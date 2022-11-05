@@ -9,13 +9,17 @@ end
 
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'                                                         -- Package manager
-  use 'nvim-lualine/lualine.nvim'                                                      -- Fancier statusline
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- Themes
   use 'AlessandroYorba/Alduin'
   use 'danishprakash/vim-yami'
   use 'bluz71/vim-nightfly-guicolors'
-  use 'nanotech/jellybeans.vim'
+  use 'metalelf0/jellybeans-nvim'
+  use { 'rktjmp/lush.nvim'}
 
   -- Surround
   use 'tpope/vim-surround'
@@ -39,6 +43,9 @@ require('packer').startup(function(use)
       require('gitsigns').setup()
     end
   }
+
+  use 'nvim-treesitter/nvim-treesitter'                                                -- Highlight, edit, and navigate code
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } } -- Additional textobjects for treesitter
 
   use 'glepnir/lspsaga.nvim'
 
@@ -115,7 +122,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme jellybeans]]
+vim.cmd [[colorscheme jellybeans-nvim]]
 
 -- Window splits
 vim.o.splitright = true
@@ -167,7 +174,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-require('lualine').setup()
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+  }
+}
 require('Comment').setup()
 
 local telescope_setup, telescope = pcall(require, 'telescope')
@@ -289,4 +301,66 @@ saga.init_lsp_saga({
 })
 
 require('lspkind')
+
+-- [[ Configure Treesitter ]]
+-- See `:help nvim-treesitter`
+require('nvim-treesitter.configs').setup {
+  -- Add languages to be installed here that you want installed for treesitter
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript' },
+
+  highlight = { enable = true },
+  indent = { enable = true },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<c-space>',
+      node_incremental = '<c-space>',
+      -- TODO: I'm not sure for this one.
+      scope_incremental = '<c-s>',
+      node_decremental = '<c-backspace>',
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>A'] = '@parameter.inner',
+      },
+    },
+  },
+}
 
