@@ -74,11 +74,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  Alduin = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/Alduin",
-    url = "https://github.com/AlessandroYorba/Alduin"
-  },
   ["Comment.nvim"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/Comment.nvim",
@@ -140,6 +135,11 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
+  ["modus-theme-vim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/modus-theme-vim",
+    url = "https://github.com/ishan9299/modus-theme-vim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -197,11 +197,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
-  },
-  ["vim-yami"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/vim-yami",
-    url = "https://github.com/danishprakash/vim-yami"
   }
 }
 
