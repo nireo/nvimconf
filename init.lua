@@ -31,10 +31,17 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/nvim-cmp'
+  use { 'saadparwaiz1/cmp_luasnip' }
 
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'onsails/lspkind.nvim'
+
+  use 'ray-x/go.nvim'
+
+  -- Snippets
+  use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+  use 'rafamadriz/friendly-snippets'
 
   use {
    'lewis6991/gitsigns.nvim',
@@ -75,9 +82,7 @@ local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'source <afile> | PackerCompile',
   group = packer_group,
-  pattern = vim.fn.expand '$MYVIMRC',
-})
-
+  pattern = vim.fn.expand '$MYVIMRC', })
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -202,6 +207,10 @@ if not cmp_setup then
   return
 end
 
+local lspkind = require 'lspkind'
+local luasnip = require 'luasnip'
+require("luasnip/loaders/from_vscode").lazy_load()
+
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
@@ -211,7 +220,31 @@ cmp.setup {
 		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 		["<C-e>"] = cmp.mapping.abort(), -- close completion window
 		["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
 	}),
+
+ snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
 
 	-- sources for autocompletion
 	sources = cmp.config.sources({
@@ -220,6 +253,14 @@ cmp.setup {
 	  { name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
 	}),
+
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+    })
+  },
 }
 
 require('mason').setup()
@@ -247,7 +288,7 @@ local on_attach = function(client, bufnr)
 	-- keybind options
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+  -- vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
 
 	-- set keybinds
 	keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
@@ -261,25 +302,43 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
 	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
 	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    if vim.lsp.buf.format then
+      vim.lsp.buf.format()
+    elseif vim.lsp.buf.formatting then
+      vim.lsp.buf.formatting()
+    end
+  end, { desc = 'Format current buffer with LSP' })
+
   local capabilities = cmp_nvim_lsp.default_capabilities()
 end
 
 lspconfig["gopls"].setup {
+  settings = {
+    gopls = {
+      analyses = {
+        nilness = true,
+        unusedparams = true,
+        unusedwrite = true,
+        useany = true,
+      },
+      gofumpt = true,
+      staticcheck = true,
+    },
+  },
   capabilities = capabilities,
   on_attach = on_attach,
 }
+vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
 
 lspconfig["clangd"].setup {
   capabilities = capabilities,
   on_attach = on_attach,
 }
 
-local saga_status, saga = pcall(require, "lspsaga")
-if not saga_status then
-	return
-end
-
-saga.init_lsp_saga({
+require('lspsaga').init_lsp_saga({
 	-- keybinds for navigation in lspsaga window
 	move_in_saga = { prev = "<C-k>", next = "<C-j>" },
 	-- use enter to open file with finder
@@ -291,8 +350,6 @@ saga.init_lsp_saga({
 		edit = "<CR>",
 	},
 })
-
-require('lspkind')
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -356,209 +413,15 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- Eviline config for lualine
--- Author: shadmansaleh
--- Credit: glepnir
-local lualine = require('lualine')
+require('lualine').setup()
 
--- Color table for highlights
--- stylua: ignore
-local colors = {
-  bg       = '#202328',
-  fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
-}
 
-local conditions = {
-  buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-  end,
-  hide_in_width = function()
-    return vim.fn.winwidth(0) > 80
-  end,
-  check_git_workspace = function()
-    local filepath = vim.fn.expand('%:p:h')
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
-  end,
-}
-
--- Config
-local config = {
-  options = {
-    -- Disable sections and component separators
-    component_separators = '',
-    section_separators = '',
-    theme = {
-      -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
-      -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    },
-  },
-  sections = {
-    -- these are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    -- These will be filled later
-    lualine_c = {},
-    lualine_x = {},
-  },
-  inactive_sections = {
-    -- these are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    lualine_c = {},
-    lualine_x = {},
-  },
-}
-
--- Inserts a component in lualine_c at left section
-local function ins_left(component)
-  table.insert(config.sections.lualine_c, component)
-end
-
--- Inserts a component in lualine_x ot right section
-local function ins_right(component)
-  table.insert(config.sections.lualine_x, component)
-end
-
-ins_left {
-  -- mode component
-  function()
-    return ' '
-  end,
-  color = function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red,
-    }
-    return { fg = mode_color[vim.fn.mode()] }
-  end,
-  padding = { right = 1 },
-}
-
-ins_left {
-  -- filesize component
-  'filesize',
-  cond = conditions.buffer_not_empty,
-}
-
-ins_left {
-  'filename',
-  cond = conditions.buffer_not_empty,
-  color = { fg = colors.magenta, gui = 'bold' },
-}
-
-ins_left { 'location' }
-
-ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-
-ins_left {
-  'diagnostics',
-  sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
-  diagnostics_color = {
-    color_error = { fg = colors.red },
-    color_warn = { fg = colors.yellow },
-    color_info = { fg = colors.cyan },
-  },
-}
-
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
-ins_left {
-  function()
-    return '%='
-  end,
-}
-
-ins_left {
-  -- Lsp server name .
-  function()
-    local msg = 'no'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-      return msg
-    end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
-    end
-    return msg
-  end,
-  icon = ' lsp:',
-  color = { fg = '#ffffff', gui = 'bold' },
-}
-
--- Add components to right sections
-ins_right {
-  'o:encoding', -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
-  cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = 'bold' },
-}
-
-ins_right {
-  'fileformat',
-  fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-  color = { fg = colors.green, gui = 'bold' },
-}
-
-ins_right {
-  'branch',
-  icon = '',
-  color = { fg = colors.violet, gui = 'bold' },
-}
-
-ins_right {
-  'diff',
-  -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
-  diff_color = {
-    added = { fg = colors.green },
-    modified = { fg = colors.orange },
-    removed = { fg = colors.red },
-  },
-  cond = conditions.hide_in_width,
-}
-
--- Now don't forget to initialize lualine
-lualine.setup(config)
+-- Enable go.nvim
+require('go').setup({
+  go = "go",
+  gofmt = "gofumpt",
+  max_line_len = 100,
+  lsp_gofumpt = false,
+  luasnip = true,
+})
 
