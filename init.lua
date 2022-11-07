@@ -47,6 +47,7 @@ require('packer').startup(function(use)
 
   use 'ray-x/go.nvim'
 
+  use 'nvim-tree/nvim-web-devicons'
   use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 
   -- Snippets
@@ -72,19 +73,6 @@ require('packer').startup(function(use)
     require('packer').sync()
   end
 end)
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- You'll need to restart nvim, and then it will work.
-if is_bootstrap then
-  print '=================================='
-  print '    Plugins are being installed'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '=================================='
-  return
-end
 
 -- Automatically source and re-compile packer whenever you save this init.lua
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
@@ -274,12 +262,10 @@ cmp.setup {
   },
 }
 
+local language_servers = { 'clangd', 'gopls' }
 require('mason').setup()
 require('mason-lspconfig').setup {
-  ensure_installed = {
-    'clangd',
-    'gopls',
-  }
+  ensure_installed = language_servers,
 }
 
 local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
@@ -424,6 +410,11 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+require'nvim-web-devicons'.setup {
+ color_icons = true;
+ default = true;
+}
+
 require('lualine').setup()
 
 require('bufferline').setup {}
@@ -434,8 +425,8 @@ vim.keymap.set('n', '<leader>k', ':bnext<cr>')
 require('go').setup({
   go = "go",
   gofmt = "gofumpt",
-  max_line_len = 100,
+  max_line_len = 80,
   lsp_gofumpt = false,
-  luasnip = true,
+  -- luasnip = true,
 })
 
