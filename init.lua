@@ -15,29 +15,39 @@ require('packer').startup(function(use)
   }
 
   -- Themes
-  use 'ishan9299/modus-theme-vim'
   use 'metalelf0/jellybeans-nvim'
   use 'bluz71/vim-nightfly-guicolors'
   use { 'rktjmp/lush.nvim'}
+  use "mcchrish/zenbones.nvim"
 
-  -- Surround
-  use 'tpope/vim-surround'
+  use {
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+        })
+    end
+  }
 
   -- Commenting
   use 'numToStr/Comment.nvim'
 
+  -- LSP settings
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/nvim-cmp'
   use { 'saadparwaiz1/cmp_luasnip' }
+  use 'glepnir/lspsaga.nvim'
 
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'onsails/lspkind.nvim'
 
   use 'ray-x/go.nvim'
+
+  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 
   -- Snippets
   use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
@@ -50,10 +60,9 @@ require('packer').startup(function(use)
     end
   }
 
-  use 'nvim-treesitter/nvim-treesitter'                                                -- Highlight, edit, and navigate code
+  use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
   use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } } -- Additional textobjects for treesitter
 
-  use 'glepnir/lspsaga.nvim'
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -83,6 +92,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'source <afile> | PackerCompile',
   group = packer_group,
   pattern = vim.fn.expand '$MYVIMRC', })
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -123,7 +133,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme nightfly]]
+vim.cmd [[colorscheme zenbones]]
 
 -- Window splits
 vim.o.splitright = true
@@ -163,6 +173,7 @@ vim.o.scrolloff = 5
 vim.o.swapfile = false
 vim.o.fileencoding = 'utf-8'
 vim.o.showmode = false
+vim.o.guicursor='n-v-c-i:block'
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -415,6 +426,9 @@ require('nvim-treesitter.configs').setup {
 
 require('lualine').setup()
 
+require('bufferline').setup {}
+vim.keymap.set('n', '<leader>o', ':bprev<cr>')
+vim.keymap.set('n', '<leader>k', ':bnext<cr>')
 
 -- Enable go.nvim
 require('go').setup({
