@@ -43,6 +43,7 @@ require("packer").startup(function(use)
 	-- Commenting
 	use("numToStr/Comment.nvim")
 
+	use("Tsuzat/NeoSolarized.nvim")
 	-- LSP settings
 	use("neovim/nvim-lspconfig")
 	use("hrsh7th/cmp-nvim-lsp")
@@ -133,7 +134,7 @@ vim.wo.signcolumn = "yes"
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd([[colorscheme kanagawabones]])
+vim.cmd([[colorscheme NeoSolarized]])
 
 -- Window splits
 vim.o.splitright = true
@@ -352,6 +353,11 @@ lspconfig["clangd"].setup({
 	},
 })
 
+lspconfig["pyright"].setup({
+	capabilities = clang_capabilities,
+	on_attach = on_attach,
+})
+
 require("lspsaga").init_lsp_saga({
 	-- keybinds for navigation in lspsaga window
 	move_in_saga = { prev = "<C-k>", next = "<C-j>" },
@@ -432,7 +438,11 @@ require("nvim-web-devicons").setup({
 	default = true,
 })
 
-require("lualine").setup()
+require("lualine").setup({
+	options = {
+		theme = "NeoSolarized",
+	},
+})
 
 require("bufferline").setup({})
 vim.keymap.set("n", "<leader>o", ":bprev<cr>")
@@ -447,6 +457,7 @@ nls.setup({
 		nls.builtins.formatting.goimports,
 		nls.builtins.formatting.gofumpt,
 		nls.builtins.formatting.golines,
+		nls.builtins.formatting.black,
 		nls.builtins.formatting.clang_format,
 		nls.builtins.formatting.stylua,
 	},
