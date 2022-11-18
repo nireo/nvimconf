@@ -10,22 +10,19 @@ end
 require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
-	-- A nicer looking mode line
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
-
 	-- Themes
 	use("metalelf0/jellybeans-nvim")
 	use("bluz71/vim-nightfly-guicolors")
 	use({ "rktjmp/lush.nvim" })
 	use("mcchrish/zenbones.nvim")
+	use("rebelot/kanagawa.nvim")
 
 	use({
 		"kylechui/nvim-surround",
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
+
+	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
 
 	use({
 		"windwp/nvim-autopairs",
@@ -134,7 +131,7 @@ vim.wo.signcolumn = "yes"
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd([[colorscheme NeoSolarized]])
+vim.cmd([[colorscheme oxocarbon]])
 
 -- Window splits
 vim.o.splitright = true
@@ -173,7 +170,7 @@ vim.o.backup = false
 vim.o.scrolloff = 5
 vim.o.swapfile = false
 vim.o.fileencoding = "utf-8"
-vim.o.showmode = false
+vim.o.showmode = true
 vim.o.guicursor = "n-v-c-i:block"
 
 -- [[ Highlight on yank ]]
@@ -438,12 +435,6 @@ require("nvim-web-devicons").setup({
 	default = true,
 })
 
-require("lualine").setup({
-	options = {
-		theme = "NeoSolarized",
-	},
-})
-
 require("bufferline").setup({})
 vim.keymap.set("n", "<leader>o", ":bprev<cr>")
 vim.keymap.set("n", "<leader>k", ":bnext<cr>")
@@ -485,6 +476,6 @@ require("go").setup({
 	go = "go",
 	gofmt = "gofumpt",
 	max_line_len = 80,
-	lsp_gofumpt = false,
-	-- luasnip = true,
+	staticcheck = true,
+	luasnip = true,
 })
