@@ -11,18 +11,15 @@ require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Themes
-	use("metalelf0/jellybeans-nvim")
-	use("bluz71/vim-nightfly-guicolors")
-	use({ "rktjmp/lush.nvim" })
 	use("mcchrish/zenbones.nvim")
-	use("rebelot/kanagawa.nvim")
+	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
+	use({ "Lokaltog/vim-monotone" })
+	use({ "cranberry-clockworks/coal.nvim" })
 
 	use({
 		"kylechui/nvim-surround",
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
-
-	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
 
 	use({
 		"windwp/nvim-autopairs",
@@ -40,7 +37,6 @@ require("packer").startup(function(use)
 	-- Commenting
 	use("numToStr/Comment.nvim")
 
-	use("Tsuzat/NeoSolarized.nvim")
 	-- LSP settings
 	use("neovim/nvim-lspconfig")
 	use("hrsh7th/cmp-nvim-lsp")
@@ -55,9 +51,7 @@ require("packer").startup(function(use)
 	use("onsails/lspkind.nvim")
 
 	use("ray-x/go.nvim") -- Go support
-
-	use("nvim-tree/nvim-web-devicons") -- Nice icons
-	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" }) -- A nice looking bufferline
+	-- use("nvim-tree/nvim-web-devicons") -- Nice icons
 
 	-- Snippets
 	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
@@ -123,7 +117,7 @@ vim.o.smartcase = true
 -- Enable usage of system clipboard.
 vim.o.clipboard = "unnamedplus"
 
-vim.o.cursorline = true
+vim.o.cursorline = false
 
 -- Decrease update time
 vim.o.updatetime = 100
@@ -131,7 +125,7 @@ vim.wo.signcolumn = "yes"
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd([[colorscheme oxocarbon]])
+vim.cmd([[ colorscheme coal ]])
 
 -- Window splits
 vim.o.splitright = true
@@ -170,7 +164,7 @@ vim.o.backup = false
 vim.o.scrolloff = 5
 vim.o.swapfile = false
 vim.o.fileencoding = "utf-8"
-vim.o.showmode = true
+vim.o.showmode = false
 vim.o.guicursor = "n-v-c-i:block"
 
 -- [[ Highlight on yank ]]
@@ -272,7 +266,7 @@ cmp.setup({
 	},
 })
 
-local language_servers = { "clangd", "gopls" }
+local language_servers = { "clangd", "gopls", "pyright", "tsserver" }
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = language_servers,
@@ -351,7 +345,12 @@ lspconfig["clangd"].setup({
 })
 
 lspconfig["pyright"].setup({
-	capabilities = clang_capabilities,
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["tsserver"].setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
@@ -372,7 +371,7 @@ require("lspsaga").init_lsp_saga({
 -- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "typescript", "erlang" },
+	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "javascript", "typescript", "erlang" },
 
 	highlight = { enable = true },
 	indent = { enable = true },
@@ -430,12 +429,12 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
-require("nvim-web-devicons").setup({
-	color_icons = true,
-	default = true,
-})
+-- require("nvim-web-devicons").setup({
+-- 	color_icons = true,
+-- 	default = true,
+-- })
 
-require("bufferline").setup({})
+-- require("bufferline").setup({})
 vim.keymap.set("n", "<leader>o", ":bprev<cr>")
 vim.keymap.set("n", "<leader>k", ":bnext<cr>")
 
@@ -443,6 +442,7 @@ require("nvim-surround").setup({})
 
 local nls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 nls.setup({
 	sources = {
 		nls.builtins.formatting.goimports,
@@ -451,6 +451,7 @@ nls.setup({
 		nls.builtins.formatting.black,
 		nls.builtins.formatting.clang_format,
 		nls.builtins.formatting.stylua,
+		nls.builtins.formatting.prettier,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
