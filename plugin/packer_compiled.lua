@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["boo-colorscheme-nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/boo-colorscheme-nvim",
+    url = "https://github.com/rockerBOO/boo-colorscheme-nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -104,18 +109,12 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["coal.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/coal.nvim",
-    url = "https://github.com/cranberry-clockworks/coal.nvim"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
-    config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
@@ -124,6 +123,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/go.nvim",
     url = "https://github.com/ray-x/go.nvim"
+  },
+  kimbox = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/kimbox",
+    url = "https://github.com/lmburns/kimbox"
   },
   ["lspkind.nvim"] = {
     loaded = true,
@@ -135,6 +139,11 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
     url = "https://github.com/glepnir/lspsaga.nvim"
   },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/lush.nvim",
+    url = "https://github.com/rktjmp/lush.nvim"
+  },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
@@ -144,6 +153,36 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
+  },
+  melange = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/melange",
+    url = "https://github.com/savq/melange"
+  },
+  ["meliora.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/meliora.nvim",
+    url = "https://github.com/ramojus/meliora.nvim"
+  },
+  ["neg.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/neg.nvim",
+    url = "https://github.com/neg-serg/neg.nvim"
+  },
+  ["no-clown-fiesta.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/no-clown-fiesta.nvim",
+    url = "https://github.com/aktersnurra/no-clown-fiesta.nvim"
+  },
+  ["noctis.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/noctis.nvim",
+    url = "https://github.com/kartikp10/noctis.nvim"
+  },
+  ["nortia.nvim"] = {
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/nortia.nvim",
+    url = "https://github.com/alaric/nortia.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -208,15 +247,10 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["vim-monotone"] = {
+  ["templeos.nvim"] = {
     loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/vim-monotone",
-    url = "https://github.com/Lokaltog/vim-monotone"
-  },
-  ["zenbones.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/zenbones.nvim",
-    url = "https://github.com/mcchrish/zenbones.nvim"
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/templeos.nvim",
+    url = "https://github.com/LunarVim/templeos.nvim"
   }
 }
 
@@ -225,10 +259,6 @@ time([[Defining packer_plugins]], false)
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]

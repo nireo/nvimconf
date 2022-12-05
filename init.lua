@@ -11,10 +11,17 @@ require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Themes
-	use("mcchrish/zenbones.nvim")
 	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
-	use({ "Lokaltog/vim-monotone" })
-	use({ "cranberry-clockworks/coal.nvim" })
+	use({ "aktersnurra/no-clown-fiesta.nvim" })
+	use({ "ramojus/meliora.nvim" })
+	use({ "rockerBOO/boo-colorscheme-nvim" })
+	use({ "lmburns/kimbox" })
+	use({ "LunarVim/templeos.nvim" })
+	use({ "alaric/nortia.nvim" })
+	use({ "neg-serg/neg.nvim" })
+	use({ "kartikp10/noctis.nvim" })
+	use({ "savq/melange" })
+	use({ "rktjmp/lush.nvim" })
 
 	use({
 		"kylechui/nvim-surround",
@@ -51,7 +58,6 @@ require("packer").startup(function(use)
 	use("onsails/lspkind.nvim")
 
 	use("ray-x/go.nvim") -- Go support
-	-- use("nvim-tree/nvim-web-devicons") -- Nice icons
 
 	-- Snippets
 	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
@@ -60,9 +66,6 @@ require("packer").startup(function(use)
 	-- Git indicators in the fringe.
 	use({
 		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
 	})
 
 	use("nvim-treesitter/nvim-treesitter") -- Highlight, edit, and navigate code
@@ -121,11 +124,11 @@ vim.o.cursorline = false
 
 -- Decrease update time
 vim.o.updatetime = 100
-vim.wo.signcolumn = "yes"
+vim.wo.signcolumn = "no"
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd([[ colorscheme coal ]])
+vim.cmd([[ colorscheme quiet ]])
 
 -- Window splits
 vim.o.splitright = true
@@ -429,17 +432,7 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
--- require("nvim-web-devicons").setup({
--- 	color_icons = true,
--- 	default = true,
--- })
-
--- require("bufferline").setup({})
-vim.keymap.set("n", "<leader>o", ":bprev<cr>")
-vim.keymap.set("n", "<leader>k", ":bnext<cr>")
-
 require("nvim-surround").setup({})
-
 local nls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -470,6 +463,20 @@ nls.setup({
 			})
 		end
 	end,
+})
+
+require("gitsigns").setup({
+	signs = {
+		add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+		change = { hl = "GitSignsChange", text = "/", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+		delete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+		topdelete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+		changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+		untracked = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+	},
+	linehl = false,
+	signcolumn = false,
+	numhl = true,
 })
 
 -- Enable go.nvim
