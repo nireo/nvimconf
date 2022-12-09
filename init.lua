@@ -13,14 +13,6 @@ require("packer").startup(function(use)
 	-- Themes
 	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
 	use({ "aktersnurra/no-clown-fiesta.nvim" })
-	use({ "ramojus/meliora.nvim" })
-	use({ "rockerBOO/boo-colorscheme-nvim" })
-	use({ "lmburns/kimbox" })
-	use({ "LunarVim/templeos.nvim" })
-	use({ "alaric/nortia.nvim" })
-	use({ "neg-serg/neg.nvim" })
-	use({ "kartikp10/noctis.nvim" })
-	use({ "savq/melange" })
 	use({ "rktjmp/lush.nvim" })
 
 	use({
@@ -53,6 +45,14 @@ require("packer").startup(function(use)
 	use({ "saadparwaiz1/cmp_luasnip" })
 	use("glepnir/lspsaga.nvim")
 
+  use({
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+      }
+    end
+  })
+
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
 	use("onsails/lspkind.nvim")
@@ -74,6 +74,14 @@ require("packer").startup(function(use)
 	-- Fuzzy Finder (files, lsp, etc)
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { "nvim-lua/plenary.nvim" } })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+
+	use({
+		"akinsho/toggleterm.nvim",
+		tag = "*",
+		config = function()
+			require("toggleterm").setup()
+		end,
+	})
 
 	if is_bootstrap then
 		require("packer").sync()
@@ -121,14 +129,18 @@ vim.o.smartcase = true
 vim.o.clipboard = "unnamedplus"
 
 vim.o.cursorline = false
+vim.o.cursorcolumn = false
 
 -- Decrease update time
 vim.o.updatetime = 100
+vim.o.timeoutlen = 500
 vim.wo.signcolumn = "no"
+vim.o.synmaxcol = 180
 
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd([[ colorscheme quiet ]])
+-- vim.cmd([[ colorscheme quiet ]])
 
 -- Window splits
 vim.o.splitright = true
@@ -158,6 +170,7 @@ vim.keymap.set("n", "<leader>s", ":w!<CR>")
 
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>l", "<cmd>Telescope buffers<cr>")
+vim.keymap.set("n", "<leader>n", "<cmd>Telescope live_grep<cr>")
 
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
@@ -168,6 +181,7 @@ vim.o.scrolloff = 5
 vim.o.swapfile = false
 vim.o.fileencoding = "utf-8"
 vim.o.showmode = false
+vim.o.lazyredraw = true
 vim.o.guicursor = "n-v-c-i:block"
 
 -- [[ Highlight on yank ]]
@@ -374,7 +388,7 @@ require("lspsaga").init_lsp_saga({
 -- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "javascript", "typescript", "erlang" },
+	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "javascript", "typescript", "erlang", "haskell" },
 
 	highlight = { enable = true },
 	indent = { enable = true },

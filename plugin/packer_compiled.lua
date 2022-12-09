@@ -84,11 +84,6 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["boo-colorscheme-nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/boo-colorscheme-nvim",
-    url = "https://github.com/rockerBOO/boo-colorscheme-nvim"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -124,11 +119,6 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/go.nvim",
     url = "https://github.com/ray-x/go.nvim"
   },
-  kimbox = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/kimbox",
-    url = "https://github.com/lmburns/kimbox"
-  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
@@ -154,35 +144,10 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
-  melange = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/melange",
-    url = "https://github.com/savq/melange"
-  },
-  ["meliora.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/meliora.nvim",
-    url = "https://github.com/ramojus/meliora.nvim"
-  },
-  ["neg.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/neg.nvim",
-    url = "https://github.com/neg-serg/neg.nvim"
-  },
   ["no-clown-fiesta.nvim"] = {
     loaded = true,
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/no-clown-fiesta.nvim",
     url = "https://github.com/aktersnurra/no-clown-fiesta.nvim"
-  },
-  ["noctis.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/noctis.nvim",
-    url = "https://github.com/kartikp10/noctis.nvim"
-  },
-  ["nortia.nvim"] = {
-    loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/nortia.nvim",
-    url = "https://github.com/alaric/nortia.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -247,18 +212,33 @@ _G.packer_plugins = {
     path = "/home/lain/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["templeos.nvim"] = {
+  ["toggleterm.nvim"] = {
+    config = { "\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15toggleterm\frequire\0" },
     loaded = true,
-    path = "/home/lain/.local/share/nvim/site/pack/packer/start/templeos.nvim",
-    url = "https://github.com/LunarVim/templeos.nvim"
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
+    url = "https://github.com/akinsho/toggleterm.nvim"
+  },
+  ["which-key.nvim"] = {
+    config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0" },
+    loaded = true,
+    path = "/home/lain/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
+-- Config for: toggleterm.nvim
+time([[Config for toggleterm.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15toggleterm\frequire\0", "config", "toggleterm.nvim")
+time([[Config for toggleterm.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]
