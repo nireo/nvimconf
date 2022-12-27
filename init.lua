@@ -11,9 +11,20 @@ require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Themes
-	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
+	use({ "nyoom-engineering/oxocarbon.nvim" })
 	use({ "aktersnurra/no-clown-fiesta.nvim" })
 	use({ "rktjmp/lush.nvim" })
+	use({ "kvrohit/mellow.nvim" })
+	use({ "luisiacc/gruvbox-baby" })
+	use("nvim-lualine/lualine.nvim")
+	use("shaunsingh/seoul256.nvim")
+	use("tanvirtin/monokai.nvim")
+	use("ntk148v/komau.vim")
+	use("mcchrish/zenbones.nvim")
+
+	use({
+		"lmburns/kimbox",
+	})
 
 	use({
 		"kylechui/nvim-surround",
@@ -45,13 +56,12 @@ require("packer").startup(function(use)
 	use({ "saadparwaiz1/cmp_luasnip" })
 	use("glepnir/lspsaga.nvim")
 
-  use({
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup {
-      }
-    end
-  })
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({})
+		end,
+	})
 
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
@@ -139,8 +149,10 @@ vim.o.synmaxcol = 180
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd([[ colorscheme quiet ]])
--- vim.cmd([[ colorscheme quiet ]])
+vim.o.background = "dark"
+
+vim.g.gruvbox_baby_background_color = "dark"
+vim.cmd([[ colorscheme zenbones ]])
 
 -- Window splits
 vim.o.splitright = true
@@ -388,7 +400,19 @@ require("lspsaga").init_lsp_saga({
 -- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "javascript", "typescript", "erlang", "haskell" },
+	ensure_installed = {
+		"c",
+		"cpp",
+		"go",
+		"lua",
+		"python",
+		"rust",
+		"javascript",
+		"typescript",
+		"erlang",
+		"haskell",
+		"clojure",
+	},
 
 	highlight = { enable = true },
 	indent = { enable = true },
@@ -490,7 +514,7 @@ require("gitsigns").setup({
 	},
 	linehl = false,
 	signcolumn = false,
-	numhl = true,
+	numhl = false,
 })
 
 -- Enable go.nvim
@@ -501,3 +525,5 @@ require("go").setup({
 	staticcheck = true,
 	luasnip = true,
 })
+
+require("lualine").setup({})
