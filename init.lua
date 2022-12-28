@@ -16,7 +16,6 @@ require("packer").startup(function(use)
 	use({ "rktjmp/lush.nvim" })
 	use({ "kvrohit/mellow.nvim" })
 	use({ "luisiacc/gruvbox-baby" })
-	use("nvim-lualine/lualine.nvim")
 	use("shaunsingh/seoul256.nvim")
 	use("tanvirtin/monokai.nvim")
 	use("ntk148v/komau.vim")
@@ -110,8 +109,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 vim.o.hlsearch = false
 
 -- Make line numbers default
-vim.o.relativenumber = true
-vim.o.number = true
+-- vim.o.relativenumber = true
+-- vim.o.number = true
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
@@ -525,5 +524,3 @@ require("go").setup({
 	staticcheck = true,
 	luasnip = true,
 })
-
-require("lualine").setup({})
