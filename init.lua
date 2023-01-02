@@ -15,11 +15,9 @@ require("packer").startup(function(use)
 	use({ "aktersnurra/no-clown-fiesta.nvim" })
 	use({ "rktjmp/lush.nvim" })
 	use({ "kvrohit/mellow.nvim" })
-	use({ "luisiacc/gruvbox-baby" })
-	use("shaunsingh/seoul256.nvim")
 	use("tanvirtin/monokai.nvim")
-	use("ntk148v/komau.vim")
 	use("mcchrish/zenbones.nvim")
+	use("lukas-reineke/indent-blankline.nvim")
 
 	use({
 		"lmburns/kimbox",
@@ -294,7 +292,7 @@ cmp.setup({
 	},
 })
 
-local language_servers = { "clangd", "gopls", "pyright", "tsserver" }
+local language_servers = { "clangd", "gopls", "pyright", "tsserver", "ocamllsp" }
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = language_servers,
@@ -361,6 +359,12 @@ lspconfig["gopls"].setup({
 	on_attach = on_attach,
 })
 
+lspconfig["ocamllsp"].setup({
+	filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocmllex", "reason", "dune" },
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
 local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
 clang_capabilities.offsetEncoding = { "utf-16" }
 lspconfig["clangd"].setup({
@@ -411,6 +415,7 @@ require("nvim-treesitter.configs").setup({
 		"erlang",
 		"haskell",
 		"clojure",
+		"ocaml",
 	},
 
 	highlight = { enable = true },
@@ -524,3 +529,5 @@ require("go").setup({
 	staticcheck = true,
 	luasnip = true,
 })
+
+require("indent_blankline").setup()
