@@ -10,14 +10,14 @@ end
 require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
+	use("lewis6991/impatient.nvim")
+
 	-- Themes
-	use({ "nyoom-engineering/oxocarbon.nvim" })
-	use({ "aktersnurra/no-clown-fiesta.nvim" })
 	use({ "rktjmp/lush.nvim" })
 	use({ "kvrohit/mellow.nvim" })
 	use("nvim-tree/nvim-web-devicons")
-	use("savq/melange-nvim")
 	use("metalelf0/jellybeans-nvim")
+	use("mcchrish/zenbones.nvim")
 
 	use({
 		"kylechui/nvim-surround",
@@ -65,11 +65,6 @@ require("packer").startup(function(use)
 	-- Snippets
 	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
 	use("rafamadriz/friendly-snippets")
-
-	-- Git indicators in the fringe.
-	use({
-		"lewis6991/gitsigns.nvim",
-	})
 
 	use("nvim-treesitter/nvim-treesitter") -- Highlight, edit, and navigate code
 	use({ "nvim-treesitter/nvim-treesitter-textobjects", after = { "nvim-treesitter" } }) -- Additional textobjects for treesitter
@@ -136,7 +131,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme jellybeans-nvim")
+vim.cmd("colorscheme zenbones")
 
 -- Window splits
 vim.o.splitright = true
@@ -166,7 +161,7 @@ vim.keymap.set("n", "<leader>s", ":w!<CR>")
 
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>l", "<cmd>Telescope buffers<cr>")
-vim.keymap.set("n", "<leader>n", "<cmd>Telescope live_grep<cr>")
+vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
 
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
@@ -180,8 +175,6 @@ vim.o.showmode = false
 vim.o.lazyredraw = true
 vim.o.guicursor = "n-v-c-i:block"
 
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
@@ -272,10 +265,20 @@ cmp.setup({
 
 	formatting = {
 		format = lspkind.cmp_format({
-			mode = "symbol", -- show only symbol annotations
-			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+			mode = "symbol_text",
+			menu = {
+				buffer = "[buf]",
+				nvim_lsp = "[lsp]",
+				luasnip = "[lua_snip]",
+				nvim_lua = "[lua]",
+				latex_symbols = "[latex]",
+			},
 		}),
+	},
+
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 })
 
@@ -346,12 +349,6 @@ lspconfig["gopls"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["ocamllsp"].setup({
-	filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocmllex", "reason", "dune" },
-	on_attach = on_attach,
-	capabilities = capabilities,
-})
-
 local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
 clang_capabilities.offsetEncoding = { "utf-16" }
 lspconfig["clangd"].setup({
@@ -386,8 +383,6 @@ require("lspsaga").setup({
 	},
 })
 
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
 	-- Add languages to be installed here that you want installed for treesitter
 	ensure_installed = {
@@ -395,14 +390,10 @@ require("nvim-treesitter.configs").setup({
 		"cpp",
 		"go",
 		"lua",
-		"python",
 		"rust",
 		"javascript",
 		"typescript",
-		"erlang",
-		"haskell",
-		"clojure",
-		"ocaml",
+		"hcl",
 	},
 
 	highlight = { enable = true },
@@ -469,7 +460,6 @@ nls.setup({
 	sources = {
 		nls.builtins.formatting.goimports,
 		nls.builtins.formatting.gofumpt,
-		nls.builtins.formatting.golines,
 		nls.builtins.formatting.black,
 		nls.builtins.formatting.clang_format,
 		nls.builtins.formatting.stylua,
@@ -494,25 +484,11 @@ nls.setup({
 	end,
 })
 
-require("gitsigns").setup({
-	signs = {
-		add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-		change = { hl = "GitSignsChange", text = "/", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-		delete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-		topdelete = { hl = "GitSignsDelete", text = "-", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-		changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-		untracked = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-	},
-	linehl = false,
-	signcolumn = false,
-	numhl = false,
-})
-
 -- Enable go.nvim
 require("go").setup({
 	go = "go",
 	gofmt = "gofumpt",
-	max_line_len = 80,
+	max_line_len = 200,
 	staticcheck = true,
 	luasnip = true,
 })

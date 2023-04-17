@@ -109,15 +109,15 @@ _G.packer_plugins = {
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
-  ["gitsigns.nvim"] = {
-    loaded = true,
-    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
-    url = "https://github.com/lewis6991/gitsigns.nvim"
-  },
   ["go.nvim"] = {
     loaded = true,
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/go.nvim",
     url = "https://github.com/ray-x/go.nvim"
+  },
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/impatient.nvim",
+    url = "https://github.com/lewis6991/impatient.nvim"
   },
   ["jellybeans-nvim"] = {
     loaded = true,
@@ -149,20 +149,10 @@ _G.packer_plugins = {
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
-  ["melange-nvim"] = {
-    loaded = true,
-    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/melange-nvim",
-    url = "https://github.com/savq/melange-nvim"
-  },
   ["mellow.nvim"] = {
     loaded = true,
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/mellow.nvim",
     url = "https://github.com/kvrohit/mellow.nvim"
-  },
-  ["no-clown-fiesta.nvim"] = {
-    loaded = true,
-    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/no-clown-fiesta.nvim",
-    url = "https://github.com/aktersnurra/no-clown-fiesta.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -207,11 +197,6 @@ _G.packer_plugins = {
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
-  ["oxocarbon.nvim"] = {
-    loaded = true,
-    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/oxocarbon.nvim",
-    url = "https://github.com/nyoom-engineering/oxocarbon.nvim"
-  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -237,18 +222,23 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
+  },
+  ["zenbones.nvim"] = {
+    loaded = true,
+    path = "/Users/eemil.lehtikangas/.local/share/nvim/site/pack/packer/start/zenbones.nvim",
+    url = "https://github.com/mcchrish/zenbones.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]
