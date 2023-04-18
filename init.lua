@@ -1,90 +1,77 @@
--- Install packer
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	is_bootstrap = true
-	vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-	vim.cmd([[packadd packer.nvim]])
-end
-
-require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-
-	use("lewis6991/impatient.nvim")
-
-	-- Themes
-	use({ "rktjmp/lush.nvim" })
-	use({ "kvrohit/mellow.nvim" })
-	use("nvim-tree/nvim-web-devicons")
-	use("metalelf0/jellybeans-nvim")
-	use("mcchrish/zenbones.nvim")
-
-	use({
-		"kylechui/nvim-surround",
-		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
 	})
+end
+vim.opt.rtp:prepend(lazypath)
 
-	use({
+local plugins = {
+	"metalelf0/jellybeans-nvim",
+	"mcchrish/zenbones.nvim",
+	"nvim-tree/nvim-web-devicons",
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	"windwp/nvim-autopairs",
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	"numToStr/Comment.nvim",
+	"neovim/nvim-lspconfig",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/nvim-cmp",
+	"saadparwaiz1/cmp_luasnip",
+	"rktjmp/lush.nvim",
+	"glepnir/lspsaga.nvim",
+	{
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
 		end,
-	})
-
-	-- Formatting and linters.
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-	})
-
-	-- Commenting
-	use("numToStr/Comment.nvim")
-
-	-- LSP settings
-	use("neovim/nvim-lspconfig")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
-	use("hrsh7th/nvim-cmp")
-	use({ "saadparwaiz1/cmp_luasnip" })
-	use("glepnir/lspsaga.nvim")
-
-	use({
+	},
+	{
 		"folke/which-key.nvim",
 		config = function()
 			require("which-key").setup({})
 		end,
-	})
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		version = "<CurrentMajor>.*",
+	},
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
+	"onsails/lspkind.nvim",
+	"ray-x/go.nvim",
+	"nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	"rafamadriz/friendly-snippets",
+}
 
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
-	use("onsails/lspkind.nvim")
+local opts = {}
 
-	use("ray-x/go.nvim") -- Go support
-
-	-- Snippets
-	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
-	use("rafamadriz/friendly-snippets")
-
-	use("nvim-treesitter/nvim-treesitter") -- Highlight, edit, and navigate code
-	use({ "nvim-treesitter/nvim-treesitter-textobjects", after = { "nvim-treesitter" } }) -- Additional textobjects for treesitter
-
-	-- Fuzzy Finder (files, lsp, etc)
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { "nvim-lua/plenary.nvim" } })
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
-
-	if is_bootstrap then
-		require("packer").sync()
-	end
-end)
-
--- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	command = "source <afile> | PackerCompile",
-	group = packer_group,
-	pattern = vim.fn.expand("$MYVIMRC"),
-})
+require("lazy").setup(plugins, opts)
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -131,7 +118,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme zenbones")
+vim.cmd("colorscheme jellybeans-nvim")
 
 -- Window splits
 vim.o.splitright = true
