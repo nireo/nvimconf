@@ -1,1 +1,5 @@
-# neovim configuration for systems programming
+# neovim configuration for golang development
+
+```
+git clone https://github.com/nireo/nvimconf ~/.config/nvim
+```

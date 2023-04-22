@@ -13,8 +13,9 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	"metalelf0/jellybeans-nvim",
-	"mcchrish/zenbones.nvim",
 	"nvim-tree/nvim-web-devicons",
+	"nvim-lualine/lualine.nvim",
+	"bluz71/vim-moonfly-colors",
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -24,6 +25,15 @@ local plugins = {
 				-- Configuration here, or leave empty to use defaults
 			})
 		end,
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+		},
 	},
 	"windwp/nvim-autopairs",
 	{
@@ -59,7 +69,10 @@ local plugins = {
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"onsails/lspkind.nvim",
-	"ray-x/go.nvim",
+	{
+		"ray-x/go.nvim",
+		dependencies = { "ray-x/guihua.lua" },
+	},
 	"nvim-treesitter/nvim-treesitter",
 	{
 		"nvim-telescope/telescope.nvim",
@@ -118,7 +131,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme jellybeans-nvim")
+vim.cmd("colorscheme moonfly")
 
 -- Window splits
 vim.o.splitright = true
@@ -146,8 +159,14 @@ vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
 
+vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
+vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
+vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
+vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
+vim.keymap.set("n", "<leader>e", "<cmd>:Neotree toggle<cr>")
+
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
-vim.keymap.set("n", "<leader>l", "<cmd>Telescope buffers<cr>")
+vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
 vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
 
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
@@ -195,7 +214,6 @@ telescope.setup({
 })
 
 telescope.load_extension("fzf")
-
 vim.opt.completeopt = "menu,menuone,noselect"
 
 local cmp_setup, cmp = pcall(require, "cmp")
@@ -254,11 +272,11 @@ cmp.setup({
 		format = lspkind.cmp_format({
 			mode = "symbol_text",
 			menu = {
-				buffer = "[buf]",
-				nvim_lsp = "[lsp]",
-				luasnip = "[lua_snip]",
-				nvim_lua = "[lua]",
-				latex_symbols = "[latex]",
+				buffer = "[Buffer]",
+				nvim_lsp = "[LSP]",
+				luasnip = "[LuaSnip]",
+				nvim_lua = "[Lua]",
+				latex_symbols = "[Latex]",
 			},
 		}),
 	},
@@ -471,6 +489,13 @@ nls.setup({
 	end,
 })
 
+require("neo-tree").setup({
+	popup_border_style = "rounded",
+	window = {
+		width = 30,
+	},
+})
+
 -- Enable go.nvim
 require("go").setup({
 	go = "go",
@@ -479,3 +504,5 @@ require("go").setup({
 	staticcheck = true,
 	luasnip = true,
 })
+
+require("lualine").setup({})
