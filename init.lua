@@ -12,7 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	"metalelf0/jellybeans-nvim",
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
 	"bluz71/vim-moonfly-colors",
@@ -31,7 +30,6 @@ local plugins = {
 		branch = "v2.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
 			"MunifTanjim/nui.nvim",
 		},
 	},
@@ -287,7 +285,7 @@ cmp.setup({
 	},
 })
 
-local language_servers = { "clangd", "gopls", "pyright", "tsserver" }
+local language_servers = { "clangd", "gopls", "tsserver" }
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = language_servers,
@@ -354,18 +352,7 @@ lspconfig["gopls"].setup({
 	on_attach = on_attach,
 })
 
-local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
-clang_capabilities.offsetEncoding = { "utf-16" }
 lspconfig["clangd"].setup({
-	capabilities = clang_capabilities,
-	on_attach = on_attach,
-	cmd = {
-		"clangd",
-		"--background-index",
-	},
-})
-
-lspconfig["pyright"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
