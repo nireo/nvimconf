@@ -14,17 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
-	"bluz71/vim-moonfly-colors",
-	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
-	},
+	"metalelf0/jellybeans-nvim",
+	"lewis6991/gitsigns.nvim",
+	"rktjmp/lush.nvim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -45,7 +37,6 @@ local plugins = {
 	"hrsh7th/cmp-path",
 	"hrsh7th/nvim-cmp",
 	"saadparwaiz1/cmp_luasnip",
-	"rktjmp/lush.nvim",
 	"glepnir/lspsaga.nvim",
 	{
 		"windwp/nvim-autopairs",
@@ -61,7 +52,7 @@ local plugins = {
 	},
 	{
 		"L3MON4D3/LuaSnip",
-		version = "<CurrentMajor>.*",
+		version = "v1.2.1.*",
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	"williamboman/mason.nvim",
@@ -78,6 +69,7 @@ local plugins = {
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	"rafamadriz/friendly-snippets",
+	"ggandor/leap.nvim",
 }
 
 local opts = {}
@@ -129,7 +121,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme moonfly")
+vim.cmd("colorscheme jellybeans-nvim")
 
 -- Window splits
 vim.o.splitright = true
@@ -144,6 +136,8 @@ vim.o.completeopt = "menuone,noselect"
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+vim.g["surround_no_mapping"] = 1
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -444,7 +438,6 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
-require("nvim-surround").setup({})
 local nls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -493,3 +486,10 @@ require("go").setup({
 })
 
 require("lualine").setup({})
+
+require("gitsigns").setup({
+	numhl = true,
+	signcolumn = false,
+})
+
+require("leap").add_default_mappings()
