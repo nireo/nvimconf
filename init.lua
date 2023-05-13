@@ -16,7 +16,9 @@ local plugins = {
 	"nvim-lualine/lualine.nvim",
 	"metalelf0/jellybeans-nvim",
 	"lewis6991/gitsigns.nvim",
+	"ofirgall/ofirkai.nvim",
 	"rktjmp/lush.nvim",
+	"akinsho/bufferline.nvim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -70,6 +72,7 @@ local plugins = {
 	},
 	"rafamadriz/friendly-snippets",
 	"ggandor/leap.nvim",
+	"folke/trouble.nvim",
 }
 
 local opts = {}
@@ -121,7 +124,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme jellybeans-nvim")
+vim.cmd("colorscheme ofirkai")
 
 -- Window splits
 vim.o.splitright = true
@@ -264,11 +267,11 @@ cmp.setup({
 		format = lspkind.cmp_format({
 			mode = "symbol_text",
 			menu = {
-				buffer = "[Buffer]",
-				nvim_lsp = "[LSP]",
-				luasnip = "[LuaSnip]",
-				nvim_lua = "[Lua]",
-				latex_symbols = "[Latex]",
+				buffer = "[buffer]",
+				nvim_lsp = "[lsp]",
+				luasnip = "[luasnip]",
+				nvim_lua = "[lua]",
+				latex_symbols = "[latex]",
 			},
 		}),
 	},
@@ -346,8 +349,10 @@ lspconfig["gopls"].setup({
 	on_attach = on_attach,
 })
 
+local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
+clang_capabilities.offsetEncoding = { "utf-16" }
 lspconfig["clangd"].setup({
-	capabilities = capabilities,
+	capabilities = clang_capabilities,
 	on_attach = on_attach,
 })
 
@@ -485,11 +490,36 @@ require("go").setup({
 	luasnip = true,
 })
 
-require("lualine").setup({})
-
 require("gitsigns").setup({
-	numhl = true,
+	numhl = false,
 	signcolumn = false,
 })
 
 require("leap").add_default_mappings()
+require("trouble").setup()
+
+require("ofirkai").setup({
+	scheme = {
+		background = "#23231d",
+		winbar_bg = "#1d1d14",
+	},
+})
+
+require("bufferline").setup({
+	options = {
+		separator_style = "slant",
+		offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "center" } },
+		show_buffer_icons = true,
+		themable = true,
+		numbers = "ordinal",
+		max_name_length = 40,
+	},
+	highlights = require("ofirkai.tablines.bufferline").highlights,
+})
+
+local ofirkai_lualine = require("ofirkai.statuslines.lualine")
+require("lualine").setup({
+	options = {
+		theme = ofirkai_lualine.theme,
+	},
+})
