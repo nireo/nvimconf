@@ -16,9 +16,9 @@ local plugins = {
 	"nvim-lualine/lualine.nvim",
 	"metalelf0/jellybeans-nvim",
 	"lewis6991/gitsigns.nvim",
-	"ofirgall/ofirkai.nvim",
 	"rktjmp/lush.nvim",
-	"akinsho/bufferline.nvim",
+	"svrana/neosolarized.nvim",
+	"tjdevries/colorbuddy.vim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -124,7 +124,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme ofirkai")
+-- vim.cmd("colorscheme neosolarized")
 
 -- Window splits
 vim.o.splitright = true
@@ -498,28 +498,12 @@ require("gitsigns").setup({
 require("leap").add_default_mappings()
 require("trouble").setup()
 
-require("ofirkai").setup({
-	scheme = {
-		background = "#23231d",
-		winbar_bg = "#1d1d14",
-	},
-})
-
-require("bufferline").setup({
-	options = {
-		separator_style = "slant",
-		offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "center" } },
-		show_buffer_icons = true,
-		themable = true,
-		numbers = "ordinal",
-		max_name_length = 40,
-	},
-	highlights = require("ofirkai.tablines.bufferline").highlights,
-})
-
-local ofirkai_lualine = require("ofirkai.statuslines.lualine")
 require("lualine").setup({
 	options = {
-		theme = ofirkai_lualine.theme,
+		theme = "solarized",
 	},
+})
+
+require("neosolarized").setup({
+	comment_italics = false,
 })
