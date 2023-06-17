@@ -14,11 +14,11 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
-	"metalelf0/jellybeans-nvim",
 	"lewis6991/gitsigns.nvim",
 	"rktjmp/lush.nvim",
 	"svrana/neosolarized.nvim",
 	"tjdevries/colorbuddy.vim",
+	"rockyzhang24/arctic.nvim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -124,7 +124,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
--- vim.cmd("colorscheme neosolarized")
+vim.cmd("colorscheme arctic")
 
 -- Window splits
 vim.o.splitright = true
@@ -498,12 +498,4 @@ require("gitsigns").setup({
 require("leap").add_default_mappings()
 require("trouble").setup()
 
-require("lualine").setup({
-	options = {
-		theme = "solarized",
-	},
-})
-
-require("neosolarized").setup({
-	comment_italics = false,
-})
+require("lualine").setup({})
