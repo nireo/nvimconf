@@ -16,6 +16,7 @@ local plugins = {
 	"lewis6991/gitsigns.nvim",
 	"svrana/neosolarized.nvim",
 	"tjdevries/colorbuddy.vim",
+	"rockyzhang24/arctic.nvim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -494,7 +495,3 @@ require("gitsigns").setup({
 
 require("leap").add_default_mappings()
 require("trouble").setup()
-
--- require("neosolarized").setup({
---	comment_italics = false,
--- })
