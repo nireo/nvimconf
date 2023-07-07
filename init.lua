@@ -14,9 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"nvim-tree/nvim-web-devicons",
 	"lewis6991/gitsigns.nvim",
-	"svrana/neosolarized.nvim",
-	"tjdevries/colorbuddy.vim",
-	"rockyzhang24/arctic.nvim",
+	"metalelf0/jellybeans-nvim",
+	"rktjmp/lush.nvim",
+	"RRethy/nvim-base16",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -25,6 +25,7 @@ local plugins = {
 			"MunifTanjim/nui.nvim",
 		},
 	},
+	"p00f/alabaster.nvim",
 	"windwp/nvim-autopairs",
 	{
 		"jose-elias-alvarez/null-ls.nvim",
@@ -89,6 +90,7 @@ vim.o.backspace = "indent,eol,start"
 
 -- Enable mouse mode
 vim.o.mouse = "a"
+vim.o.guicursor = ""
 
 -- Indentation changes
 vim.o.shiftwidth = 2
@@ -122,7 +124,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme lunaperche")
+vim.cmd("colorscheme base16-black-metal-immortal")
 
 -- Window splits
 vim.o.splitright = true
@@ -151,6 +153,7 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
+vim.keymap.set("n", "<leader>q", ":q!<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
@@ -172,7 +175,6 @@ vim.o.swapfile = false
 vim.o.fileencoding = "utf-8"
 vim.o.showmode = false
 vim.o.lazyredraw = true
-vim.o.guicursor = "n-v-c-i:block"
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -280,7 +282,7 @@ cmp.setup({
 	},
 })
 
-local language_servers = { "clangd", "gopls", "tsserver" }
+local language_servers = { "clangd", "gopls", "tsserver", "rust_analyzer" }
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = language_servers,
@@ -355,6 +357,16 @@ lspconfig["clangd"].setup({
 })
 
 lspconfig["tsserver"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["pyright"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["rust_analyzer"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
