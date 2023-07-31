@@ -154,6 +154,7 @@ vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
+vim.keymap.set("n", "<leader>t", ":TroubleToggle<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
