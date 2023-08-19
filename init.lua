@@ -14,9 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"nvim-tree/nvim-web-devicons",
 	"lewis6991/gitsigns.nvim",
-	"metalelf0/jellybeans-nvim",
-	"rktjmp/lush.nvim",
-	"zbirenbaum/copilot.lua",
+	"zekzekus/menguless",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -42,14 +40,6 @@ local plugins = {
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
-		end,
-	},
-	{
-		"xero/miasma.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd("colorscheme miasma")
 		end,
 	},
 	{
@@ -79,16 +69,9 @@ local plugins = {
 	"rafamadriz/friendly-snippets",
 	"ggandor/leap.nvim",
 	"folke/trouble.nvim",
-	{
-		"zbirenbaum/copilot-cmp",
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	},
 }
 
 local opts = {}
-
 require("lazy").setup(plugins, opts)
 
 -- Set highlight on search
@@ -137,6 +120,8 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
+vim.cmd("colorscheme menguless")
+
 -- Window splits
 vim.o.splitright = true
 vim.o.splitbelow = true
@@ -172,8 +157,6 @@ vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
 vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
 vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
 vim.keymap.set("n", "<leader>e", "<cmd>:Neotree toggle<cr>")
-
-vim.keymap.set("n", "<leader>cp", "<cmd>:Copilot panel<CR>")
 
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
@@ -275,7 +258,6 @@ cmp.setup({
 		{ name = "luasnip" }, -- snippets
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
-		{ name = "copilot " },
 	}),
 
 	formatting = {
