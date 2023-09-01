@@ -12,9 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	"nvim-tree/nvim-web-devicons",
-	"lewis6991/gitsigns.nvim",
-	"zekzekus/menguless",
+	"norcalli/nvim-colorizer.lua",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -120,7 +118,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme menguless")
+vim.cmd("colorscheme focus")
 
 -- Window splits
 vim.o.splitright = true
@@ -497,10 +495,6 @@ require("go").setup({
 	luasnip = true,
 })
 
-require("gitsigns").setup({
-	numhl = false,
-	signcolumn = false,
-})
-
 require("leap").add_default_mappings()
 require("trouble").setup()
+require("colorizer").setup()
