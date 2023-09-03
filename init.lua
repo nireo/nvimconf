@@ -15,6 +15,7 @@ local plugins = {
 	"norcalli/nvim-colorizer.lua",
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
+	"nyoom-engineering/oxocarbon.nvim",
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -120,7 +121,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme focus")
+vim.cmd("colorscheme oxocarbon")
 
 -- Window splits
 vim.o.splitright = true
@@ -138,11 +139,8 @@ vim.g.maplocalleader = " "
 
 vim.g["surround_no_mapping"] = 1
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
--- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
@@ -165,6 +163,11 @@ vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
 vim.keymap.set("n", "<leader>sh", "<C-w>s")
+
+-- Run a single suite test. Similar to VSCODE
+vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
+vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
+vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
 
 vim.o.backup = false
 vim.o.scrolloff = 5
