@@ -60,6 +60,7 @@ local plugins = {
 	{
 		"ray-x/go.nvim",
 		dependencies = { "ray-x/guihua.lua" },
+		ft = "go",
 	},
 	"nvim-treesitter/nvim-treesitter",
 	{
@@ -70,6 +71,20 @@ local plugins = {
 	"rafamadriz/friendly-snippets",
 	"ggandor/leap.nvim",
 	"folke/trouble.nvim",
+	{
+		"nvim-neorg/neorg",
+		ft = "norg", -- lazy load on filetype
+		cmd = "Neorg", -- lazy load on command, allows you to autocomplete :Neorg regardless of whether it's loaded yet
+		--  (you could also just remove both lazy loading things)
+		priority = 30, -- treesitter is on default priority of 50, neorg should load after it.
+		config = function()
+			require("neorg").setup({
+				load = {
+					["core.defaults"] = {},
+				},
+			})
+		end,
+	},
 }
 
 local opts = {}
@@ -175,6 +190,8 @@ vim.o.swapfile = false
 vim.o.fileencoding = "utf-8"
 vim.o.showmode = false
 vim.o.lazyredraw = true
+vim.wo.wrap = true
+vim.wo.linebreak = true
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
