@@ -16,19 +16,8 @@ local plugins = {
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
 	"nyoom-engineering/oxocarbon.nvim",
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-		},
-	},
+	"blazkowolf/gruber-darker.nvim",
 	"windwp/nvim-autopairs",
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
 	"numToStr/Comment.nvim",
 	"neovim/nvim-lspconfig",
 	"hrsh7th/cmp-nvim-lsp",
@@ -37,37 +26,10 @@ local plugins = {
 	"hrsh7th/nvim-cmp",
 	"saadparwaiz1/cmp_luasnip",
 	"glepnir/lspsaga.nvim",
-	{
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	},
-	{
-		"folke/which-key.nvim",
-		config = function()
-			require("which-key").setup({})
-		end,
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		version = "v1.2.1.*",
-	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"onsails/lspkind.nvim",
-	{
-		"ray-x/go.nvim",
-		dependencies = { "ray-x/guihua.lua" },
-		ft = "go",
-	},
-	"nvim-treesitter/nvim-treesitter",
-	{
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
 	"rafamadriz/friendly-snippets",
 	"ggandor/leap.nvim",
 	"folke/trouble.nvim",
@@ -85,6 +47,45 @@ local plugins = {
 			})
 		end,
 	},
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+		},
+	},
+	{
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	},
+	{
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({})
+		end,
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v1.2.1.*",
+	},
+	{
+		"ray-x/go.nvim",
+		dependencies = { "ray-x/guihua.lua" },
+		ft = "go",
+	},
+	"nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 }
 
 local opts = {}
@@ -94,8 +95,8 @@ require("lazy").setup(plugins, opts)
 vim.o.hlsearch = false
 
 -- Make line numbers default
-vim.o.relativenumber = true
-vim.o.number = true
+-- vim.o.relativenumber = true
+-- vim.o.number = true
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
@@ -136,7 +137,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme oxocarbon")
+vim.cmd("colorscheme gruber-darker")
 
 -- Window splits
 vim.o.splitright = true

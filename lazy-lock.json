@@ -7,6 +7,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "friendly-snippets": { "branch": "main", "commit": "ebf6d6e83494cdd88a54a429340256f4dbb6a052" },
   "go.nvim": { "branch": "master", "commit": "5e9e083f4927402eab6ab233e970b397daa2e826" },
+  "gruber-darker.nvim": { "branch": "main", "commit": "3d1bf7f9f112e70e8123e1d5b85a8df2ffeca93e" },
   "guihua.lua": { "branch": "master", "commit": "5ad8dba19ce9b9fd8965598984dfdc9c119f97e4" },
   "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
   "leap.nvim": { "branch": "main", "commit": "5efe985cf68fac3b6a6dfe7a75fbfaca8db2af9c" },
