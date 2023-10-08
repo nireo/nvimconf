@@ -13,24 +13,51 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	"norcalli/nvim-colorizer.lua",
-	"nvim-tree/nvim-web-devicons",
-	"nvim-lualine/lualine.nvim",
-	"nyoom-engineering/oxocarbon.nvim",
-	"blazkowolf/gruber-darker.nvim",
-	"windwp/nvim-autopairs",
-	"numToStr/Comment.nvim",
-	"neovim/nvim-lspconfig",
-	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/nvim-cmp",
-	"saadparwaiz1/cmp_luasnip",
-	"glepnir/lspsaga.nvim",
+	{
+		"nvim-tree/nvim-web-devicons",
+		lazy = true,
+	},
+	{
+		"windwp/nvim-autopairs",
+		lazy = true,
+	},
+	{
+		"ribru17/bamboo.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("bamboo").setup({
+				style = "multiplex",
+			})
+			require("bamboo").load()
+		end,
+	},
+	{
+		"numToStr/Comment.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+	},
+	{
+		"neovim/nvim-lspconfig",
+		lazy = true,
+		event = { "BufReadPost", "BufNewFile" },
+		dependencies = {
+			"glepnir/lspsaga.nvim",
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		event = { "InsertEnter", "CmdlineEnter" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"saadparwaiz1/cmp_luasnip",
+		},
+	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
 	"onsails/lspkind.nvim",
-	"rafamadriz/friendly-snippets",
 	"ggandor/leap.nvim",
 	"folke/trouble.nvim",
 	{
@@ -52,14 +79,6 @@ local plugins = {
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-		},
-	},
-	{
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
@@ -67,24 +86,41 @@ local plugins = {
 	},
 	{
 		"folke/which-key.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("which-key").setup({})
 		end,
 	},
 	{
 		"L3MON4D3/LuaSnip",
-		version = "v1.2.1.*",
+		dependencies = "rafamadriz/friendly-snippets",
+		version = "2.*",
+		build = "make install_jsregexp",
 	},
 	{
 		"ray-x/go.nvim",
 		dependencies = { "ray-x/guihua.lua" },
 		ft = "go",
 	},
-	"nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-treesitter/nvim-treesitter",
+		event = "BufRead",
+	},
 	{
 		"nvim-telescope/telescope.nvim",
+		lazy = true,
 		branch = "0.1.x",
 		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"2html_plugin",
+				"tohtml",
+				"tutor",
+				"ftplugin",
+			},
+		},
 	},
 }
 
@@ -137,8 +173,6 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme gruber-darker")
-
 -- Window splits
 vim.o.splitright = true
 vim.o.splitbelow = true
@@ -170,7 +204,6 @@ vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
 vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
 vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
-vim.keymap.set("n", "<leader>e", "<cmd>:Neotree toggle<cr>")
 
 vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
@@ -282,21 +315,35 @@ cmp.setup({
 	}),
 
 	formatting = {
-		format = lspkind.cmp_format({
-			mode = "symbol_text",
-			menu = {
-				buffer = "[buffer]",
-				nvim_lsp = "[lsp]",
-				luasnip = "[luasnip]",
-				nvim_lua = "[lua]",
-				latex_symbols = "[latex]",
-			},
-		}),
+		fields = { "kind", "abbr", "menu" },
+		format = function(entry, vim_item)
+			local kind = lspkind.cmp_format({
+				symbol_map = { Copilot = "", Codeium = "", Snippet = "", Keyword = "" },
+				preset = "codicons",
+				maxwidth = 40,
+			})(entry, vim_item)
+			local strings = vim.split(vim_item.kind, "%s+", { trimempty = true })
+			kind.kind = " " .. string.format("%s │", strings[1], strings[2]) .. " "
+			return kind
+		end,
 	},
 
 	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		documentation = {
+			winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
+			scrollbar = false,
+			col_offset = 0,
+		},
+		completion = {
+			winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
+			scrollbar = false,
+			col_offset = 0,
+			side_padding = 0,
+		},
+	},
+	experimental = {
+		ghost_text = true,
+		native_menu = false,
 	},
 })
 
@@ -502,13 +549,6 @@ nls.setup({
 	end,
 })
 
-require("neo-tree").setup({
-	popup_border_style = "rounded",
-	window = {
-		width = 30,
-	},
-})
-
 -- Enable go.nvim
 require("go").setup({
 	go = "go",
@@ -521,9 +561,3 @@ require("go").setup({
 require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
-require("lualine").setup({
-	options = {
-		component_separators = "",
-		section_separators = "",
-	},
-})
