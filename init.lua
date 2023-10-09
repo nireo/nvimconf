@@ -33,6 +33,10 @@ local plugins = {
 		end,
 	},
 	{
+		"folke/todo-comments.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
+	},
+	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 	},
@@ -45,6 +49,12 @@ local plugins = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 		},
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		cmd = "ToggleTerm",
+		lazy = true,
+		version = "*",
 	},
 	{
 		"hrsh7th/nvim-cmp",
@@ -130,10 +140,6 @@ require("lazy").setup(plugins, opts)
 -- Set highlight on search
 vim.o.hlsearch = false
 
--- Make line numbers default
--- vim.o.relativenumber = true
--- vim.o.number = true
-
 -- Backspace
 vim.o.backspace = "indent,eol,start"
 
@@ -198,7 +204,8 @@ vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
-vim.keymap.set("n", "<leader>t", ":TroubleToggle<CR>")
+vim.keymap.set("n", "<leader>td", ":TroubleToggle<CR>")
+vim.keymap.set("n", "<leader>tt", ":ToggleTerm<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
@@ -525,9 +532,9 @@ nls.setup({
 	sources = {
 		nls.builtins.formatting.goimports,
 		nls.builtins.formatting.gofumpt,
-		nls.builtins.formatting.black,
 		nls.builtins.formatting.clang_format,
 		nls.builtins.formatting.stylua,
+		nls.builtins.formatting.black,
 		nls.builtins.formatting.prettier,
 	},
 	on_attach = function(client, bufnr)
@@ -561,3 +568,40 @@ require("go").setup({
 require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
+
+local status_ok, toggleterm = pcall(require, "toggleterm")
+if not status_ok then
+	return
+end
+
+toggleterm.setup({
+	size = 20,
+	hide_numbers = true,
+	shade_filetypes = {},
+	shade_terminals = true,
+	shading_factor = 2,
+	persist_size = true,
+	direction = "float",
+	close_on_exit = true,
+	shell = vim.o.shell,
+	float_opts = {
+		border = "curved",
+		winblend = 0,
+		highlights = {
+			border = "Normal",
+			background = "Normal",
+		},
+	},
+})
+
+function _G.set_terminal_keymaps()
+	local opts = { noremap = true }
+	vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+end
+
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
