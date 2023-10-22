@@ -12,30 +12,29 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	"norcalli/nvim-colorizer.lua",
+  {
+	  "norcalli/nvim-colorizer.lua",
+    lazy = true,
+  },
+  {
+    "mcchrish/zenbones.nvim",
+    dependencies = "rktjmp/lush.nvim"
+  },
 	{
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
 	},
+	"windwp/nvim-autopairs",
 	{
-		"windwp/nvim-autopairs",
-		lazy = true,
-	},
-	{
-		"ribru17/bamboo.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("bamboo").setup({
-				style = "multiplex",
-			})
-			require("bamboo").load()
-		end,
+		"folke/zen-mode.nvim",
 	},
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 	},
+  {
+    "simrat39/rust-tools.nvim",
+  },
 	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
@@ -55,8 +54,7 @@ local plugins = {
 		cmd = "ToggleTerm",
 		lazy = true,
 		version = "*",
-	},
-	{
+	}, {
 		"hrsh7th/nvim-cmp",
 		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
@@ -69,21 +67,10 @@ local plugins = {
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	"onsails/lspkind.nvim",
 	"ggandor/leap.nvim",
-	"folke/trouble.nvim",
 	{
-		"nvim-neorg/neorg",
-		ft = "norg", -- lazy load on filetype
-		cmd = "Neorg", -- lazy load on command, allows you to autocomplete :Neorg regardless of whether it's loaded yet
-		--  (you could also just remove both lazy loading things)
-		priority = 30, -- treesitter is on default priority of 50, neorg should load after it.
-		config = function()
-			require("neorg").setup({
-				load = {
-					["core.defaults"] = {},
-				},
-			})
-		end,
-	},
+    "folke/trouble.nvim",
+    lazy = true,
+  },
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -135,7 +122,12 @@ local plugins = {
 }
 
 local opts = {}
+vim.loader.enable()
+
 require("lazy").setup(plugins, opts)
+
+vim.o.number = true
+vim.o.relativenumber = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -325,12 +317,12 @@ cmp.setup({
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			local kind = lspkind.cmp_format({
-				symbol_map = { Copilot = "", Codeium = "", Snippet = "", Keyword = "" },
+				symbol_map = { Copilot = "", Codeium = "", Snippet = "", Keyword = "", Text = "" },
 				preset = "codicons",
-				maxwidth = 40,
+				maxwidth = 30,
 			})(entry, vim_item)
 			local strings = vim.split(vim_item.kind, "%s+", { trimempty = true })
-			kind.kind = " " .. string.format("%s │", strings[1], strings[2]) .. " "
+			kind.kind = " " .. string.format("%s ", strings[1], strings[2]) .. " "
 			return kind
 		end,
 	},
@@ -438,9 +430,21 @@ lspconfig["pyright"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["rust_analyzer"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
+-- Setup for rust development
+local rt = require("rust-tools")
+rt.setup({
+  server = {
+    rustfmt = {
+      -- I don't like 4 spaces for tabs.
+      extraArgs = { '--config', 'tab_spaces=2' } 
+    },
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  }
 })
 
 require("lspsaga").setup({
@@ -467,6 +471,7 @@ require("nvim-treesitter.configs").setup({
 		"javascript",
 		"typescript",
 		"hcl",
+    "toml",
 	},
 
 	highlight = { enable = true },
@@ -546,9 +551,7 @@ nls.setup({
 				callback = function()
 					vim.lsp.buf.format({
 						bufnr = bufnr,
-						filter = function(client)
-							return client.name == "null-ls"
-						end,
+						filter = function(client) end,
 					})
 				end,
 			})
@@ -604,4 +607,8 @@ function _G.set_terminal_keymaps()
 	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
 end
 
+require("todo-comments").setup({})
+
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+vim.g.rust_recommended_style = 0
+vim.cmd("colorscheme neobones")
