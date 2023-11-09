@@ -12,18 +12,23 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  {
-	  "norcalli/nvim-colorizer.lua",
-    lazy = true,
-  },
-  {
-    "mcchrish/zenbones.nvim",
-    dependencies = "rktjmp/lush.nvim"
-  },
+	{
+		"norcalli/nvim-colorizer.lua",
+		lazy = true,
+	},
+	{
+		"preservim/tagbar",
+		lazy = true,
+	},
+	{
+		"mcchrish/zenbones.nvim",
+		dependencies = "rktjmp/lush.nvim",
+	},
 	{
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
 	},
+	"savq/melange-nvim",
 	"windwp/nvim-autopairs",
 	{
 		"folke/zen-mode.nvim",
@@ -32,9 +37,9 @@ local plugins = {
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 	},
-  {
-    "simrat39/rust-tools.nvim",
-  },
+	{
+		"simrat39/rust-tools.nvim",
+	},
 	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
@@ -54,7 +59,8 @@ local plugins = {
 		cmd = "ToggleTerm",
 		lazy = true,
 		version = "*",
-	}, {
+	},
+	{
 		"hrsh7th/nvim-cmp",
 		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
@@ -68,9 +74,9 @@ local plugins = {
 	"onsails/lspkind.nvim",
 	"ggandor/leap.nvim",
 	{
-    "folke/trouble.nvim",
-    lazy = true,
-  },
+		"folke/trouble.nvim",
+		lazy = true,
+	},
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -109,14 +115,14 @@ local plugins = {
 		branch = "0.1.x",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
-  {
-    "phaazon/hop.nvim",
-    branch = "v2",
-    config = function()
-      -- you can configure Hop the way you like here; see :h hop-config
-      require'hop'.setup { }
-    end
-  },
+	{
+		"phaazon/hop.nvim",
+		branch = "v2",
+		config = function()
+			-- you can configure Hop the way you like here; see :h hop-config
+			require("hop").setup({})
+		end,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
@@ -135,7 +141,6 @@ vim.loader.enable()
 require("lazy").setup(plugins, opts)
 
 vim.o.number = true
-vim.o.relativenumber = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -441,18 +446,14 @@ lspconfig["pyright"].setup({
 -- Setup for rust development
 local rt = require("rust-tools")
 rt.setup({
-  server = {
-    rustfmt = {
-      -- I don't like 4 spaces for tabs.
-      extraArgs = { '--config', 'tab_spaces=2' } 
-    },
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  }
+	server = {
+		on_attach = function(_, bufnr)
+			-- Hover actions
+			vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+			-- Code action groups
+			vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+		end,
+	},
 })
 
 require("lspsaga").setup({
@@ -479,7 +480,7 @@ require("nvim-treesitter.configs").setup({
 		"javascript",
 		"typescript",
 		"hcl",
-    "toml",
+		"toml",
 	},
 
 	highlight = { enable = true },
@@ -549,6 +550,7 @@ nls.setup({
 		nls.builtins.formatting.stylua,
 		nls.builtins.formatting.black,
 		nls.builtins.formatting.prettier,
+		nls.builtins.formatting.rustfmt,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
@@ -559,7 +561,9 @@ nls.setup({
 				callback = function()
 					vim.lsp.buf.format({
 						bufnr = bufnr,
-						filter = function(client) end,
+						filter = function(client)
+							return client.name == "null-ls"
+						end,
 					})
 				end,
 			})
@@ -618,20 +622,19 @@ end
 require("todo-comments").setup({})
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-vim.g.rust_recommended_style = 0
-vim.cmd("colorscheme neobones")
+vim.cmd("colorscheme melange")
 
-local hop = require('hop')
-local directions = require('hop.hint').HintDirection
-vim.keymap.set('', 'f', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, {remap=true})
-vim.keymap.set('', 'F', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, {remap=true})
-vim.keymap.set('', 't', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, {remap=true})
-vim.keymap.set('', 'T', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, {remap=true})
+local hop = require("hop")
+local directions = require("hop.hint").HintDirection
+vim.keymap.set("", "f", function()
+	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "F", function()
+	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "t", function()
+	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, { remap = true })
+vim.keymap.set("", "T", function()
+	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, { remap = true })
