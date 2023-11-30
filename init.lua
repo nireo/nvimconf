@@ -16,6 +16,10 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
+	"nyoom-engineering/oxocarbon.nvim",
+	"bluz71/vim-moonfly-colors",
+	"blazkowolf/gruber-darker.nvim",
+	"tpope/vim-fugitive",
 	{
 		"preservim/tagbar",
 		lazy = true,
@@ -30,9 +34,6 @@ local plugins = {
 	},
 	"savq/melange-nvim",
 	"windwp/nvim-autopairs",
-	{
-		"folke/zen-mode.nvim",
-	},
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
@@ -53,12 +54,6 @@ local plugins = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 		},
-	},
-	{
-		"akinsho/toggleterm.nvim",
-		cmd = "ToggleTerm",
-		lazy = true,
-		version = "*",
 	},
 	{
 		"hrsh7th/nvim-cmp",
@@ -139,8 +134,6 @@ local opts = {}
 vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
-
-vim.o.number = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -584,45 +577,10 @@ require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
 
-local status_ok, toggleterm = pcall(require, "toggleterm")
-if not status_ok then
-	return
-end
-
-toggleterm.setup({
-	size = 20,
-	hide_numbers = true,
-	shade_filetypes = {},
-	shade_terminals = true,
-	shading_factor = 2,
-	persist_size = true,
-	direction = "float",
-	close_on_exit = true,
-	shell = vim.o.shell,
-	float_opts = {
-		border = "curved",
-		winblend = 0,
-		highlights = {
-			border = "Normal",
-			background = "Normal",
-		},
-	},
-})
-
-function _G.set_terminal_keymaps()
-	local opts = { noremap = true }
-	vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
-end
-
 require("todo-comments").setup({})
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-vim.cmd("colorscheme melange")
+vim.cmd("colorscheme moonfly")
 
 local hop = require("hop")
 local directions = require("hop.hint").HintDirection
