@@ -20,6 +20,7 @@ local plugins = {
 	"bluz71/vim-moonfly-colors",
 	"blazkowolf/gruber-darker.nvim",
 	"tpope/vim-fugitive",
+	"kartikp10/noctis.nvim",
 	{
 		"preservim/tagbar",
 		lazy = true,
