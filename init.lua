@@ -16,9 +16,8 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"nyoom-engineering/oxocarbon.nvim",
-	"bluz71/vim-moonfly-colors",
-	"blazkowolf/gruber-darker.nvim",
+	"Mofiqul/adwaita.nvim",
+	"ribru17/bamboo.nvim",
 	"tpope/vim-fugitive",
 	"kartikp10/noctis.nvim",
 	{
@@ -33,7 +32,6 @@ local plugins = {
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
 	},
-	"savq/melange-nvim",
 	"windwp/nvim-autopairs",
 	{
 		"folke/todo-comments.nvim",
@@ -204,7 +202,6 @@ vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
 vim.keymap.set("n", "<leader>td", ":TroubleToggle<CR>")
-vim.keymap.set("n", "<leader>tt", ":ToggleTerm<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
@@ -580,8 +577,7 @@ require("colorizer").setup()
 
 require("todo-comments").setup({})
 
-vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-vim.cmd("colorscheme moonfly")
+vim.cmd("colorscheme adwaita")
 
 local hop = require("hop")
 local directions = require("hop.hint").HintDirection
