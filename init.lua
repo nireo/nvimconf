@@ -16,10 +16,16 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
+	"nyoom-engineering/oxocarbon.nvim",
 	"Mofiqul/adwaita.nvim",
-	"ribru17/bamboo.nvim",
-	"tpope/vim-fugitive",
-	"kartikp10/noctis.nvim",
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"sindrets/diffview.nvim", -- optional - Diff integration
+		},
+		config = true,
+	},
 	{
 		"preservim/tagbar",
 		lazy = true,
@@ -36,6 +42,12 @@ local plugins = {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
+	},
+	{
+		"scalameta/nvim-metals",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 	},
 	{
 		"simrat39/rust-tools.nvim",
@@ -89,12 +101,6 @@ local plugins = {
 		end,
 	},
 	{
-		"L3MON4D3/LuaSnip",
-		dependencies = "rafamadriz/friendly-snippets",
-		version = "2.*",
-		build = "make install_jsregexp",
-	},
-	{
 		"ray-x/go.nvim",
 		dependencies = { "ray-x/guihua.lua" },
 		ft = "go",
@@ -131,6 +137,8 @@ vim.o.hlsearch = false
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
+
+vim.o.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = "a"
@@ -213,6 +221,9 @@ vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
 vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
 vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
 
+-- go error :D
+vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+
 vim.o.backup = false
 vim.o.scrolloff = 5
 vim.o.swapfile = false
@@ -263,8 +274,6 @@ if not cmp_setup then
 end
 
 local lspkind = require("lspkind")
-local luasnip = require("luasnip")
-require("luasnip/loaders/from_vscode").lazy_load()
 
 cmp.setup({
 	mapping = cmp.mapping.preset.insert({
@@ -278,8 +287,6 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
 			else
 				fallback()
 			end
@@ -287,24 +294,15 @@ cmp.setup({
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
 			else
 				fallback()
 			end
 		end, { "i", "s" }),
 	}),
 
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-
 	-- sources for autocompletion
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" }, -- lsp
-		{ name = "luasnip" }, -- snippets
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
 	}),
@@ -422,6 +420,11 @@ lspconfig["tsserver"].setup({
 })
 
 lspconfig["pyright"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["metals"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
@@ -558,9 +561,7 @@ nls.setup({
 require("go").setup({
 	go = "go",
 	gofmt = "gofumpt",
-	max_line_len = 200,
 	staticcheck = true,
-	luasnip = true,
 })
 
 require("leap").add_default_mappings()
@@ -569,4 +570,4 @@ require("colorizer").setup()
 
 require("todo-comments").setup({})
 
-vim.cmd("colorscheme adwaita")
+vim.cmd("colorscheme oxocarbon")
