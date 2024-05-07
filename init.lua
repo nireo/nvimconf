@@ -18,6 +18,9 @@ local plugins = {
 	},
 	"nyoom-engineering/oxocarbon.nvim",
 	"Mofiqul/adwaita.nvim",
+	"tamton-aquib/staline.nvim",
+	"projekt0n/github-nvim-theme",
+	"miikanissi/modus-themes.nvim",
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -570,4 +573,10 @@ require("colorizer").setup()
 
 require("todo-comments").setup({})
 
-vim.cmd("colorscheme oxocarbon")
+require("modus-themes").setup({
+	variant = "deuteranopia",
+	dim_inactive = true,
+})
+require("staline").setup({})
+
+vim.cmd("colorscheme modus_vivendi")
