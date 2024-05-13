@@ -153,6 +153,8 @@ vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
 
+vim.opt.colorcolumn = "100"
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -579,4 +581,4 @@ require("modus-themes").setup({
 })
 require("staline").setup({})
 
-vim.cmd("colorscheme modus_vivendi")
+vim.cmd("colorscheme github_dark_default")
