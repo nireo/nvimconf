@@ -16,11 +16,9 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"nyoom-engineering/oxocarbon.nvim",
-	"Mofiqul/adwaita.nvim",
-	"tamton-aquib/staline.nvim",
-	"projekt0n/github-nvim-theme",
-	"miikanissi/modus-themes.nvim",
+	"gmr458/cold.nvim",
+	"savq/melange-nvim",
+	"lukas-reineke/indent-blankline.nvim",
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -28,14 +26,6 @@ local plugins = {
 			"sindrets/diffview.nvim", -- optional - Diff integration
 		},
 		config = true,
-	},
-	{
-		"preservim/tagbar",
-		lazy = true,
-	},
-	{
-		"mcchrish/zenbones.nvim",
-		dependencies = "rktjmp/lush.nvim",
 	},
 	{
 		"nvim-tree/nvim-web-devicons",
@@ -46,15 +36,7 @@ local plugins = {
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 	},
-	{
-		"scalameta/nvim-metals",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
-	{
-		"simrat39/rust-tools.nvim",
-	},
+	"simrat39/rust-tools.nvim",
 	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
@@ -153,8 +135,6 @@ vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
 
-vim.opt.colorcolumn = "100"
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -180,6 +160,7 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
+vim.cmd("colorscheme cold")
 
 -- Window splits
 vim.o.splitright = true
@@ -429,21 +410,11 @@ lspconfig["pyright"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["metals"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 -- Setup for rust development
 local rt = require("rust-tools")
 rt.setup({
 	server = {
-		on_attach = function(_, bufnr)
-			-- Hover actions
-			vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-			-- Code action groups
-			vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-		end,
+		on_attach = on_attach,
 	},
 })
 
@@ -572,13 +543,5 @@ require("go").setup({
 require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
-
 require("todo-comments").setup({})
-
-require("modus-themes").setup({
-	variant = "deuteranopia",
-	dim_inactive = true,
-})
-require("staline").setup({})
-
-vim.cmd("colorscheme github_dark_default")
+require("ibl").setup()
