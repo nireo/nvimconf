@@ -16,8 +16,6 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"gmr458/cold.nvim",
-	"savq/melange-nvim",
 	"lukas-reineke/indent-blankline.nvim",
 	{
 		"NeogitOrg/neogit",
@@ -122,7 +120,6 @@ vim.o.hlsearch = false
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
-
 vim.o.relativenumber = true
 
 -- Enable mouse mode
@@ -160,7 +157,7 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.cmd("colorscheme cold")
+vim.cmd("colorscheme default")
 
 -- Window splits
 vim.o.splitright = true
@@ -169,10 +166,6 @@ vim.o.splitbelow = true
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menuone,noselect"
 
--- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -346,12 +339,8 @@ local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
 local on_attach = function(client, bufnr)
-	-- keybind options
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
-	-- vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
-
-	-- set keybinds
 	keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
 	keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
 	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
@@ -364,7 +353,6 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
 	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
 
-	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
 		if vim.lsp.buf.format then
 			vim.lsp.buf.format()
@@ -419,20 +407,16 @@ rt.setup({
 })
 
 require("lspsaga").setup({
-	-- keybinds for navigation in lspsaga window
 	move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-	-- use enter to open file with finder
 	finder_action_keys = {
 		open = "<CR>",
 	},
-	-- use enter to open file with definition preview
 	definition_action_keys = {
 		edit = "<CR>",
 	},
 })
 
 require("nvim-treesitter.configs").setup({
-	-- Add languages to be installed here that you want installed for treesitter
 	ensure_installed = {
 		"c",
 		"cpp",
@@ -452,7 +436,6 @@ require("nvim-treesitter.configs").setup({
 		keymaps = {
 			init_selection = "<c-space>",
 			node_incremental = "<c-space>",
-			-- TODO: I'm not sure for this one.
 			scope_incremental = "<c-s>",
 			node_decremental = "<c-backspace>",
 		},
@@ -460,9 +443,8 @@ require("nvim-treesitter.configs").setup({
 	textobjects = {
 		select = {
 			enable = true,
-			lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+			lookahead = true,
 			keymaps = {
-				-- You can use the capture groups defined in textobjects.scm
 				["af"] = "@function.outer",
 				["if"] = "@function.inner",
 				["ac"] = "@class.outer",
@@ -471,7 +453,7 @@ require("nvim-treesitter.configs").setup({
 		},
 		move = {
 			enable = true,
-			set_jumps = true, -- whether to set jumps in the jumplist
+			set_jumps = true,
 			goto_next_start = {
 				["]m"] = "@function.outer",
 				["]]"] = "@class.outer",
