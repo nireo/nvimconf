@@ -17,6 +17,7 @@ local plugins = {
 		lazy = true,
 	},
 	"lukas-reineke/indent-blankline.nvim",
+	"ishan9299/modus-theme-vim",
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -157,7 +158,7 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.cmd("colorscheme default")
+vim.cmd("colorscheme modus-vivendi")
 
 -- Window splits
 vim.o.splitright = true
@@ -393,6 +394,11 @@ lspconfig["tsserver"].setup({
 	on_attach = on_attach,
 })
 
+lspconfig["zls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lspconfig["pyright"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -427,6 +433,7 @@ require("nvim-treesitter.configs").setup({
 		"typescript",
 		"hcl",
 		"toml",
+		"zig",
 	},
 
 	highlight = { enable = true },
