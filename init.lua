@@ -60,6 +60,16 @@ local plugins = {
 			"saadparwaiz1/cmp_luasnip",
 		},
 	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			{ "fredrikaverpil/neotest-golang", version = "*" }, -- Installation
+		},
+	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	"onsails/lspkind.nvim",
 	"ggandor/leap.nvim",
@@ -205,6 +215,9 @@ vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader>tr", function()
+	require("neotest").run.run()
+end)
 
 vim.o.backup = false
 vim.o.scrolloff = 5
@@ -382,11 +395,6 @@ lspconfig["tsserver"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["zls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 lspconfig["pyright"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -508,6 +516,15 @@ nls.setup({
 			})
 		end
 	end,
+})
+
+local go_test_conf = {
+	testify_enabled = true,
+}
+require("neotest").setup({
+	adapters = {
+		require("neotest-golang")(go_test_conf), -- Apply configuration
+	},
 })
 
 -- Enable go.nvim
