@@ -16,8 +16,12 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"lukas-reineke/indent-blankline.nvim",
-	"ishan9299/modus-theme-vim",
+	{
+		"zenbones-theme/zenbones.nvim",
+		dependencies = "rktjmp/lush.nvim",
+		lazy = false,
+		priority = 1000,
+	},
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -25,10 +29,6 @@ local plugins = {
 			"sindrets/diffview.nvim", -- optional - Diff integration
 		},
 		config = true,
-	},
-	{
-		"nvim-tree/nvim-web-devicons",
-		lazy = true,
 	},
 	"windwp/nvim-autopairs",
 	{
@@ -158,7 +158,9 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.cmd("colorscheme modus-vivendi")
+
+vim.g.zenbones_italic_comments = false
+vim.cmd("colorscheme zenbones")
 
 -- Window splits
 vim.o.splitright = true
@@ -286,20 +288,6 @@ cmp.setup({
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
 	}),
-
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		format = function(entry, vim_item)
-			local kind = lspkind.cmp_format({
-				symbol_map = { Copilot = "", Codeium = "", Snippet = "", Keyword = "", Text = "" },
-				preset = "codicons",
-				maxwidth = 30,
-			})(entry, vim_item)
-			local strings = vim.split(vim_item.kind, "%s+", { trimempty = true })
-			kind.kind = " " .. string.format("%s ", strings[1], strings[2]) .. " "
-			return kind
-		end,
-	},
 
 	window = {
 		documentation = {
@@ -533,4 +521,3 @@ require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
 require("todo-comments").setup({})
-require("ibl").setup()
