@@ -208,6 +208,9 @@ vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
 vim.keymap.set("n", "<leader>sh", "<C-w>s")
 
+vim.keymap.set("n", "<leader>ngp", "<cmd>Neogit push<cr>")
+vim.keymap.set("n", "<leader>ngs", "<cmd>Neogit<cr>")
+
 -- Run a single suite test. Similar to VSCODE
 vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
 vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
