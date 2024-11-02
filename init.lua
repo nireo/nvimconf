@@ -17,10 +17,36 @@ local plugins = {
 		lazy = true,
 	},
 	{
+		"vague2k/vague.nvim",
+		config = function()
+			require("vague").setup({
+				style = {
+					boolean = "none",
+					number = "none",
+					float = "none",
+					error = "none",
+					comments = "none",
+					conditionals = "none",
+					functions = "none",
+					headings = "none",
+					operators = "none",
+					strings = "none",
+					variables = "none",
+				},
+			})
+		end,
+	},
+	{
 		"zenbones-theme/zenbones.nvim",
 		dependencies = "rktjmp/lush.nvim",
 		lazy = false,
 		priority = 1000,
+	},
+	{
+		"killitar/obscure.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
 	},
 	{
 		"NeogitOrg/neogit",
@@ -131,6 +157,7 @@ vim.o.hlsearch = false
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
+vim.o.number = true
 vim.o.relativenumber = true
 
 -- Enable mouse mode
@@ -170,7 +197,7 @@ vim.o.termguicolors = true
 vim.o.background = "dark"
 
 vim.g.zenbones_italic_comments = false
-vim.cmd("colorscheme zenbones")
+vim.cmd("colorscheme vague")
 
 -- Window splits
 vim.o.splitright = true
