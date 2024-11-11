@@ -17,25 +17,9 @@ local plugins = {
 		lazy = true,
 	},
 	{
-		"vague2k/vague.nvim",
-		config = function()
-			require("vague").setup({
-				style = {
-					boolean = "none",
-					number = "none",
-					float = "none",
-					error = "none",
-					comments = "none",
-					conditionals = "none",
-					functions = "none",
-					headings = "none",
-					operators = "none",
-					strings = "none",
-					variables = "none",
-				},
-			})
-		end,
+		"bettervim/yugen.nvim",
 	},
+	"cdmill/neomodern.nvim",
 	{
 		"zenbones-theme/zenbones.nvim",
 		dependencies = "rktjmp/lush.nvim",
@@ -197,7 +181,7 @@ vim.o.termguicolors = true
 vim.o.background = "dark"
 
 vim.g.zenbones_italic_comments = false
-vim.cmd("colorscheme vague")
+vim.cmd("colorscheme roseprime")
 
 -- Window splits
 vim.o.splitright = true
@@ -351,7 +335,7 @@ cmp.setup({
 	},
 })
 
-local language_servers = { "clangd", "gopls", "tsserver", "rust_analyzer" }
+local language_servers = { "clangd", "gopls", "rust_analyzer" }
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = language_servers,
@@ -417,11 +401,6 @@ local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
 clang_capabilities.offsetEncoding = { "utf-16" }
 lspconfig["clangd"].setup({
 	capabilities = clang_capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["tsserver"].setup({
-	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
@@ -568,3 +547,92 @@ require("leap").add_default_mappings()
 require("trouble").setup()
 require("colorizer").setup()
 require("todo-comments").setup({})
+
+local function mode()
+	local current_mode = vim.api.nvim_get_mode().mode
+	return string.format(" %s ", current_mode)
+end
+
+local function update_mode_colors()
+	local current_mode = vim.api.nvim_get_mode().mode
+	local mode_color = "%#StatusLineAccent#"
+	if current_mode == "n" then
+		mode_color = "%#StatuslineAccent#"
+	elseif current_mode == "i" or current_mode == "ic" then
+		mode_color = "%#StatuslineInsertAccent#"
+	elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
+		mode_color = "%#StatuslineVisualAccent#"
+	elseif current_mode == "R" then
+		mode_color = "%#StatuslineReplaceAccent#"
+	elseif current_mode == "c" then
+		mode_color = "%#StatuslineCmdLineAccent#"
+	elseif current_mode == "t" then
+		mode_color = "%#StatuslineTerminalAccent#"
+	end
+	return mode_color
+end
+
+local function filepath()
+	local fpath = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.:h")
+	if fpath == "" or fpath == "." then
+		return " "
+	end
+
+	return string.format(" %%<%s/", fpath)
+end
+
+local function filename()
+	local fname = vim.fn.expand("%:t")
+	if fname == "" then
+		return ""
+	end
+	return fname .. " "
+end
+
+local function filetype()
+	return string.format(" %s ", vim.bo.filetype):upper()
+end
+
+local function lineinfo()
+	if vim.bo.filetype == "alpha" then
+		return ""
+	end
+	return " %P %l:%c "
+end
+
+Statusline = {}
+
+Statusline.active = function()
+	return table.concat({
+		"%#Statusline#",
+		update_mode_colors(),
+		mode(),
+		"%#Normal# ",
+		filepath(),
+		filename(),
+		"%#Normal#",
+		"%=%#StatusLineExtra#",
+		filetype(),
+		lineinfo(),
+	})
+end
+
+function Statusline.inactive()
+	return " %F"
+end
+
+function Statusline.short()
+	return "%#StatusLineNC#   NvimTree"
+end
+
+vim.api.nvim_exec(
+	[[
+  augroup Statusline
+  au!
+  au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
+  au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
+  au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline.short()
+  augroup END
+]],
+	false
+)
