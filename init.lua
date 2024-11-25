@@ -32,6 +32,7 @@ local plugins = {
 		priority = 1000,
 		opts = {},
 	},
+	"scalameta/nvim-metals",
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -548,6 +549,7 @@ require("trouble").setup()
 require("colorizer").setup()
 require("todo-comments").setup({})
 
+-- Create custom statusline
 local function mode()
 	local current_mode = vim.api.nvim_get_mode().mode
 	return string.format(" %s ", current_mode)
@@ -636,3 +638,16 @@ vim.api.nvim_exec(
 ]],
 	false
 )
+
+-- Setup Scala support
+local metals_config = require("metals").bare_config()
+metals_config.on_attach = on_attach
+
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "scala", "sbt", "java" },
+	callback = function()
+		require("metals").initialize_or_attach(metals_config)
+	end,
+	group = nvim_metals_group,
+})
