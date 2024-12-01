@@ -426,6 +426,9 @@ require("lspsaga").setup({
 	definition_action_keys = {
 		edit = "<CR>",
 	},
+	symbol_in_winbar = {
+		false,
+	},
 })
 
 require("nvim-treesitter.configs").setup({
