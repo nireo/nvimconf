@@ -16,16 +16,11 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	{
-		"bettervim/yugen.nvim",
-	},
+	"darkvoid-theme/darkvoid.nvim",
+	"sainnhe/gruvbox-material",
 	"cdmill/neomodern.nvim",
-	{
-		"zenbones-theme/zenbones.nvim",
-		dependencies = "rktjmp/lush.nvim",
-		lazy = false,
-		priority = 1000,
-	},
+	"wnkz/monoglow.nvim",
+	"cpwrs/americano.nvim",
 	{
 		"killitar/obscure.nvim",
 		lazy = false,
@@ -69,16 +64,6 @@ local plugins = {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"saadparwaiz1/cmp_luasnip",
-		},
-	},
-	{
-		"nvim-neotest/neotest",
-		dependencies = {
-			"nvim-neotest/nvim-nio",
-			"nvim-lua/plenary.nvim",
-			"antoinemadec/FixCursorHold.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			{ "fredrikaverpil/neotest-golang", version = "*" }, -- Installation
 		},
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -181,8 +166,7 @@ vim.o.synmaxcol = 180
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-vim.g.zenbones_italic_comments = false
-vim.cmd("colorscheme roseprime")
+vim.cmd("colorscheme americano")
 
 -- Window splits
 vim.o.splitright = true
@@ -230,9 +214,6 @@ vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-vim.keymap.set("n", "<leader>tr", function()
-	require("neotest").run.run()
-end)
 
 vim.o.backup = false
 vim.o.scrolloff = 5
@@ -531,16 +512,6 @@ nls.setup({
 	end,
 })
 
-local go_test_conf = {
-	testify_enabled = true,
-}
-require("neotest").setup({
-	adapters = {
-		require("neotest-golang")(go_test_conf), -- Apply configuration
-	},
-})
-
--- Enable go.nvim
 require("go").setup({
 	go = "go",
 	gofmt = "gofumpt",
@@ -552,95 +523,7 @@ require("trouble").setup()
 require("colorizer").setup()
 require("todo-comments").setup({})
 
--- Create custom statusline
-local function mode()
-	local current_mode = vim.api.nvim_get_mode().mode
-	return string.format(" %s ", current_mode)
-end
-
-local function update_mode_colors()
-	local current_mode = vim.api.nvim_get_mode().mode
-	local mode_color = "%#StatusLineAccent#"
-	if current_mode == "n" then
-		mode_color = "%#StatuslineAccent#"
-	elseif current_mode == "i" or current_mode == "ic" then
-		mode_color = "%#StatuslineInsertAccent#"
-	elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
-		mode_color = "%#StatuslineVisualAccent#"
-	elseif current_mode == "R" then
-		mode_color = "%#StatuslineReplaceAccent#"
-	elseif current_mode == "c" then
-		mode_color = "%#StatuslineCmdLineAccent#"
-	elseif current_mode == "t" then
-		mode_color = "%#StatuslineTerminalAccent#"
-	end
-	return mode_color
-end
-
-local function filepath()
-	local fpath = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.:h")
-	if fpath == "" or fpath == "." then
-		return " "
-	end
-
-	return string.format(" %%<%s/", fpath)
-end
-
-local function filename()
-	local fname = vim.fn.expand("%:t")
-	if fname == "" then
-		return ""
-	end
-	return fname .. " "
-end
-
-local function filetype()
-	return string.format(" %s ", vim.bo.filetype):upper()
-end
-
-local function lineinfo()
-	if vim.bo.filetype == "alpha" then
-		return ""
-	end
-	return " %P %l:%c "
-end
-
-Statusline = {}
-
-Statusline.active = function()
-	return table.concat({
-		"%#Statusline#",
-		update_mode_colors(),
-		mode(),
-		"%#Normal# ",
-		filepath(),
-		filename(),
-		"%#Normal#",
-		"%=%#StatusLineExtra#",
-		filetype(),
-		lineinfo(),
-	})
-end
-
-function Statusline.inactive()
-	return " %F"
-end
-
-function Statusline.short()
-	return "%#StatusLineNC#   NvimTree"
-end
-
-vim.api.nvim_exec(
-	[[
-  augroup Statusline
-  au!
-  au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
-  au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
-  au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline.short()
-  augroup END
-]],
-	false
-)
+require("statusline")
 
 -- Setup Scala support
 local metals_config = require("metals").bare_config()
