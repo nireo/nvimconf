@@ -21,6 +21,7 @@ local plugins = {
 	"cdmill/neomodern.nvim",
 	"wnkz/monoglow.nvim",
 	"cpwrs/americano.nvim",
+	"savq/melange-nvim",
 	{
 		"killitar/obscure.nvim",
 		lazy = false,
@@ -28,6 +29,25 @@ local plugins = {
 		opts = {},
 	},
 	"scalameta/nvim-metals",
+	{
+		"saghen/blink.cmp",
+		dependencies = "rafamadriz/friendly-snippets",
+
+		version = "v0.*",
+		opts = {
+			keymap = { preset = "default" },
+			appearance = {
+				use_nvim_cmp_as_default = true,
+				nerd_font_variant = "mono",
+			},
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+			signature = { enabled = true },
+		},
+		opts_extend = { "sources.default" },
+	},
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
@@ -51,19 +71,10 @@ local plugins = {
 		lazy = true,
 		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
+			"saghen/blink.nvim",
 			"glepnir/lspsaga.nvim",
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-		},
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		event = { "InsertEnter", "CmdlineEnter" },
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
 		},
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -135,8 +146,8 @@ vim.o.mouse = "a"
 vim.o.guicursor = ""
 
 -- Indentation changes
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.autoindent = true
 
@@ -165,8 +176,7 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
-
-vim.cmd("colorscheme americano")
+vim.cmd("colorscheme darkforest")
 
 -- Window splits
 vim.o.splitright = true
@@ -259,63 +269,7 @@ telescope.setup({
 telescope.load_extension("fzf")
 vim.opt.completeopt = "menu,menuone,noselect"
 
-local cmp_setup, cmp = pcall(require, "cmp")
-if not cmp_setup then
-	return
-end
-
 local lspkind = require("lspkind")
-
-cmp.setup({
-	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-		["<C-e>"] = cmp.mapping.abort(), -- close completion window
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-
-	-- sources for autocompletion
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" }, -- lsp
-		{ name = "buffer" }, -- text within current buffer
-		{ name = "path" }, -- file system paths
-	}),
-
-	window = {
-		documentation = {
-			winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
-			scrollbar = false,
-			col_offset = 0,
-		},
-		completion = {
-			winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
-			scrollbar = false,
-			col_offset = 0,
-			side_padding = 0,
-		},
-	},
-	experimental = {
-		ghost_text = true,
-		native_menu = false,
-	},
-})
 
 local language_servers = { "clangd", "gopls", "rust_analyzer" }
 require("mason").setup()
@@ -328,14 +282,7 @@ if not lspconfig_status then
 	return
 end
 
-local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not cmp_nvim_lsp_status then
-	return
-end
-
 local keymap = vim.keymap -- for conciseness
-
--- enable keybinds only for when lsp server available
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -359,7 +306,7 @@ local on_attach = function(client, bufnr)
 		end
 	end, { desc = "Format current buffer with LSP" })
 
-	local capabilities = cmp_nvim_lsp.default_capabilities()
+	local capabilities = require("blink.cmp").get_lsp_capabilities()
 end
 
 lspconfig["gopls"].setup({
@@ -525,7 +472,6 @@ require("todo-comments").setup({})
 
 require("statusline")
 
--- Setup Scala support
 local metals_config = require("metals").bare_config()
 metals_config.on_attach = on_attach
 
