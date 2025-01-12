@@ -25,6 +25,7 @@ local plugins = {
 		end,
 	},
 	"cdmill/neomodern.nvim",
+	{ "datsfilipe/vesper.nvim" },
 	"scalameta/nvim-metals",
 	{
 		"saghen/blink.cmp",
@@ -175,6 +176,9 @@ vim.o.synmaxcol = 180
 -- Set colorscheme
 require("no-clown-fiesta").setup({
 	transparent = true,
+	styles = {
+		comments = { fg = "#98C379" },
+	},
 })
 
 require("vesper").setup({
