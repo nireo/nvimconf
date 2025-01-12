@@ -12,22 +12,19 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+	"tpope/vim-sleuth",
 	{
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"darkvoid-theme/darkvoid.nvim",
-	"sainnhe/gruvbox-material",
-	"cdmill/neomodern.nvim",
-	"wnkz/monoglow.nvim",
-	"cpwrs/americano.nvim",
-	"savq/melange-nvim",
+	"aktersnurra/no-clown-fiesta.nvim",
 	{
-		"killitar/obscure.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
+		"vague2k/vague.nvim",
+		config = function()
+			require("vague").setup({})
+		end,
 	},
+	"cdmill/neomodern.nvim",
 	"scalameta/nvim-metals",
 	{
 		"saghen/blink.cmp",
@@ -38,9 +35,10 @@ local plugins = {
 				preset = "enter",
 				["<C-k>"] = { "select_prev", "fallback" },
 				["<C-j>"] = { "select_next", "fallback" },
+				["<Tab>"] = { "select_next", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
 			},
 			appearance = {
-				use_nvim_cmp_as_default = true,
 				nerd_font_variant = "mono",
 			},
 
@@ -141,8 +139,6 @@ vim.o.hlsearch = false
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
-vim.o.number = true
-vim.o.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = "a"
@@ -177,9 +173,21 @@ vim.wo.signcolumn = "no"
 vim.o.synmaxcol = 180
 
 -- Set colorscheme
+require("no-clown-fiesta").setup({
+	transparent = true,
+})
+
+require("vesper").setup({
+	transparent = true,
+})
+
 vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.cmd("colorscheme darkforest")
+vim.cmd("colorscheme no-clown-fiesta")
+
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
 -- Window splits
 vim.o.splitright = true
@@ -337,6 +345,16 @@ lspconfig["clangd"].setup({
 })
 
 lspconfig["pyright"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["ts_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["svelte"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
