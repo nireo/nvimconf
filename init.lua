@@ -121,32 +121,55 @@ local plugins = {
 	{
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
+		opts = {},
 	},
 	{
 		"aktersnurra/no-clown-fiesta.nvim",
-		config = function()
-			require("no-clown-fiesta").setup({
-				transparent = true,
-				styles = {
-					comments = { fg = "#98C379" },
-				},
-			})
-		end,
+		opts = {
+			transparent = true,
+			styles = {
+				comments = { fg = "#98C379" },
+			},
+		},
 	},
 	{
 		"vague2k/vague.nvim",
-		config = function()
-			require("vague").setup({})
-		end,
+		opts = {},
 	},
 	"cdmill/neomodern.nvim",
 	{
 		"datsfilipe/vesper.nvim",
-		config = function()
-			require("vesper").setup({
-				transparent = true,
-			})
-		end,
+		opts = {
+			transparent = true,
+		},
+	},
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				python = { "isort", "black" },
+				rust = { "rustfmt", lsp_format = "fallback" },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettierd", "prettier", stop_after_first = true },
+				go = { "goimports", "gofmt" },
+				cpp = { "clang_format" },
+				javascriptreact = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				javascript = { "prettierd" },
+				typescript = { "prettierd" },
+				graphql = { "prettierd" },
+				json = { "prettierd" },
+				css = { "prettierd" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_format = "fallback",
+			},
+			format_after_save = {
+				lsp_format = "fallback",
+			},
+		},
 	},
 	"scalameta/nvim-metals",
 	{
@@ -184,11 +207,13 @@ local plugins = {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
+		opts = {},
 	},
 	"simrat39/rust-tools.nvim",
 	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
+		opts = {},
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -207,10 +232,7 @@ local plugins = {
 	{
 		"folke/trouble.nvim",
 		lazy = true,
-	},
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -229,10 +251,84 @@ local plugins = {
 		"ray-x/go.nvim",
 		dependencies = { "ray-x/guihua.lua" },
 		ft = "go",
+		opts = {
+			go = "go",
+			gofmt = "gofumpt",
+			staticcheck = true,
+		},
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = "BufRead",
+		build = ":TSUpdate",
+		main = "nvim-treesitter.configs",
+		opts = {
+			ensure_installed = {
+				"c",
+				"cpp",
+				"go",
+				"lua",
+				"rust",
+				"javascript",
+				"typescript",
+				"hcl",
+				"toml",
+				"zig",
+			},
+
+			highlight = { enable = true },
+			indent = { enable = true },
+			incremental_selection = {
+				enable = true,
+				keymaps = {
+					init_selection = "<c-space>",
+					node_incremental = "<c-space>",
+					scope_incremental = "<c-s>",
+					node_decremental = "<c-backspace>",
+				},
+			},
+			textobjects = {
+				select = {
+					enable = true,
+					lookahead = true,
+					keymaps = {
+						["af"] = "@function.outer",
+						["if"] = "@function.inner",
+						["ac"] = "@class.outer",
+						["ic"] = "@class.inner",
+					},
+				},
+				move = {
+					enable = true,
+					set_jumps = true,
+					goto_next_start = {
+						["]m"] = "@function.outer",
+						["]]"] = "@class.outer",
+					},
+					goto_next_end = {
+						["]M"] = "@function.outer",
+						["]["] = "@class.outer",
+					},
+					goto_previous_start = {
+						["[m"] = "@function.outer",
+						["[["] = "@class.outer",
+					},
+					goto_previous_end = {
+						["[M"] = "@function.outer",
+						["[]"] = "@class.outer",
+					},
+				},
+				swap = {
+					enable = true,
+					swap_next = {
+						["<leader>a"] = "@parameter.inner",
+					},
+					swap_previous = {
+						["<leader>A"] = "@parameter.inner",
+					},
+				},
+			},
+		},
 	},
 	{
 		"nvim-telescope/telescope.nvim",
@@ -257,13 +353,7 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
-require("vesper").setup({
-	transparent = true,
-})
-
 vim.cmd("colorscheme no-clown-fiesta")
-
-require("Comment").setup()
 
 local telescope_setup, telescope = pcall(require, "telescope")
 if not telescope_setup then
@@ -389,117 +479,7 @@ require("lspsaga").setup({
 	},
 })
 
-require("nvim-treesitter.configs").setup({
-	ensure_installed = {
-		"c",
-		"cpp",
-		"go",
-		"lua",
-		"rust",
-		"javascript",
-		"typescript",
-		"hcl",
-		"toml",
-		"zig",
-	},
-
-	highlight = { enable = true },
-	indent = { enable = true },
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<c-space>",
-			node_incremental = "<c-space>",
-			scope_incremental = "<c-s>",
-			node_decremental = "<c-backspace>",
-		},
-	},
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-			},
-		},
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_next_start = {
-				["]m"] = "@function.outer",
-				["]]"] = "@class.outer",
-			},
-			goto_next_end = {
-				["]M"] = "@function.outer",
-				["]["] = "@class.outer",
-			},
-			goto_previous_start = {
-				["[m"] = "@function.outer",
-				["[["] = "@class.outer",
-			},
-			goto_previous_end = {
-				["[M"] = "@function.outer",
-				["[]"] = "@class.outer",
-			},
-		},
-		swap = {
-			enable = true,
-			swap_next = {
-				["<leader>a"] = "@parameter.inner",
-			},
-			swap_previous = {
-				["<leader>A"] = "@parameter.inner",
-			},
-		},
-	},
-})
-
-local nls = require("null-ls")
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-nls.setup({
-	sources = {
-		nls.builtins.formatting.goimports,
-		nls.builtins.formatting.gofumpt,
-		nls.builtins.formatting.clang_format,
-		nls.builtins.formatting.stylua,
-		nls.builtins.formatting.black,
-		nls.builtins.formatting.prettier,
-		nls.builtins.formatting.rustfmt,
-	},
-	on_attach = function(client, bufnr)
-		if client.supports_method("textDocument/formatting") then
-			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = augroup,
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({
-						bufnr = bufnr,
-						filter = function(client)
-							return client.name == "null-ls"
-						end,
-					})
-				end,
-			})
-		end
-	end,
-})
-
-require("go").setup({
-	go = "go",
-	gofmt = "gofumpt",
-	staticcheck = true,
-})
-
 require("leap").add_default_mappings()
-require("trouble").setup()
-require("colorizer").setup()
-require("todo-comments").setup({})
-
 require("statusline")
 
 local metals_config = require("metals").bare_config()
