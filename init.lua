@@ -1,13 +1,118 @@
+-- Set highlight on search
+vim.o.hlsearch = false
+
+-- Backspace
+vim.o.backspace = "indent,eol,start"
+
+-- Enable mouse mode
+vim.o.mouse = "a"
+vim.o.guicursor = ""
+
+-- Indentation changes
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
+vim.o.expandtab = true
+vim.o.autoindent = true
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Save undo history
+vim.o.undofile = true
+
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Enable usage of system clipboard.
+vim.o.clipboard = "unnamedplus"
+
+vim.o.cursorline = false
+vim.o.cursorcolumn = false
+
+-- Decrease update time
+vim.o.updatetime = 100
+vim.o.timeoutlen = 500
+vim.wo.signcolumn = "no"
+vim.o.synmaxcol = 180
+
+vim.o.termguicolors = true
+vim.o.background = "dark"
+
+-- Window splits
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = "menuone,noselect"
+
+-- Set leader to space
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.g["surround_no_mapping"] = 1
+
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+vim.keymap.set("i", "<C-j>", "<ESC>")
+vim.keymap.set("i", "<C-f>", "<ESC>")
+vim.keymap.set("n", "<leader>s", ":w!<CR>")
+vim.keymap.set("n", "<leader>q", ":q!<CR>")
+vim.keymap.set("n", "<leader>td", ":Trouble diagnostics<CR>")
+
+vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
+vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
+vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
+vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
+vim.keymap.set("n", "<leader>lh", ":split<CR>")
+vim.keymap.set("n", "<leader>lv", ":vsplit<CR>")
+
+vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
+vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
+vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
+
+vim.keymap.set("n", "<leader>wc", ":close<cr>")
+vim.keymap.set("n", "<leader>sv", "<C-w>v")
+vim.keymap.set("n", "<leader>sh", "<C-w>s")
+
+vim.keymap.set("n", "<leader>ngp", "<cmd>Neogit push<cr>")
+vim.keymap.set("n", "<leader>ngs", "<cmd>Neogit<cr>")
+
+-- Run a single suite test. Similar to VSCODE
+vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
+vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
+vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
+
+-- go error :D
+vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+
+vim.o.backup = false
+vim.o.scrolloff = 5
+vim.o.swapfile = false
+vim.o.fileencoding = "utf-8"
+vim.o.showmode = false
+vim.o.lazyredraw = true
+vim.wo.wrap = true
+vim.wo.linebreak = true
+
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = "*",
+})
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		error("Error cloning lazy.nvim:\n" .. out)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -17,7 +122,17 @@ local plugins = {
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
 	},
-	"aktersnurra/no-clown-fiesta.nvim",
+	{
+		"aktersnurra/no-clown-fiesta.nvim",
+		config = function()
+			require("no-clown-fiesta").setup({
+				transparent = true,
+				styles = {
+					comments = { fg = "#98C379" },
+				},
+			})
+		end,
+	},
 	{
 		"vague2k/vague.nvim",
 		config = function()
@@ -25,7 +140,14 @@ local plugins = {
 		end,
 	},
 	"cdmill/neomodern.nvim",
-	{ "datsfilipe/vesper.nvim" },
+	{
+		"datsfilipe/vesper.nvim",
+		config = function()
+			require("vesper").setup({
+				transparent = true,
+			})
+		end,
+	},
 	"scalameta/nvim-metals",
 	{
 		"saghen/blink.cmp",
@@ -135,128 +257,11 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
--- Set highlight on search
-vim.o.hlsearch = false
-
--- Backspace
-vim.o.backspace = "indent,eol,start"
-
--- Enable mouse mode
-vim.o.mouse = "a"
-vim.o.guicursor = ""
-
--- Indentation changes
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-vim.o.expandtab = true
-vim.o.autoindent = true
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Enable usage of system clipboard.
-vim.o.clipboard = "unnamedplus"
-
-vim.o.cursorline = false
-vim.o.cursorcolumn = false
-
--- Decrease update time
-vim.o.updatetime = 100
-vim.o.timeoutlen = 500
-vim.wo.signcolumn = "no"
-vim.o.synmaxcol = 180
-
--- Set colorscheme
-require("no-clown-fiesta").setup({
-	transparent = true,
-	styles = {
-		comments = { fg = "#98C379" },
-	},
-})
-
 require("vesper").setup({
 	transparent = true,
 })
 
-vim.o.termguicolors = true
-vim.o.background = "dark"
 vim.cmd("colorscheme no-clown-fiesta")
-
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-
--- Window splits
-vim.o.splitright = true
-vim.o.splitbelow = true
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
-vim.g["surround_no_mapping"] = 1
-
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
-vim.keymap.set("i", "<C-j>", "<ESC>")
-vim.keymap.set("i", "<C-f>", "<ESC>")
-vim.keymap.set("n", "<leader>s", ":w!<CR>")
-vim.keymap.set("n", "<leader>q", ":q!<CR>")
-vim.keymap.set("n", "<leader>td", ":TroubleToggle<CR>")
-
-vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
-vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
-vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
-vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
-
-vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
-vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
-
-vim.keymap.set("n", "<leader>wc", ":close<cr>")
-vim.keymap.set("n", "<leader>sv", "<C-w>v")
-vim.keymap.set("n", "<leader>sh", "<C-w>s")
-
-vim.keymap.set("n", "<leader>ngp", "<cmd>Neogit push<cr>")
-vim.keymap.set("n", "<leader>ngs", "<cmd>Neogit<cr>")
-
--- Run a single suite test. Similar to VSCODE
-vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
-vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
-vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
-
--- go error :D
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-
-vim.o.backup = false
-vim.o.scrolloff = 5
-vim.o.swapfile = false
-vim.o.fileencoding = "utf-8"
-vim.o.showmode = false
-vim.o.lazyredraw = true
-vim.wo.wrap = true
-vim.wo.linebreak = true
-
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
-})
 
 require("Comment").setup()
 
