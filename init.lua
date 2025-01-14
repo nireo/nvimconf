@@ -124,6 +124,43 @@ local plugins = {
 		opts = {},
 	},
 	{
+		"https://github.com/RRethy/base16-nvim",
+		config = function()
+			local bg = "#0F1919"
+			local accent = "#102121"
+			local accent2 = "#0D2525" -- highlight
+
+			local text = "#abb2bf"
+			local dark_text = "#3E4451" -- comments, line numbers
+
+			local keyword = "#8F939A"
+			local func = "#B6AB8B"
+			local types = "#65838E"
+			local constant = "#A06057"
+
+			local for_tesing = "#FF0000"
+
+			require("base16-colorscheme").setup({
+				base00 = bg,
+				base01 = accent,
+				base02 = accent2,
+				base03 = "#48955D",
+				base04 = dark_text,
+				base05 = text,
+				base06 = for_tesing,
+				base07 = for_tesing,
+				base08 = text,
+				base09 = constant,
+				base0A = types,
+				base0B = constant,
+				base0C = text,
+				base0D = func,
+				base0E = keyword,
+				base0F = text,
+			})
+		end,
+	},
+	{
 		"aktersnurra/no-clown-fiesta.nvim",
 		opts = {
 			transparent = true,
@@ -353,7 +390,7 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
-vim.cmd("colorscheme no-clown-fiesta")
+-- vim.cmd("colorscheme no-clown-fiesta")
 
 local telescope_setup, telescope = pcall(require, "telescope")
 if not telescope_setup then
