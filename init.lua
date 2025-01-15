@@ -1,5 +1,6 @@
 -- Set highlight on search
 vim.o.hlsearch = false
+vim.o.relativenumber = true
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
@@ -80,11 +81,6 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s")
 vim.keymap.set("n", "<leader>ngp", "<cmd>Neogit push<cr>")
 vim.keymap.set("n", "<leader>ngs", "<cmd>Neogit<cr>")
 
--- Run a single suite test. Similar to VSCODE
-vim.keymap.set("n", "<leader>ms", "<cmd>GoTestFunc -a testify.m<cr>")
-vim.keymap.set("n", "<leader>mt", "<cmd>GoTestFunc<cr>")
-vim.keymap.set("n", "<leader>mf", "<cmd>GoTestPkg<cr>")
-
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
 
@@ -121,65 +117,11 @@ local plugins = {
 	{
 		"norcalli/nvim-colorizer.lua",
 		lazy = true,
-		opts = {},
-	},
-	{
-		"https://github.com/RRethy/base16-nvim",
 		config = function()
-			local bg = "#0F1919"
-			local accent = "#102121"
-			local accent2 = "#0D2525" -- highlight
-
-			local text = "#abb2bf"
-			local dark_text = "#3E4451" -- comments, line numbers
-
-			local keyword = "#8F939A"
-			local func = "#B6AB8B"
-			local types = "#65838E"
-			local constant = "#A06057"
-
-			local for_tesing = "#FF0000"
-
-			require("base16-colorscheme").setup({
-				base00 = bg,
-				base01 = accent,
-				base02 = accent2,
-				base03 = "#48955D",
-				base04 = dark_text,
-				base05 = text,
-				base06 = for_tesing,
-				base07 = for_tesing,
-				base08 = text,
-				base09 = constant,
-				base0A = types,
-				base0B = constant,
-				base0C = text,
-				base0D = func,
-				base0E = keyword,
-				base0F = text,
-			})
+			require("colorizer").setup({})
 		end,
 	},
-	{
-		"aktersnurra/no-clown-fiesta.nvim",
-		opts = {
-			transparent = true,
-			styles = {
-				comments = { fg = "#98C379" },
-			},
-		},
-	},
-	{
-		"vague2k/vague.nvim",
-		opts = {},
-	},
-	"cdmill/neomodern.nvim",
-	{
-		"datsfilipe/vesper.nvim",
-		opts = {
-			transparent = true,
-		},
-	},
+	"Mofiqul/adwaita.nvim",
 	{
 		"stevearc/conform.nvim",
 		opts = {
@@ -190,7 +132,8 @@ local plugins = {
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				go = { "goimports", "gofmt" },
-				cpp = { "clang_format" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
 				javascriptreact = { "prettierd" },
 				typescriptreact = { "prettierd" },
 				javascript = { "prettierd" },
@@ -198,6 +141,11 @@ local plugins = {
 				graphql = { "prettierd" },
 				json = { "prettierd" },
 				css = { "prettierd" },
+			},
+			formatters = {
+				clang_format = {
+					prepend_args = { "--style=file", "--fallback-style=LLVM" },
+				},
 			},
 			format_on_save = {
 				timeout_ms = 500,
@@ -235,16 +183,17 @@ local plugins = {
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
 		},
 		config = true,
 	},
 	"windwp/nvim-autopairs",
 	{
 		"folke/todo-comments.nvim",
-		dependencies = "nvim-lua/plenary.nvim",
-		opts = {},
+		event = "VimEnter",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = { signs = false },
 	},
 	"simrat39/rust-tools.nvim",
 	{
@@ -315,56 +264,6 @@ local plugins = {
 
 			highlight = { enable = true },
 			indent = { enable = true },
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					scope_incremental = "<c-s>",
-					node_decremental = "<c-backspace>",
-				},
-			},
-			textobjects = {
-				select = {
-					enable = true,
-					lookahead = true,
-					keymaps = {
-						["af"] = "@function.outer",
-						["if"] = "@function.inner",
-						["ac"] = "@class.outer",
-						["ic"] = "@class.inner",
-					},
-				},
-				move = {
-					enable = true,
-					set_jumps = true,
-					goto_next_start = {
-						["]m"] = "@function.outer",
-						["]]"] = "@class.outer",
-					},
-					goto_next_end = {
-						["]M"] = "@function.outer",
-						["]["] = "@class.outer",
-					},
-					goto_previous_start = {
-						["[m"] = "@function.outer",
-						["[["] = "@class.outer",
-					},
-					goto_previous_end = {
-						["[M"] = "@function.outer",
-						["[]"] = "@class.outer",
-					},
-				},
-				swap = {
-					enable = true,
-					swap_next = {
-						["<leader>a"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
-					},
-				},
-			},
 		},
 	},
 	{
@@ -390,7 +289,8 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
--- vim.cmd("colorscheme no-clown-fiesta")
+vim.g.adwaita_darker = true
+vim.cmd("colorscheme adwaita")
 
 local telescope_setup, telescope = pcall(require, "telescope")
 if not telescope_setup then
@@ -417,7 +317,6 @@ telescope.load_extension("fzf")
 vim.opt.completeopt = "menu,menuone,noselect"
 
 local lspkind = require("lspkind")
-
 local language_servers = { "clangd", "gopls", "rust_analyzer" }
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -495,9 +394,7 @@ lspconfig["svelte"].setup({
 	on_attach = on_attach,
 })
 
--- Setup for rust development
-local rt = require("rust-tools")
-rt.setup({
+require("rust-tools").setup({
 	server = {
 		on_attach = on_attach,
 	},
@@ -518,6 +415,7 @@ require("lspsaga").setup({
 
 require("leap").add_default_mappings()
 require("statusline")
+require("colorizer").setup({})
 
 local metals_config = require("metals").bare_config()
 metals_config.on_attach = on_attach
