@@ -70,16 +70,9 @@ vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
 vim.keymap.set("n", "<leader>lh", ":split<CR>")
 vim.keymap.set("n", "<leader>lv", ":vsplit<CR>")
 
-vim.keymap.set("n", "<leader>p", "<cmd>Telescope find_files<cr>")
-vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<cr>")
-vim.keymap.set("n", "<leader>g", "<cmd>Telescope live_grep<cr>")
-
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
 vim.keymap.set("n", "<leader>sh", "<C-w>s")
-
-vim.keymap.set("n", "<leader>ngp", "<cmd>Neogit push<cr>")
-vim.keymap.set("n", "<leader>ngs", "<cmd>Neogit<cr>")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
@@ -115,13 +108,17 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"tpope/vim-sleuth",
 	{
-		"norcalli/nvim-colorizer.lua",
-		lazy = true,
+		"sainnhe/gruvbox-material",
+		lazy = false,
+		priority = 1000,
 		config = function()
-			require("colorizer").setup({})
+			vim.g.gruvbox_material_background = "hard"
+			vim.g.gruvbox_material_enable_italic = false
+			vim.g.gruvbox_material_ui_contrast = "high"
+			vim.g.gruvbox_material_transparent_background = 1
 		end,
 	},
-	"Mofiqul/adwaita.nvim",
+	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 	{
 		"stevearc/conform.nvim",
 		opts = {
@@ -181,12 +178,10 @@ local plugins = {
 		opts_extend = { "sources.default" },
 	},
 	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"sindrets/diffview.nvim",
+		"WTFox/jellybeans.nvim",
+		opts = {
+			flat_ui = true,
 		},
-		config = true,
 	},
 	"windwp/nvim-autopairs",
 	{
@@ -212,7 +207,6 @@ local plugins = {
 			"williamboman/mason-lspconfig.nvim",
 		},
 	},
-	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	"onsails/lspkind.nvim",
 	"ggandor/leap.nvim",
 	{
@@ -267,10 +261,85 @@ local plugins = {
 		},
 	},
 	{
-		"nvim-telescope/telescope.nvim",
-		lazy = true,
-		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		opts = {
+			picker = { enabled = true },
+		},
+		keys = {
+			{
+				"<leader>l",
+				function()
+					Snacks.picker.grep()
+				end,
+				desc = "Grep",
+			},
+			{
+				"<leader>fb",
+				function()
+					Snacks.picker.buffers()
+				end,
+				desc = "Buffers",
+			},
+			{
+				"<leader>fc",
+				function()
+					Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+				end,
+				desc = "Find Config File",
+			},
+			{
+				"<leader>p",
+				function()
+					Snacks.picker.files()
+				end,
+				desc = "Find Files",
+			},
+			{
+				"<leader>fg",
+				function()
+					Snacks.picker.git_files()
+				end,
+				desc = "Find Git Files",
+			},
+			{
+				"<leader>fp",
+				function()
+					Snacks.picker.projects()
+				end,
+				desc = "Projects",
+			},
+			{
+				"<leader>fr",
+				function()
+					Snacks.picker.recent()
+				end,
+				desc = "Recent",
+			},
+			{
+				"<leader>cR",
+				function()
+					Snacks.rename.rename_file()
+				end,
+				desc = "Rename File",
+			},
+			{
+				"<leader>gB",
+				function()
+					Snacks.gitbrowse()
+				end,
+				desc = "Git Browse",
+				mode = { "n", "v" },
+			},
+			{
+				"<leader>gg",
+				function()
+					Snacks.lazygit()
+				end,
+				desc = "Lazygit",
+			},
+		},
 	},
 	performance = {
 		rtp = {
@@ -289,31 +358,6 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
-vim.g.adwaita_darker = true
-vim.cmd("colorscheme adwaita")
-
-local telescope_setup, telescope = pcall(require, "telescope")
-if not telescope_setup then
-	return
-end
-
-local actions_setup, actions = pcall(require, "telescope.actions")
-if not actions_setup then
-	return
-end
-
-telescope.setup({
-	defaults = {
-		mappings = {
-			i = {
-				["<C-k>"] = actions.move_selection_previous,
-				["<C-j>"] = actions.move_selection_next,
-			},
-		},
-	},
-})
-
-telescope.load_extension("fzf")
 vim.opt.completeopt = "menu,menuone,noselect"
 
 local lspkind = require("lspkind")
@@ -415,7 +459,6 @@ require("lspsaga").setup({
 
 require("leap").add_default_mappings()
 require("statusline")
-require("colorizer").setup({})
 
 local metals_config = require("metals").bare_config()
 metals_config.on_attach = on_attach
@@ -428,3 +471,5 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 	group = nvim_metals_group,
 })
+
+vim.cmd([[colorscheme jellybeans]])
