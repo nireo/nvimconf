@@ -108,18 +108,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"tpope/vim-sleuth",
 	{
-		"sainnhe/gruvbox-material",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.g.gruvbox_material_background = "hard"
-			vim.g.gruvbox_material_enable_italic = false
-			vim.g.gruvbox_material_ui_contrast = "high"
-			vim.g.gruvbox_material_transparent_background = 1
-		end,
-	},
-	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
-	{
 		"stevearc/conform.nvim",
 		opts = {
 			formatters_by_ft = {
@@ -189,6 +177,22 @@ local plugins = {
 		event = "VimEnter",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
+		keys = {
+			{
+				"<leader>st",
+				function()
+					Snacks.picker.todo_comments()
+				end,
+				desc = "Todo",
+			},
+			{
+				"<leader>sT",
+				function()
+					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+				end,
+				desc = "Todo/Fix/Fixme",
+			},
+		},
 	},
 	"simrat39/rust-tools.nvim",
 	{
@@ -216,16 +220,12 @@ local plugins = {
 	},
 	{
 		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
+		opts = {},
 	},
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		config = function()
-			require("which-key").setup({})
-		end,
+		opts = {},
 	},
 	{
 		"ray-x/go.nvim",
@@ -254,6 +254,7 @@ local plugins = {
 				"hcl",
 				"toml",
 				"zig",
+				"php",
 			},
 
 			highlight = { enable = true },
@@ -266,6 +267,13 @@ local plugins = {
 		lazy = false,
 		opts = {
 			picker = { enabled = true },
+			notifier = {
+				enabled = true,
+				timeout = 3000,
+			},
+			scroll = {
+				enabled = true,
+			},
 		},
 		keys = {
 			{
@@ -295,6 +303,25 @@ local plugins = {
 					Snacks.picker.files()
 				end,
 				desc = "Find Files",
+			},
+			{
+				"<leader>fm",
+				function()
+					Snacks.picker.man({
+						finder = "system_man",
+						format = "man",
+						preview = "man",
+						confirm = function(picker, item)
+							picker:close()
+							if item then
+								vim.schedule(function()
+									vim.cmd("Man " .. item.ref)
+								end)
+							end
+						end,
+					})
+				end,
+				desc = "Find man pages",
 			},
 			{
 				"<leader>fg",
@@ -434,6 +461,11 @@ lspconfig["ts_ls"].setup({
 })
 
 lspconfig["svelte"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig["phpactor"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
