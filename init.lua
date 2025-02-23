@@ -1,6 +1,6 @@
 -- Set highlight on search
 vim.o.hlsearch = false
-vim.o.relativenumber = true
+-- vim.o.relativenumber = true
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
@@ -171,6 +171,53 @@ local plugins = {
 			flat_ui = true,
 		},
 	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
 	"windwp/nvim-autopairs",
 	{
 		"folke/todo-comments.nvim",
@@ -212,7 +259,6 @@ local plugins = {
 		},
 	},
 	"onsails/lspkind.nvim",
-	"ggandor/leap.nvim",
 	{
 		"folke/trouble.nvim",
 		lazy = true,
@@ -261,6 +307,7 @@ local plugins = {
 			indent = { enable = true },
 		},
 	},
+	"slugbyte/lackluster.nvim",
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -493,6 +540,11 @@ lspconfig["ts_ls"].setup({
 	on_attach = on_attach,
 })
 
+lspconfig["zls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lspconfig["svelte"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -522,7 +574,6 @@ require("lspsaga").setup({
 	},
 })
 
-require("leap").add_default_mappings()
 require("statusline")
 
 local metals_config = require("metals").bare_config()
@@ -537,4 +588,4 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = nvim_metals_group,
 })
 
-vim.cmd([[colorscheme jellybeans]])
+vim.cmd([[colorscheme less]])
