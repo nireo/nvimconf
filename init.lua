@@ -172,12 +172,6 @@ local plugins = {
 		opts_extend = { "sources.default" },
 	},
 	{
-		"WTFox/jellybeans.nvim",
-		opts = {
-			flat_ui = true,
-		},
-	},
-	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		opts = {},
@@ -313,7 +307,6 @@ local plugins = {
 			indent = { enable = true },
 		},
 	},
-	"slugbyte/lackluster.nvim",
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -489,10 +482,6 @@ local keymap = vim.keymap -- for conciseness
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
-	-- keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
-	-- keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
-	-- keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-	-- keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
 	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
 	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
 	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
@@ -536,30 +525,13 @@ lspconfig["clangd"].setup({
 	on_attach = on_attach,
 })
 
-lspconfig["pyright"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["ts_ls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["zls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["svelte"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig["phpactor"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
+local servers = { "pyright", "ts_ls", "zls", "svelte" }
+for _, server in ipairs(servers) do
+	lspconfig[server].setup({
+		capabilities = capabilities,
+		on_attach = on_attach,
+	})
+end
 
 require("rust-tools").setup({
 	server = {
