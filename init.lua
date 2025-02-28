@@ -108,6 +108,16 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"tpope/vim-sleuth",
 	{
+		"pechorin/any-jump.vim",
+		cmd = { "AnyJump", "AnyJumpVisual" },
+		keys = {
+			{ "<leader>ii", "<cmd>AnyJump<CR>", desc = "Any Jump" },
+			{ "<leader>ii", "<cmd>AnyJumpVisual<CR>", mode = "x", desc = "Any Jump" },
+			{ "<leader>ib", "<cmd>AnyJumpBack<CR>", desc = "Any Jump Back" },
+			{ "<leader>il", "<cmd>AnyJumpLastResults<CR>", desc = "Any Jump Resume" },
+		},
+	},
+	{
 		"stevearc/conform.nvim",
 		opts = {
 			formatters_by_ft = {
