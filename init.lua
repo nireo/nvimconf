@@ -330,7 +330,7 @@ local plugins = {
 		},
 		keys = {
 			{
-				"<leader>l",
+				"<leader>ig",
 				function()
 					Snacks.picker.grep()
 				end,
