@@ -18,6 +18,8 @@ highlight! Type cterm=bold gui=bold
 highlight! link Constructor Type
 highlight! link Character String
 
+highlight! Comment guifg=#8cc85f ctermfg=71
+
 " treesitter
 highlight! link @namespace Namespace
 highlight! link @module Module
