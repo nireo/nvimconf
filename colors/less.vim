@@ -4,7 +4,7 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guibg=#000000 ctermbg=0
+highlight Normal guibg=#080808 ctermbg=0
 
 " primitives
 highlight! Function guifg=NvimLightGrey2
@@ -32,3 +32,6 @@ highlight! link @variable.builtin @variable
 highlight! link @constant.builtin @constant
 highlight! link @function.builtin @function
 highlight! link @tag.attribute @attribute
+
+highlight StatusLine guifg=#bdbdbd guibg=#111111 gui=NONE ctermfg=15 ctermbg=236
+highlight StatusLineNC guifg=#9e9e9e guibg=#181818 gui=NONE ctermfg=249 ctermbg=235

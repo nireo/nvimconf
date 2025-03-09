@@ -117,6 +117,7 @@ local plugins = {
 			{ "<leader>il", "<cmd>AnyJumpLastResults<CR>", desc = "Any Jump Resume" },
 		},
 	},
+	"slugbyte/lackluster.nvim",
 	{
 		"stevearc/conform.nvim",
 		opts = {
@@ -264,11 +265,42 @@ local plugins = {
 			"williamboman/mason-lspconfig.nvim",
 		},
 	},
-	"onsails/lspkind.nvim",
 	{
 		"folke/trouble.nvim",
-		lazy = true,
-		opts = {},
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -472,7 +504,6 @@ require("lazy").setup(plugins, opts)
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
-local lspkind = require("lspkind")
 local language_servers = { "clangd", "gopls", "rust_analyzer" }
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -572,4 +603,4 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = nvim_metals_group,
 })
 
-vim.cmd([[colorscheme less]])
+vim.cmd([[colorscheme lackluster-night]])
