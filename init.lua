@@ -175,6 +175,13 @@ local plugins = {
 			cmdline = {
 				enabled = false,
 			},
+			completion = {
+				menu = {
+					draw = {
+						columns = { { "label", "label_description", gap = 1 }, { "kind", "source_name", grap = 1 } },
+					},
+				},
+			},
 		},
 		opts_extend = { "sources.default" },
 	},
@@ -603,4 +610,9 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = nvim_metals_group,
 })
 
+require("lackluster").setup({
+	tweak_syntax = {
+		comment = "#98C379",
+	},
+})
 vim.cmd([[colorscheme lackluster-night]])
