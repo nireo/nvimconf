@@ -76,6 +76,13 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader><leader>v", function()
+	if next(require("diffview.lib").views) == nil then
+		vim.cmd("DiffviewOpen")
+	else
+		vim.cmd("DiffviewClose")
+	end
+end)
 
 vim.o.backup = false
 vim.o.scrolloff = 5
@@ -232,7 +239,6 @@ local plugins = {
 			},
 		},
 	},
-	"windwp/nvim-autopairs",
 	{
 		"folke/todo-comments.nvim",
 		event = "VimEnter",
@@ -351,6 +357,10 @@ local plugins = {
 			highlight = { enable = true },
 			indent = { enable = true },
 		},
+	},
+	{
+		"sindrets/diffview.nvim",
+		opts = {},
 	},
 	{
 		"folke/snacks.nvim",
