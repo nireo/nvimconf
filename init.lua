@@ -14,7 +14,6 @@ vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.autoindent = true
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -24,6 +23,7 @@ vim.o.undofile = true
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.smartindent = true
 
 -- Enable usage of system clipboard.
 vim.o.clipboard = "unnamedplus"
@@ -76,6 +76,11 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv", opts)
+vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
+
 vim.keymap.set("n", "<leader><leader>v", function()
 	if next(require("diffview.lib").views) == nil then
 		vim.cmd("DiffviewOpen")
@@ -92,6 +97,10 @@ vim.o.showmode = false
 vim.o.lazyredraw = true
 vim.wo.wrap = true
 vim.wo.linebreak = true
+
+vim.g.netrw_winsize = 20
+vim.g.netrw_banner = 0
+vim.g.netrw_list_style = 1
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
