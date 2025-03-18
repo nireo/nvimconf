@@ -121,6 +121,29 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local keymap = vim.keymap
+local on_attach = function(client, bufnr)
+	local opts = { noremap = true, silent = true, buffer = bufnr }
+
+	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
+	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
+	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
+	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
+	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
+	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
+	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+
+	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+		if vim.lsp.buf.format then
+			vim.lsp.buf.format()
+		elseif vim.lsp.buf.formatting then
+			vim.lsp.buf.formatting()
+		end
+	end, { desc = "Format current buffer with LSP" })
+
+	local capabilities = require("blink.cmp").get_lsp_capabilities()
+end
+
 local plugins = {
 	"tpope/vim-sleuth",
 	{
@@ -133,7 +156,17 @@ local plugins = {
 			{ "<leader>il", "<cmd>AnyJumpLastResults<CR>", desc = "Any Jump Resume" },
 		},
 	},
-	"slugbyte/lackluster.nvim",
+	{
+		"slugbyte/lackluster.nvim",
+		opts = {
+			tweak_syntax = {
+				comment = "#98C379",
+			},
+			tweak_background = {
+				normal = "#0A0A0A",
+			},
+		},
+	},
 	{
 		"stevearc/conform.nvim",
 		opts = {
@@ -168,7 +201,22 @@ local plugins = {
 			},
 		},
 	},
-	"scalameta/nvim-metals",
+	{
+		"scalameta/nvim-metals",
+		config = function()
+			local metals_config = require("metals").bare_config()
+			metals_config.on_attach = on_attach
+
+			local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "scala", "sbt", "java" },
+				callback = function()
+					require("metals").initialize_or_attach(metals_config)
+				end,
+				group = nvim_metals_group,
+			})
+		end,
+	},
 	{
 		"saghen/blink.cmp",
 		dependencies = "rafamadriz/friendly-snippets",
@@ -270,7 +318,14 @@ local plugins = {
 			},
 		},
 	},
-	"simrat39/rust-tools.nvim",
+	{
+		"simrat39/rust-tools.nvim",
+		opts = {
+			server = {
+				on_attach = on_attach,
+			},
+		},
+	},
 	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
@@ -541,29 +596,6 @@ if not lspconfig_status then
 	return
 end
 
-local keymap = vim.keymap -- for conciseness
-local on_attach = function(client, bufnr)
-	local opts = { noremap = true, silent = true, buffer = bufnr }
-
-	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		if vim.lsp.buf.format then
-			vim.lsp.buf.format()
-		elseif vim.lsp.buf.formatting then
-			vim.lsp.buf.formatting()
-		end
-	end, { desc = "Format current buffer with LSP" })
-
-	local capabilities = require("blink.cmp").get_lsp_capabilities()
-end
-
 lspconfig["gopls"].setup({
 	settings = {
 		gopls = {
@@ -596,12 +628,6 @@ for _, server in ipairs(servers) do
 	})
 end
 
-require("rust-tools").setup({
-	server = {
-		on_attach = on_attach,
-	},
-})
-
 require("lspsaga").setup({
 	move_in_saga = { prev = "<C-k>", next = "<C-j>" },
 	finder_action_keys = {
@@ -616,22 +642,4 @@ require("lspsaga").setup({
 })
 
 require("statusline")
-
-local metals_config = require("metals").bare_config()
-metals_config.on_attach = on_attach
-
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "scala", "sbt", "java" },
-	callback = function()
-		require("metals").initialize_or_attach(metals_config)
-	end,
-	group = nvim_metals_group,
-})
-
-require("lackluster").setup({
-	tweak_syntax = {
-		comment = "#98C379",
-	},
-})
 vim.cmd([[colorscheme lackluster-night]])
