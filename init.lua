@@ -81,6 +81,10 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv", opts)
 vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
 
+-- show search results in the middle of the screen
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
 vim.keymap.set("n", "<leader><leader>v", function()
 	if next(require("diffview.lib").views) == nil then
 		vim.cmd("DiffviewOpen")
@@ -357,26 +361,6 @@ local plugins = {
 				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 				desc = "Buffer Diagnostics (Trouble)",
 			},
-			{
-				"<leader>cs",
-				"<cmd>Trouble symbols toggle focus=false<cr>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<leader>cl",
-				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<leader>xL",
-				"<cmd>Trouble loclist toggle<cr>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<leader>xQ",
-				"<cmd>Trouble qflist toggle<cr>",
-				desc = "Quickfix List (Trouble)",
-			},
 		},
 	},
 	{
@@ -426,12 +410,49 @@ local plugins = {
 		"sindrets/diffview.nvim",
 		opts = {},
 	},
+
+	{
+		"MagicDuck/grug-far.nvim",
+		config = function()
+			require("grug-far").setup({})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "grug-far",
+				callback = function()
+					-- Map <Esc> to quit after ensuring we're in normal mode
+					vim.keymap.set({ "i", "n" }, "<Esc>", "<Cmd>stopinsert | bd!<CR>", { buffer = true })
+				end,
+			})
+		end,
+		keys = {
+			{
+				"<leader>sr",
+				function()
+					local grug = require("grug-far")
+					local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+					grug.open({
+						transient = true,
+						prefills = {
+							filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+						},
+					})
+				end,
+				mode = { "n", "v" },
+				desc = "Search and Replace",
+			},
+		},
+	},
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
 		opts = {
-			picker = { enabled = true },
+			picker = {
+				enabled = true,
+				layout = {
+					preset = "ivy",
+				},
+			},
 			notifier = {
 				enabled = true,
 				timeout = 3000,
@@ -465,25 +486,6 @@ local plugins = {
 					Snacks.picker.files()
 				end,
 				desc = "Find Files",
-			},
-			{
-				"<leader>fm",
-				function()
-					Snacks.picker.man({
-						finder = "system_man",
-						format = "man",
-						preview = "man",
-						confirm = function(picker, item)
-							picker:close()
-							if item then
-								vim.schedule(function()
-									vim.cmd("Man " .. item.ref)
-								end)
-							end
-						end,
-					})
-				end,
-				desc = "Find man pages",
 			},
 			{
 				"<leader>fg",
@@ -529,6 +531,40 @@ local plugins = {
 				desc = "Lazygit",
 			},
 			{
+				"<leader>gb",
+				function()
+					Snacks.picker.git_branches({
+						layout = "select",
+					})
+				end,
+				desc = "Branches",
+			},
+			{
+				"<S-h>",
+				function()
+					Snacks.picker.buffers({
+						on_show = function()
+							vim.cmd.stopinsert()
+						end,
+						finder = "buffers",
+						format = "buffer",
+						hidden = false,
+						unloaded = true,
+						current = true,
+						sort_lastused = true,
+						win = {
+							input = {
+								keys = {
+									["d"] = "bufdelete",
+								},
+							},
+							list = { keys = { ["d"] = "bufdelete" } },
+						},
+					})
+				end,
+				desc = "[P]Snacks picker buffers",
+			},
+			{
 				"gd",
 				function()
 					Snacks.picker.lsp_definitions()
@@ -563,37 +599,6 @@ local plugins = {
 					Snacks.picker.lsp_type_definitions()
 				end,
 				desc = "Goto T[y]pe Definition",
-			},
-		},
-		{
-			"MagicDuck/grug-far.nvim",
-			config = function()
-				require("grug-far").setup({})
-
-				vim.api.nvim_create_autocmd("FileType", {
-					pattern = "grug-far",
-					callback = function()
-						-- Map <Esc> to quit after ensuring we're in normal mode
-						vim.keymap.set({ "i", "n" }, "<Esc>", "<Cmd>stopinsert | bd!<CR>", { buffer = true })
-					end,
-				})
-			end,
-			keys = {
-				{
-					"<leader>sr",
-					function()
-						local grug = require("grug-far")
-						local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-						grug.open({
-							transient = true,
-							prefills = {
-								filesFilter = ext and ext ~= "" and "*." .. ext or nil,
-							},
-						})
-					end,
-					mode = { "n", "v" },
-					desc = "Search and Replace",
-				},
 			},
 		},
 	},
