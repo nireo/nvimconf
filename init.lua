@@ -61,7 +61,6 @@ vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>s", ":w!<CR>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
-vim.keymap.set("n", "<leader>td", ":Trouble diagnostics<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
@@ -106,15 +105,6 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_banner = 0
 vim.g.netrw_list_style = 1
 
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
-})
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -151,7 +141,7 @@ end
 local plugins = {
 	"tpope/vim-sleuth",
 	{
-		"pechorin/any-jump.vim",
+		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
 		cmd = { "AnyJump", "AnyJumpVisual" },
 		keys = {
 			{ "<leader>ii", "<cmd>AnyJump<CR>", desc = "Any Jump" },
@@ -266,38 +256,6 @@ local plugins = {
 				end,
 				desc = "Flash",
 			},
-			{
-				"S",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
-			},
 		},
 	},
 	{
@@ -312,13 +270,6 @@ local plugins = {
 					Snacks.picker.todo_comments()
 				end,
 				desc = "Todo",
-			},
-			{
-				"<leader>sT",
-				function()
-					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
-				end,
-				desc = "Todo/Fix/Fixme",
 			},
 		},
 	},
@@ -344,23 +295,6 @@ local plugins = {
 			"glepnir/lspsaga.nvim",
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-		},
-	},
-	{
-		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
-		cmd = "Trouble",
-		keys = {
-			{
-				"<leader>xx",
-				"<cmd>Trouble diagnostics toggle<cr>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xX",
-				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
 		},
 	},
 	{
@@ -407,11 +341,6 @@ local plugins = {
 		},
 	},
 	{
-		"sindrets/diffview.nvim",
-		opts = {},
-	},
-
-	{
 		"MagicDuck/grug-far.nvim",
 		config = function()
 			require("grug-far").setup({})
@@ -457,14 +386,22 @@ local plugins = {
 				enabled = true,
 				timeout = 3000,
 			},
+			terminal = {},
 		},
 		keys = {
 			{
-				"<leader>ig",
+				"<leader>/",
 				function()
 					Snacks.picker.grep()
 				end,
 				desc = "Grep",
+			},
+			{
+				"<c-/>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "Toggle Terminal",
 			},
 			{
 				"<leader>fb",
@@ -599,6 +536,20 @@ local plugins = {
 					Snacks.picker.lsp_type_definitions()
 				end,
 				desc = "Goto T[y]pe Definition",
+			},
+			{
+				"<leader>sd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "Diagnostics",
+			},
+			{
+				"<leader>sD",
+				function()
+					Snacks.picker.diagnostics_buffer()
+				end,
+				desc = "Diagnostics",
 			},
 		},
 	},
