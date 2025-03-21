@@ -20,6 +20,8 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
+vim.opt.completeopt = "menu,menuone,noselect"
+
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -287,15 +289,70 @@ local plugins = {
 		opts = {},
 	},
 	{
+		"glepnir/lspsaga.nvim",
+		opts = {
+			move_in_saga = { prev = "<C-k>", next = "<C-j>" },
+			finder_action_keys = {
+				open = "<CR>",
+			},
+			definition_action_keys = {
+				edit = "<CR>",
+			},
+			symbol_in_winbar = {
+				false,
+			},
+		},
+	},
+	{
 		"neovim/nvim-lspconfig",
 		lazy = true,
 		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
 			"saghen/blink.nvim",
-			"glepnir/lspsaga.nvim",
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 		},
+		config = function()
+			local language_servers = { "clangd", "gopls", "rust_analyzer" }
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = language_servers,
+			})
+			local lspconfig = require("lspconfig")
+
+			lspconfig["gopls"].setup({
+				settings = {
+					gopls = {
+						analyses = {
+							nilness = true,
+							unusedparams = true,
+							unusedwrite = true,
+							useany = true,
+						},
+						gofumpt = true,
+						staticcheck = true,
+					},
+				},
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			-- some weird bug fix
+			local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
+			clang_capabilities.offsetEncoding = { "utf-16" }
+			lspconfig["clangd"].setup({
+				capabilities = clang_capabilities,
+				on_attach = on_attach,
+			})
+
+			local servers = { "pyright", "ts_ls", "zls", "svelte" }
+			for _, server in ipairs(servers) do
+				lspconfig[server].setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
+				})
+			end
+		end,
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -569,64 +626,6 @@ local opts = {}
 vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
-
-vim.opt.completeopt = "menu,menuone,noselect"
-
-local language_servers = { "clangd", "gopls", "rust_analyzer" }
-require("mason").setup()
-require("mason-lspconfig").setup({
-	ensure_installed = language_servers,
-})
-
-local lspconfig_status, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status then
-	return
-end
-
-lspconfig["gopls"].setup({
-	settings = {
-		gopls = {
-			analyses = {
-				nilness = true,
-				unusedparams = true,
-				unusedwrite = true,
-				useany = true,
-			},
-			gofumpt = true,
-			staticcheck = true,
-		},
-	},
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
-clang_capabilities.offsetEncoding = { "utf-16" }
-lspconfig["clangd"].setup({
-	capabilities = clang_capabilities,
-	on_attach = on_attach,
-})
-
-local servers = { "pyright", "ts_ls", "zls", "svelte" }
-for _, server in ipairs(servers) do
-	lspconfig[server].setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-end
-
-require("lspsaga").setup({
-	move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-	finder_action_keys = {
-		open = "<CR>",
-	},
-	definition_action_keys = {
-		edit = "<CR>",
-	},
-	symbol_in_winbar = {
-		false,
-	},
-})
 
 require("statusline")
 vim.cmd([[colorscheme lackluster-night]])
