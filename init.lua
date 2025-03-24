@@ -153,6 +153,30 @@ local plugins = {
 		},
 	},
 	{
+		"miikanissi/modus-themes.nvim",
+		opts = {
+			transparent = true,
+			on_colors = function(colors)
+				if vim.o.background == "dark" then
+					-- Change the main text color to a gentler white
+					colors.fg_main = "#f0f0f0" -- Using eggshell white as an example
+				end
+			end,
+
+			on_highlights = function(highlights, colors)
+				if vim.o.background == "dark" then
+					-- Use the same gentler white for identifiers and other syntax elements
+					highlights.Identifier = { fg = "#f0f0f0" }
+					highlights["@variable.parameter"] = { fg = "#f0f0f0" }
+					highlights["@variable.parameter.builtin"] = { fg = "#f0f0f0" }
+					highlights["@property"] = { fg = "#f0f0f0" }
+					highlights["@field"] = { fg = "#f0f0f0" }
+					highlights["@variable.member"] = { fg = "#f0f0f0" }
+				end
+			end,
+		},
+	},
+	{
 		"slugbyte/lackluster.nvim",
 		opts = {
 			tweak_syntax = {
@@ -628,4 +652,4 @@ vim.loader.enable()
 require("lazy").setup(plugins, opts)
 
 require("statusline")
-vim.cmd([[colorscheme lackluster-night]])
+vim.cmd([[colorscheme modus]])
