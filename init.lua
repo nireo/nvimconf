@@ -1,6 +1,5 @@
 -- Set highlight on search
 vim.o.hlsearch = false
--- vim.o.relativenumber = true
 
 -- Backspace
 vim.o.backspace = "indent,eol,start"
@@ -85,7 +84,6 @@ vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
 -- show search results in the middle of the screen
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
-
 vim.keymap.set("n", "<leader><leader>v", function()
 	if next(require("diffview.lib").views) == nil then
 		vim.cmd("DiffviewOpen")
@@ -117,27 +115,44 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local keymap = vim.keymap
-local on_attach = function(client, bufnr)
-	local opts = { noremap = true, silent = true, buffer = bufnr }
+vim.lsp.config["gopls"] = {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	settings = {
+		analyses = {
+			nilness = true,
+			unusedparams = true,
+			unusedwrite = true,
+			useany = true,
+		},
+		gofumpt = true,
+		staticcheck = true,
+	},
+	root_markers = { "go.mod", ".git" },
+}
 
-	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+vim.lsp.config["clangd"] = {
+	cmd = { "clangd", "--offset-encoding=utf-16" },
+	filetypes = { "c", "cpp" },
+	root_markers = { ".git" },
+}
 
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		if vim.lsp.buf.format then
-			vim.lsp.buf.format()
-		elseif vim.lsp.buf.formatting then
-			vim.lsp.buf.formatting()
-		end
-	end, { desc = "Format current buffer with LSP" })
+vim.lsp.config["pyright"] = {
+	cmd = { "pyright-langserver", "--stdio" },
+	filetypes = { "python" },
+	root_markers = {
+		"pyproject.toml",
+		"setup.py",
+		"setup.cfg",
+		"requirements.txt",
+		"Pipfile",
+		".git",
+	},
+}
 
-	local capabilities = require("blink.cmp").get_lsp_capabilities()
+local servers = { "gopls", "clangd", "pyright" }
+for _, server in ipairs(servers) do
+	vim.lsp.enable(server)
 end
 
 local plugins = {
@@ -156,25 +171,25 @@ local plugins = {
 		"miikanissi/modus-themes.nvim",
 		opts = {
 			transparent = true,
-			on_colors = function(colors)
-				if vim.o.background == "dark" then
-					-- Change the main text color to a gentler white
-					colors.fg_main = "#f0f0f0" -- Using eggshell white as an example
-				end
-			end,
-
 			on_highlights = function(highlights, colors)
 				if vim.o.background == "dark" then
 					-- Use the same gentler white for identifiers and other syntax elements
-					highlights.Identifier = { fg = "#f0f0f0" }
-					highlights["@variable.parameter"] = { fg = "#f0f0f0" }
-					highlights["@variable.parameter.builtin"] = { fg = "#f0f0f0" }
-					highlights["@property"] = { fg = "#f0f0f0" }
-					highlights["@field"] = { fg = "#f0f0f0" }
-					highlights["@variable.member"] = { fg = "#f0f0f0" }
+					highlights.Identifier = { fg = "#deeeed" }
+					highlights["@variable.parameter"] = { fg = "#deeeed" }
+					highlights["@variable.parameter.builtin"] = { fg = "#deeeed" }
+					highlights["@property"] = { fg = "#deeeed" }
+					highlights["@field"] = { fg = "#deeeed" }
+					highlights["@variable.member"] = { fg = "#deeeed" }
+					highlights.Comment = { fg = "#6ae4b9" } -- Green color for comments
 				end
 			end,
 		},
+	},
+	{
+		"zenbones-theme/zenbones.nvim",
+		dependencies = "rktjmp/lush.nvim",
+		lazy = false,
+		priority = 1000,
 	},
 	{
 		"slugbyte/lackluster.nvim",
@@ -249,6 +264,7 @@ local plugins = {
 				["<Tab>"] = { "select_next", "fallback" },
 				["<S-Tab>"] = { "select_prev", "fallback" },
 			},
+			signature = { enabled = true },
 			appearance = {
 				nerd_font_variant = "mono",
 			},
@@ -262,8 +278,13 @@ local plugins = {
 			completion = {
 				menu = {
 					draw = {
-						columns = { { "label", "label_description", gap = 1 }, { "kind", "source_name", grap = 1 } },
+						columns = { { "label", "label_description", gap = 1 }, { "kind" } },
 					},
+				},
+
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 200,
 				},
 			},
 		},
@@ -300,83 +321,13 @@ local plugins = {
 		},
 	},
 	{
-		"simrat39/rust-tools.nvim",
-		opts = {
-			server = {
-				on_attach = on_attach,
-			},
-		},
-	},
-	{
 		"numToStr/Comment.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {},
 	},
 	{
-		"glepnir/lspsaga.nvim",
-		opts = {
-			move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-			finder_action_keys = {
-				open = "<CR>",
-			},
-			definition_action_keys = {
-				edit = "<CR>",
-			},
-			symbol_in_winbar = {
-				false,
-			},
-		},
-	},
-	{
-		"neovim/nvim-lspconfig",
-		lazy = true,
-		event = { "BufReadPost", "BufNewFile" },
-		dependencies = {
-			"saghen/blink.nvim",
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-		},
-		config = function()
-			local language_servers = { "clangd", "gopls", "rust_analyzer" }
-			require("mason").setup()
-			require("mason-lspconfig").setup({
-				ensure_installed = language_servers,
-			})
-			local lspconfig = require("lspconfig")
-
-			lspconfig["gopls"].setup({
-				settings = {
-					gopls = {
-						analyses = {
-							nilness = true,
-							unusedparams = true,
-							unusedwrite = true,
-							useany = true,
-						},
-						gofumpt = true,
-						staticcheck = true,
-					},
-				},
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			-- some weird bug fix
-			local clang_capabilities = vim.lsp.protocol.make_client_capabilities()
-			clang_capabilities.offsetEncoding = { "utf-16" }
-			lspconfig["clangd"].setup({
-				capabilities = clang_capabilities,
-				on_attach = on_attach,
-			})
-
-			local servers = { "pyright", "ts_ls", "zls", "svelte" }
-			for _, server in ipairs(servers) do
-				lspconfig[server].setup({
-					capabilities = capabilities,
-					on_attach = on_attach,
-				})
-			end
-		end,
+		"williamboman/mason.nvim",
+		opts = {},
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -652,4 +603,6 @@ vim.loader.enable()
 require("lazy").setup(plugins, opts)
 
 require("statusline")
-vim.cmd([[colorscheme modus]])
+vim.opt.number = true
+vim.g.neobones = { darkness = "stark" }
+vim.cmd([[colorscheme neobones]])
