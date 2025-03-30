@@ -168,34 +168,10 @@ local plugins = {
 		},
 	},
 	{
-		"miikanissi/modus-themes.nvim",
-		opts = {
-			transparent = true,
-			on_highlights = function(highlights, colors)
-				if vim.o.background == "dark" then
-					-- Use the same gentler white for identifiers and other syntax elements
-					highlights.Identifier = { fg = "#deeeed" }
-					highlights["@variable.parameter"] = { fg = "#deeeed" }
-					highlights["@variable.parameter.builtin"] = { fg = "#deeeed" }
-					highlights["@property"] = { fg = "#deeeed" }
-					highlights["@field"] = { fg = "#deeeed" }
-					highlights["@variable.member"] = { fg = "#deeeed" }
-					highlights.Comment = { fg = "#6ae4b9" } -- Green color for comments
-				end
-			end,
-		},
-	},
-	{
-		"zenbones-theme/zenbones.nvim",
-		dependencies = "rktjmp/lush.nvim",
-		lazy = false,
-		priority = 1000,
-	},
-	{
 		"slugbyte/lackluster.nvim",
 		opts = {
 			tweak_syntax = {
-				comment = "#98C379",
+				comment = "#789978",
 			},
 			tweak_background = {
 				normal = "#0A0A0A",
@@ -218,7 +194,6 @@ local plugins = {
 				typescriptreact = { "prettierd" },
 				javascript = { "prettierd" },
 				typescript = { "prettierd" },
-				graphql = { "prettierd" },
 				json = { "prettierd" },
 				css = { "prettierd" },
 			},
@@ -471,26 +446,11 @@ local plugins = {
 				desc = "Projects",
 			},
 			{
-				"<leader>fr",
-				function()
-					Snacks.picker.recent()
-				end,
-				desc = "Recent",
-			},
-			{
 				"<leader>cR",
 				function()
 					Snacks.rename.rename_file()
 				end,
 				desc = "Rename File",
-			},
-			{
-				"<leader>gB",
-				function()
-					Snacks.gitbrowse()
-				end,
-				desc = "Git Browse",
-				mode = { "n", "v" },
 			},
 			{
 				"<leader>gg",
@@ -602,7 +562,5 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
-require("statusline")
-vim.opt.number = true
-vim.g.neobones = { darkness = "stark" }
-vim.cmd([[colorscheme neobones]])
+vim.cmd("set laststatus=0")
+vim.cmd([[colorscheme lackluster-night]])
