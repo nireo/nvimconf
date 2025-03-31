@@ -156,6 +156,7 @@ for _, server in ipairs(servers) do
 end
 
 local plugins = {
+	"norcalli/nvim-colorizer.lua",
 	"tpope/vim-sleuth",
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
@@ -341,6 +342,7 @@ local plugins = {
 				"toml",
 				"zig",
 				"php",
+				"python",
 			},
 
 			highlight = { enable = true },
@@ -561,6 +563,7 @@ local opts = {}
 vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
+require("colorizer").setup({})
 
 vim.cmd("set laststatus=0")
-vim.cmd([[colorscheme lackluster-night]])
+vim.cmd([[colorscheme less]])
