@@ -1,16 +1,17 @@
+
 " less is more
 set background=dark
 runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guibg=#0A0A0A ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#0A0A0A ctermbg=0
 
 " primitives
 highlight! Function guifg=#B294BB
-highlight! Identifier guifg=NvimLightGrey2
-highlight! Delimiter guifg=NvimLightGrey2
-highlight! Directory guifg=NvimLightGrey2 cterm=bold gui=bold
+highlight! Identifier guifg=#B0B0B0
+highlight! Delimiter guifg=#B0B0B0
+highlight! Directory guifg=#B0B0B0 cterm=bold gui=bold
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=NvimLightBlue
 highlight! link Namespace Module
@@ -19,6 +20,8 @@ highlight! Number guifg=#75A0A0 ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
 highlight! link Character String
+highlight! Constant guifg=#75A0A0
+highlight! Operator guifg=#B0B0B0
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 " 708090
@@ -91,3 +94,22 @@ highlight! FloatTitle guifg=#708090 guibg=#0A0A0A gui=bold
 highlight! NormalFloat guifg=NvimLightGrey2 guibg=#0A0A0A
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
+
+highlight! link @variable.member Identifier
+highlight! link @variable.member.lua Identifier
+highlight! link @property.lua Identifier
+highlight! link @field.lua Identifier
+
+
+highlight! @variable.member.builtin guifg=#B0B0B0
+highlight! @lsp guifg=#B0B0B0
+highlight! @config guifg=#B0B0B0
+highlight! link @method.call Identifier
+highlight! link @method Identifier
+highlight! link @label.lua Identifier
+highlight! @variable.builtin guifg=#B0B0B0
+highlight! @namespace.lua guifg=#B0B0B0
+
+highlight! @module.builtin guifg=#B0B0B0
+highlight! @lsp.mod guifg=#B0B0B0
+highlight! @variable guifg=#B0B0B0
