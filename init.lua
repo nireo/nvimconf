@@ -156,7 +156,6 @@ for _, server in ipairs(servers) do
 end
 
 local plugins = {
-	"norcalli/nvim-colorizer.lua",
 	"tpope/vim-sleuth",
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
@@ -166,17 +165,6 @@ local plugins = {
 			{ "<leader>ii", "<cmd>AnyJumpVisual<CR>", mode = "x", desc = "Any Jump" },
 			{ "<leader>ib", "<cmd>AnyJumpBack<CR>", desc = "Any Jump Back" },
 			{ "<leader>il", "<cmd>AnyJumpLastResults<CR>", desc = "Any Jump Resume" },
-		},
-	},
-	{
-		"slugbyte/lackluster.nvim",
-		opts = {
-			tweak_syntax = {
-				comment = "#789978",
-			},
-			tweak_background = {
-				normal = "#0A0A0A",
-			},
 		},
 	},
 	{
@@ -343,6 +331,7 @@ local plugins = {
 				"zig",
 				"php",
 				"python",
+				"scala",
 			},
 
 			highlight = { enable = true },
@@ -357,7 +346,6 @@ local plugins = {
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = "grug-far",
 				callback = function()
-					-- Map <Esc> to quit after ensuring we're in normal mode
 					vim.keymap.set({ "i", "n" }, "<Esc>", "<Cmd>stopinsert | bd!<CR>", { buffer = true })
 				end,
 			})
@@ -547,6 +535,10 @@ local plugins = {
 			},
 		},
 	},
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		opts = {},
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
@@ -563,7 +555,6 @@ local opts = {}
 vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
-require("colorizer").setup({})
 
 vim.cmd("set laststatus=0")
 vim.cmd([[colorscheme less]])

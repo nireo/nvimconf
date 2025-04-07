@@ -1,14 +1,13 @@
-
-" less is more
 set background=dark
 runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guifg=#B0B0B0 guibg=#0A0A0A ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#121212 ctermbg=0
 
 " primitives
 highlight! Function guifg=#B294BB
+highlight! Title guifg=#B294BB
 highlight! Identifier guifg=#B0B0B0
 highlight! Delimiter guifg=#B0B0B0
 highlight! Directory guifg=#B0B0B0 cterm=bold gui=bold
@@ -24,7 +23,6 @@ highlight! Constant guifg=#75A0A0
 highlight! Operator guifg=#B0B0B0
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
-" 708090
 
 " treesitter
 highlight! link @namespace Namespace
@@ -41,57 +39,48 @@ highlight! link @tag.attribute @attribute
 highlight! link @keyword.function Keyword
 highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
-
-" Strings
 highlight! String guifg=#A7B39A ctermfg=137
 highlight! link @string String
 
-highlight! Comment guifg=#8C8178 ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#7D8A6F ctermfg=65 gui=italic cterm=italic
 
-highlight! Pmenu guibg=#0A0A0A ctermbg=0
+highlight! Pmenu guibg=#121212 ctermbg=0
 highlight! PmenuSel guibg=#1A1A1A ctermbg=233 guifg=#8AA3C1 ctermfg=67
 highlight! PmenuSbar guibg=#121212 ctermbg=232
 highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
 
-" Main Telescope/Picker components (often used by snack pickers)
-highlight! TelescopeNormal guifg=NvimLightGrey2 guibg=#0A0A0A
-highlight! TelescopeBorder guifg=#2A2A2A guibg=#0A0A0A
+highlight! TelescopeNormal guifg=NvimLightGrey2 guibg=#121212
+highlight! TelescopeBorder guifg=#2A2A2A guibg=#121212
 highlight! TelescopeSelection guifg=#8AA3C1 guibg=#1A1A1A gui=bold
 highlight! TelescopeSelectionCaret guifg=#B294BB guibg=#1A1A1A
-highlight! TelescopePromptTitle guifg=#708090 guibg=#0A0A0A gui=bold
-highlight! TelescopePreviewTitle guifg=#708090 guibg=#0A0A0A gui=bold
-highlight! TelescopeResultsTitle guifg=#708090 guibg=#0A0A0A gui=bold
+highlight! TelescopePromptTitle guifg=#708090 guibg=#121212 gui=bold
+highlight! TelescopePreviewTitle guifg=#708090 guibg=#121212 gui=bold
+highlight! TelescopeResultsTitle guifg=#708090 guibg=#121212 gui=bold
 
-" Prompt elements
-highlight! TelescopePromptNormal guifg=NvimLightGrey2 guibg=#0A0A0A
-highlight! TelescopePromptBorder guifg=#2A2A2A guibg=#0A0A0A
-highlight! TelescopePromptPrefix guifg=#A7B39A guibg=#0A0A0A
-highlight! TelescopePromptCounter guifg=#8C8178 guibg=#0A0A0A
+highlight! TelescopePromptNormal guifg=NvimLightGrey2 guibg=#121212
+highlight! TelescopePromptBorder guifg=#2A2A2A guibg=#121212
+highlight! TelescopePromptPrefix guifg=#A7B39A guibg=#121212
+highlight! TelescopePromptCounter guifg=#8C8178 guibg=#121212
 
-" Results elements
-highlight! TelescopeResultsNormal guifg=NvimLightGrey2 guibg=#0A0A0A
-highlight! TelescopeResultsBorder guifg=#2A2A2A guibg=#0A0A0A
-highlight! TelescopeResultsComment guifg=#8C8178 guibg=#0A0A0A gui=italic
-highlight! TelescopeResultsSpecialComment guifg=#8C8178 guibg=#0A0A0A gui=italic
+highlight! TelescopeResultsNormal guifg=NvimLightGrey2 guibg=#121212
+highlight! TelescopeResultsBorder guifg=#2A2A2A guibg=#121212
+highlight! TelescopeResultsComment guifg=#8C8178 guibg=#121212 gui=italic
+highlight! TelescopeResultsSpecialComment guifg=#8C8178 guibg=#121212 gui=italic
 
-" Preview elements
-highlight! TelescopePreviewNormal guifg=NvimLightGrey2 guibg=#0A0A0A
-highlight! TelescopePreviewBorder guifg=#2A2A2A guibg=#0A0A0A
+highlight! TelescopePreviewNormal guifg=NvimLightGrey2 guibg=#121212
+highlight! TelescopePreviewBorder guifg=#2A2A2A guibg=#121212
 
-" Match highlighting
 highlight! TelescopeMatching guifg=#B294BB gui=bold
 
-" Alternative highlight groups that might be used
-highlight! NvimPickerNormal guifg=NvimLightGrey2 guibg=#0A0A0A
-highlight! NvimPickerBorder guifg=#2A2A2A guibg=#0A0A0A
+highlight! NvimPickerNormal guifg=NvimLightGrey2 guibg=#121212
+highlight! NvimPickerBorder guifg=#2A2A2A guibg=#121212
 highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1A1A1A gui=bold
-highlight! NvimPickerHeader guifg=#708090 guibg=#0A0A0A gui=bold
-highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#0A0A0A
+highlight! NvimPickerHeader guifg=#708090 guibg=#121212 gui=bold
+highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
-" Generic picker groups (often used by plugins)
-highlight! FloatBorder guifg=#2A2A2A guibg=#0A0A0A
-highlight! FloatTitle guifg=#708090 guibg=#0A0A0A gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#0A0A0A
+highlight! FloatBorder guifg=#2A2A2A guibg=#121212
+highlight! FloatTitle guifg=#708090 guibg=#121212 gui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#121212
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
