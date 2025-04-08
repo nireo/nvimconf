@@ -13,6 +13,7 @@ vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.autoindent = true
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -73,6 +74,14 @@ vim.keymap.set("n", "<leader>lv", ":vsplit<CR>")
 vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
 vim.keymap.set("n", "<leader>sh", "<C-w>s")
+vim.keymap.set("n", "<CR>", ":write!<CR>")
+vim.keymap.set("n", ";", ":")
+vim.keymap.set({ "n", "v" }, "go", "%")
+vim.keymap.set({ "n", "v" }, "gh", "^")
+vim.keymap.set({ "n", "v" }, "gl", "$")
+vim.keymap.set({ "n", "v" }, "gj", "%")
+vim.keymap.set("n", "<Tab>", "<C-W>w")
+vim.keymap.set("n", "<S-Tab>", "<C-W>W")
 
 -- go error :D
 vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
@@ -84,13 +93,6 @@ vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
 -- show search results in the middle of the screen
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "<leader><leader>v", function()
-	if next(require("diffview.lib").views) == nil then
-		vim.cmd("DiffviewOpen")
-	else
-		vim.cmd("DiffviewClose")
-	end
-end)
 
 vim.o.backup = false
 vim.o.scrolloff = 5
