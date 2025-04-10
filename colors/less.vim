@@ -3,7 +3,7 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guifg=#B0B0B0 guibg=#121212 ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#0D0D0D ctermbg=0
 
 " primitives
 highlight! Function guifg=#B294BB

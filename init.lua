@@ -9,8 +9,8 @@ vim.o.mouse = "a"
 vim.o.guicursor = ""
 
 -- Indentation changes
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
 
@@ -61,17 +61,13 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
-vim.keymap.set("n", "<leader>s", ":w!<CR>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
 vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
 vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
-vim.keymap.set("n", "<leader>lh", ":split<CR>")
-vim.keymap.set("n", "<leader>lv", ":vsplit<CR>")
 
-vim.keymap.set("n", "<leader>wc", ":close<cr>")
 vim.keymap.set("n", "<leader>sv", "<C-w>v")
 vim.keymap.set("n", "<leader>sh", "<C-w>s")
 vim.keymap.set("n", "<CR>", ":write!<CR>")
@@ -338,36 +334,6 @@ local plugins = {
 
 			highlight = { enable = true },
 			indent = { enable = true },
-		},
-	},
-	{
-		"MagicDuck/grug-far.nvim",
-		config = function()
-			require("grug-far").setup({})
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "grug-far",
-				callback = function()
-					vim.keymap.set({ "i", "n" }, "<Esc>", "<Cmd>stopinsert | bd!<CR>", { buffer = true })
-				end,
-			})
-		end,
-		keys = {
-			{
-				"<leader>sr",
-				function()
-					local grug = require("grug-far")
-					local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-					grug.open({
-						transient = true,
-						prefills = {
-							filesFilter = ext and ext ~= "" and "*." .. ext or nil,
-						},
-					})
-				end,
-				mode = { "n", "v" },
-				desc = "Search and Replace",
-			},
 		},
 	},
 	{
