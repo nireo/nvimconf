@@ -91,7 +91,8 @@ highlight! link @field.lua Identifier
 
 
 highlight! @variable.member.builtin guifg=#B0B0B0
-highlight! @lsp guifg=#B0B0B0
+" highlight! @lsp guifg=#B0B0B0
+" highlight! @lsp.mod guifg=#B0B0B0
 highlight! @config guifg=#B0B0B0
 highlight! link @method.call Identifier
 highlight! link @method Identifier
@@ -100,5 +101,4 @@ highlight! @variable.builtin guifg=#B0B0B0
 highlight! @namespace.lua guifg=#B0B0B0
 
 highlight! @module.builtin guifg=#B0B0B0
-highlight! @lsp.mod guifg=#B0B0B0
 highlight! @variable guifg=#B0B0B0
