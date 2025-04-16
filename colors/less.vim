@@ -20,7 +20,8 @@ highlight! link Float Number
 highlight! link Constructor Type
 highlight! link Character String
 highlight! Constant guifg=#75A0A0
-highlight! Operator guifg=#B0B0B0
+highlight! Operator guifg=#B294BB
+highlight! ColorColumn guibg=#0A0A0A
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 
