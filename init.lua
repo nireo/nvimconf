@@ -521,5 +521,4 @@ vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
 
-vim.cmd("set laststatus=0")
 vim.cmd([[colorscheme less]])

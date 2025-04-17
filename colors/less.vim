@@ -4,6 +4,8 @@ let g:colors_name = 'less'
 
 " Set black background
 highlight Normal guifg=#B0B0B0 guibg=#0D0D0D ctermbg=0
+highlight StatusLine guifg=#B0B0B0 guibg=#2F2F2F ctermbg=0
+highlight StatusLineNC guifg=#B0B0B0 guibg=#0F0F0F ctermbg=0
 
 " primitives
 highlight! Function guifg=#B294BB
