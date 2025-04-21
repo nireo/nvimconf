@@ -13,7 +13,8 @@ highlight! Delimiter guifg=#B294BB
 highlight! Operator guifg=#B294BB
 highlight! Number guifg=#75A0A0 ctermfg=60
 highlight! String guifg=#A7B39A ctermfg=137
-highlight! Function guifg=#B294BB
+highlight! ColorColumn guibg=#090909
+highlight! Function guifg=#C1B48A
 
 highlight! Pmenu guibg=#090909 ctermbg=0
 highlight! PmenuSel guibg=#1C1C1C ctermbg=233 guifg=#8AA3C1 ctermfg=67
@@ -22,9 +23,7 @@ highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
 
 " primitives
 
-highlight! Function guifg=NvimLightGrey2
 highlight! Identifier guifg=NvimLightGrey2
-highlight! Delimiter guifg=NvimLightGrey2
 highlight! Directory guifg=NvimLightGrey2 cterm=bold gui=bold
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=NvimLightBlue
@@ -49,3 +48,16 @@ highlight! link @tag.attribute @attribute
 highlight! FloatBorder guifg=#2A2A2A guibg=#090909
 highlight! FloatTitle guifg=#708090 guibg=#090909 gui=bold
 highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
+
+" Module / Namespace -> Italic Teal
+highlight! Module guifg=#75A0A0 ctermfg=60 gui=italic cterm=italic
+highlight! link @module Module
+highlight! link Namespace Module " Keep existing link or redefine if needed
+highlight! link @namespace Module " Keep existing link or redefine if needed
+
+" Type / Constructor -> Bold Blue
+highlight! Type guifg=#8AA3C1 ctermfg=67 gui=bold cterm=bold
+highlight! link @type Type
+highlight! link @type.builtin @type " Keep existing link
+highlight! link Constructor Type " Keep existing link or redefine if needed
+highlight! link @constructor Type " Keep existing link or redefine if needed
