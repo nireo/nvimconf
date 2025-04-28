@@ -9,8 +9,8 @@ vim.o.mouse = "a"
 vim.o.guicursor = ""
 
 -- Indentation changes
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.autoindent = true
 
@@ -151,18 +151,38 @@ vim.lsp.config["pyright"] = {
 vim.lsp.config["rust-analyzer"] = {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
-	root_markers = {
-		"Cargo.toml",
-		".git",
-	},
+	root_markers = { "Cargo.toml", ".git" },
 }
 
-local servers = { "gopls", "clangd", "pyright", "rust-analyzer" }
+vim.lsp.config["ts_ls"] = {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+	},
+	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+}
+
+local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls" }
 for _, server in ipairs(servers) do
 	vim.lsp.enable(server)
 end
 
 local plugins = {
+	{
+		"slugbyte/lackluster.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			tweak_syntax = {
+				comment = "#7D8A6F",
+			},
+		},
+	},
 	"tpope/vim-sleuth",
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
@@ -181,17 +201,17 @@ local plugins = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
-				typescript = { "prettierd", "prettier", stop_after_first = true },
+				javascript = { "prettier", stop_after_first = true },
+				typescript = { "prettier", stop_after_first = true },
 				go = { "goimports", "gofmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
-				javascriptreact = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				javascript = { "prettierd" },
-				typescript = { "prettierd" },
-				json = { "prettierd" },
-				css = { "prettierd" },
+				javascriptreact = { "prettier" },
+				typescriptreact = { "prettier" },
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				json = { "prettier" },
+				css = { "prettier" },
 			},
 			formatters = {
 				clang_format = {
@@ -357,6 +377,11 @@ local plugins = {
 		},
 	},
 	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
+	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
@@ -487,6 +512,7 @@ local plugins = {
 			},
 		},
 	},
+
 	performance = {
 		rtp = {
 			disabled_plugins = {
@@ -503,8 +529,10 @@ local opts = {}
 vim.loader.enable()
 
 require("lazy").setup(plugins, opts)
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.cmd.colorscheme("less")
 
-vim.cmd([[colorscheme minimal]])
 vim.diagnostic.config({
 	virtual_text = true,
 })

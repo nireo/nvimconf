@@ -61,3 +61,5 @@ highlight! link @type Type
 highlight! link @type.builtin @type " Keep existing link
 highlight! link Constructor Type " Keep existing link or redefine if needed
 highlight! link @constructor Type " Keep existing link or redefine if needed
+
+highlight! Constant guifg=#75A0A0
