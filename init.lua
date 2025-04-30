@@ -167,7 +167,12 @@ vim.lsp.config["ts_ls"] = {
 	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
 }
 
-local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls" }
+vim.lsp.config["lua_ls"] = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+}
+
+local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls" }
 for _, server in ipairs(servers) do
 	vim.lsp.enable(server)
 end
@@ -512,7 +517,6 @@ local plugins = {
 			},
 		},
 	},
-
 	performance = {
 		rtp = {
 			disabled_plugins = {

@@ -82,9 +82,9 @@ highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1A1A1A gui=bold
 highlight! NvimPickerHeader guifg=#708090 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
-highlight! FloatBorder guifg=#2A2A2A guibg=#121212
-highlight! FloatTitle guifg=#708090 guibg=#121212 gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#121212
+highlight! FloatBorder guifg=#2A2A2A guibg=#0A0A0A
+highlight! FloatTitle guifg=#708090 guibg=#0A0A0A gui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#0A0A0A
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
