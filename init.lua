@@ -89,6 +89,17 @@ vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
 -- show search results in the middle of the screen
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set("n", "dd", function()
+	if vim.fn.getline("."):match("^%s*$") then
+		return '"_dd'
+	end
+	return "dd"
+end, { expr = true })
+
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic error message" })
+vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 vim.o.backup = false
 vim.o.scrolloff = 5
