@@ -189,16 +189,6 @@ for _, server in ipairs(servers) do
 end
 
 local plugins = {
-	{
-		"slugbyte/lackluster.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			tweak_syntax = {
-				comment = "#7D8A6F",
-			},
-		},
-	},
 	"tpope/vim-sleuth",
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
@@ -217,8 +207,6 @@ local plugins = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				javascript = { "prettier", stop_after_first = true },
-				typescript = { "prettier", stop_after_first = true },
 				go = { "goimports", "gofmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
@@ -244,22 +232,6 @@ local plugins = {
 		},
 	},
 	{
-		"scalameta/nvim-metals",
-		config = function()
-			local metals_config = require("metals").bare_config()
-			metals_config.on_attach = on_attach
-
-			local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "scala", "sbt", "java" },
-				callback = function()
-					require("metals").initialize_or_attach(metals_config)
-				end,
-				group = nvim_metals_group,
-			})
-		end,
-	},
-	{
 		"saghen/blink.cmp",
 		dependencies = "rafamadriz/friendly-snippets",
 		version = "v0.*",
@@ -271,7 +243,6 @@ local plugins = {
 				["<Tab>"] = { "select_next", "fallback" },
 				["<S-Tab>"] = { "select_prev", "fallback" },
 			},
-			signature = { enabled = true },
 			appearance = {
 				nerd_font_variant = "mono",
 			},
