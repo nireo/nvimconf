@@ -364,11 +364,6 @@ local plugins = {
 		},
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
-	},
-	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
@@ -517,6 +512,9 @@ vim.loader.enable()
 require("lazy").setup(plugins, opts)
 vim.opt.relativenumber = true
 vim.opt.number = true
+
+require("statusline")
+
 vim.cmd.colorscheme("less")
 
 vim.diagnostic.config({
