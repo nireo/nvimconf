@@ -175,7 +175,13 @@ vim.lsp.config["ts_ls"] = {
 		"typescriptreact",
 		"typescript.tsx",
 	},
-	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "deno.json" },
+}
+
+vim.lsp.config["svelte"] = {
+	cmd = { "svelteserver", "--stdio" },
+	filetypes = { "svelte" },
+	root_markers = { ".git", "package.json" },
 }
 
 vim.lsp.config["lua_ls"] = {
@@ -183,7 +189,7 @@ vim.lsp.config["lua_ls"] = {
 	filetypes = { "lua" },
 }
 
-local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls" }
+local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls", "svelte" }
 for _, server in ipairs(servers) do
 	vim.lsp.enable(server)
 end
@@ -371,7 +377,9 @@ local plugins = {
 			picker = {
 				enabled = true,
 				layout = {
+					preview = false,
 					preset = "ivy",
+					layout = { position = "bottom" },
 				},
 			},
 			notifier = {
