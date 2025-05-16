@@ -189,13 +189,24 @@ vim.lsp.config["lua_ls"] = {
 	filetypes = { "lua" },
 }
 
-local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls", "svelte" }
+vim.lsp.config["tinymist"] = {
+	cmd = { "tinymist" },
+	filetypes = { "typst" },
+}
+
+local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls", "svelte", "tinymist" }
 for _, server in ipairs(servers) do
 	vim.lsp.enable(server)
 end
 
 local plugins = {
 	"tpope/vim-sleuth",
+	{
+		"chomosuke/typst-preview.nvim",
+		lazy = false,
+		version = "1.*",
+		opts = {},
+	},
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
 		cmd = { "AnyJump", "AnyJumpVisual" },
