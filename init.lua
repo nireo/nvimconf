@@ -249,6 +249,12 @@ local plugins = {
 		},
 	},
 	{
+		"m4xshen/hardtime.nvim",
+		lazy = false,
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {},
+	},
+	{
 		"saghen/blink.cmp",
 		dependencies = "rafamadriz/friendly-snippets",
 		version = "v0.*",
@@ -284,21 +290,6 @@ local plugins = {
 			},
 		},
 		opts_extend = { "sources.default" },
-	},
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
-		keys = {
-			{
-				"s",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Flash",
-			},
-		},
 	},
 	{
 		"folke/todo-comments.nvim",
@@ -344,23 +335,14 @@ local plugins = {
 		},
 	},
 	{
-		"nvim-orgmode/orgmode",
-		event = "VeryLazy",
-		ft = { "org" },
-		config = function()
-			require("orgmode").setup({
-				org_agenda_files = "~/org/**/*",
-				org_default_notes_file = "~/org/refile.org",
-			})
-		end,
-	},
-	{
 		"nvim-treesitter/nvim-treesitter",
 		event = "BufRead",
 		build = ":TSUpdate",
 		main = "nvim-treesitter.configs",
 		opts = {
 			ensure_installed = {
+				"vimdoc",
+				"typst",
 				"c",
 				"cpp",
 				"go",
