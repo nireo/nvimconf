@@ -82,8 +82,11 @@ vim.keymap.set({ "n", "v" }, "gj", "%")
 vim.keymap.set("n", "<Tab>", "<C-W>w")
 vim.keymap.set("n", "<S-Tab>", "<C-W>W")
 
--- go error :D
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>") -- this reads the function signature so it makes it alot more efficient
+vim.keymap.set("n", "<leader>got", ":GoTestFile<CR>")
+vim.keymap.set("n", "<leader>gotf", ":GoTestFunc<CR>")
+vim.keymap.set("n", "<leader>gofs", ":GoFillStruct<CR>")
+vim.keymap.set("n", "<leader>goj", ":GoAddTag json<CR>")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv", opts)
@@ -335,6 +338,8 @@ local plugins = {
 			go = "go",
 			gofmt = "gofumpt",
 			staticcheck = true,
+			luasnip = true,
+			max_line_len = 100,
 		},
 	},
 	{
@@ -364,6 +369,11 @@ local plugins = {
 			highlight = { enable = true },
 			indent = { enable = true },
 		},
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		build = "make install_jsregexp",
 	},
 	{
 		"folke/snacks.nvim",
