@@ -83,8 +83,8 @@ vim.keymap.set("n", "<Tab>", "<C-W>w")
 vim.keymap.set("n", "<S-Tab>", "<C-W>W")
 
 vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>") -- this reads the function signature so it makes it alot more efficient
-vim.keymap.set("n", "<leader>got", ":GoTestFile<CR>")
-vim.keymap.set("n", "<leader>gotf", ":GoTestFunc<CR>")
+vim.keymap.set("n", "<leader>gotf", ":GoTestFile<CR>")
+vim.keymap.set("n", "<leader>gofn", ":GoTestFunc<CR>")
 vim.keymap.set("n", "<leader>gofs", ":GoFillStruct<CR>")
 vim.keymap.set("n", "<leader>goj", ":GoAddTag json<CR>")
 vim.keymap.set("v", "<", "<gv")

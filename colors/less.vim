@@ -18,7 +18,11 @@ highlight! Directory guifg=#88afa2
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=#88afa2
 highlight! link Namespace Module
-highlight! Type guifg=#708090 cterm=bold gui=bold
+" highlight! Type guifg=#708090 cterm=bold gui=bold
+" highlight! Type guifg=#A89984
+" highlight! Type guifg=#7A9CB8
+"highlight! Type guifg=#85A0A5    " teal-gray instead of slate
+highlight! Type guifg=#A68DB8  " lavender
 highlight! Number guifg=#75A0A0 ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
@@ -26,6 +30,9 @@ highlight! link Character String
 highlight! Constant guifg=#75A0A0
 highlight! Operator guifg=#B294BB
 highlight! ColorColumn guibg=#0A0A0A
+" highlight! String guifg=#A7B39A ctermfg=137
+" highlight! String guifg=#C9A96E
+highlight! String guifg=#B8C78A  " slightly brighter green
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 
@@ -44,7 +51,6 @@ highlight! link @tag.attribute @attribute
 highlight! link @keyword.function Keyword
 highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
-highlight! String guifg=#A7B39A ctermfg=137
 highlight! link @string String
 
 " highlight! Comment guifg=#7D8A6F ctermfg=65 gui=italic cterm=italic
