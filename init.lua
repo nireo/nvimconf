@@ -37,7 +37,7 @@ vim.o.cursorcolumn = false
 vim.o.updatetime = 100
 vim.o.timeoutlen = 500
 vim.wo.signcolumn = "no"
-vim.o.synmaxcol = 180
+vim.o.synmaxcol = 120
 
 vim.o.termguicolors = true
 vim.o.background = "dark"
@@ -195,24 +195,13 @@ vim.lsp.config["lua_ls"] = {
 	filetypes = { "lua" },
 }
 
-vim.lsp.config["tinymist"] = {
-	cmd = { "tinymist" },
-	filetypes = { "typst" },
-}
-
-local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls", "svelte", "tinymist" }
+local servers = { "gopls", "clangd", "pyright", "rust-analyzer", "ts_ls", "lua_ls", "svelte" }
 for _, server in ipairs(servers) do
 	vim.lsp.enable(server)
 end
 
 local plugins = {
 	"tpope/vim-sleuth",
-	{
-		"chomosuke/typst-preview.nvim",
-		lazy = false,
-		version = "1.*",
-		opts = {},
-	},
 	{
 		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
 		cmd = { "AnyJump", "AnyJumpVisual" },
@@ -338,7 +327,6 @@ local plugins = {
 			go = "go",
 			gofmt = "gofumpt",
 			staticcheck = true,
-			luasnip = true,
 			max_line_len = 100,
 		},
 	},
@@ -350,7 +338,7 @@ local plugins = {
 		opts = {
 			ensure_installed = {
 				"vimdoc",
-				"typst",
+				"ocaml",
 				"c",
 				"cpp",
 				"go",
@@ -361,7 +349,6 @@ local plugins = {
 				"hcl",
 				"toml",
 				"zig",
-				"php",
 				"python",
 				"scala",
 			},
@@ -369,11 +356,6 @@ local plugins = {
 			highlight = { enable = true },
 			indent = { enable = true },
 		},
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		version = "v2.*",
-		build = "make install_jsregexp",
 	},
 	{
 		"folke/snacks.nvim",
