@@ -3,8 +3,7 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-" highlight Normal guifg=#B0B0B0 guibg=#181818 ctermbg=0
-highlight Normal guifg=#B0B0B0 guibg=#191919 ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#080808 ctermbg=0
 highlight StatusLine guifg=#B0B0B0 guibg=#2F2F2F ctermbg=0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#0F0F0F ctermbg=0
 
@@ -67,9 +66,9 @@ highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1A1A1A gui=bold
 highlight! NvimPickerHeader guifg=#708090 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
-highlight! FloatBorder guifg=#2A2A2A guibg=#181818
-highlight! FloatTitle guifg=#708090 guibg=#181818 gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#181818
+highlight! FloatBorder guifg=#2A2A2A guibg=#090909
+highlight! FloatTitle guifg=#708090 guibg=#090909 gui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
