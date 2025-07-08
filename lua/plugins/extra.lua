@@ -1,9 +1,9 @@
 return {
 	{
-		"m4xshen/hardtime.nvim",
-		lazy = false,
-		dependencies = { "MunifTanjim/nui.nvim" },
-		opts = {},
+		"vague2k/vague.nvim",
+		config = function()
+			require("vague").setup({})
+		end,
 	},
 	{
 		"folke/snacks.nvim",
