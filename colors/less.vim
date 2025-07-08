@@ -3,7 +3,7 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guifg=#B0B0B0 guibg=#080808 ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#14161b ctermbg=0
 highlight StatusLine guifg=#B0B0B0 guibg=#2F2F2F ctermbg=0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#0F0F0F ctermbg=0
 
