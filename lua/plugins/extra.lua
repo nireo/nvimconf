@@ -1,9 +1,8 @@
 return {
 	{
-		"vague2k/vague.nvim",
-		config = function()
-			require("vague").setup({})
-		end,
+		"slugbyte/lackluster.nvim",
+		lazy = false,
+		priority = 1000,
 	},
 	{
 		"folke/snacks.nvim",

@@ -3,12 +3,14 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guifg=#B0B0B0 guibg=#14161b ctermbg=0
-highlight StatusLine guifg=#B0B0B0 guibg=#2F2F2F ctermbg=0
-highlight StatusLineNC guifg=#B0B0B0 guibg=#0F0F0F ctermbg=0
+" highlight Normal guifg=#B0B0B0 guibg=#14161B ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#060606 ctermbg=0
+highlight StatusLine guifg=#B0B0B0 guibg=#090909 ctermbg=0
+highlight StatusLineNC guifg=#B0B0B0 guibg=#121212 ctermbg=0
 
 " primitives
-highlight! Function guifg=#88afa2
+"highlight! Function guifg=#88afa2
+highlight! Function guifg=#829b82
 " #B294BB
 highlight! Title guifg=#B294BB
 highlight! Identifier guifg=#B0B0B0
@@ -17,21 +19,20 @@ highlight! Directory guifg=#88afa2
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=#88afa2
 highlight! link Namespace Module
-" highlight! Type guifg=#708090 cterm=bold gui=bold
-" highlight! Type guifg=#A89984
-" highlight! Type guifg=#7A9CB8
-"highlight! Type guifg=#85A0A5    " teal-gray instead of slate
-highlight! Type guifg=#A68DB8  " lavender
-highlight! Number guifg=#75A0A0 ctermfg=60
+" highlight! Type guifg=#A68DB8  " lavender
+" highlight! Type guifg=#B5AA88 " soft blue
+highlight! Type guifg=#B5AA88 " soft blue
+highlight! Number guifg=#7A8A9A ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
 highlight! link Character String
-highlight! Constant guifg=#75A0A0
+highlight! Constant guifg=#7A8A9A
 highlight! Operator guifg=#B294BB
 highlight! ColorColumn guibg=#0A0A0A
 " highlight! String guifg=#A7B39A ctermfg=137
 " highlight! String guifg=#C9A96E
-highlight! String guifg=#B8C78A  " slightly brighter green
+"highlight! String guifg=#B8C78A  " slightly brighter green
+highlight! String guifg=#9CAF88  " slightly brighter green
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 
