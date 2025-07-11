@@ -3,5 +3,6 @@ require("core.lazy")
 require("core.lsp")
 require("config.keymaps")
 require("config.autocmds")
+require("statusline")
 
 vim.cmd.colorscheme("less")

@@ -1,16 +1,15 @@
 -- Setup the statusline with custom content (components, strings).
 
-local line = require('statusline/line')
-local components = require('statusline/components')
+local line = require("statusline/line")
+local components = require("statusline/components")
 
 local contents = {
-  components.mode,
-  components.position,
-  components.lsp,
-  "%#StatusOther#%q", -- Quickfix indicator
-  "%=", -- Align to the right
-  components.path,
-  components.permissions,
+	components.mode,
+	components.path,
+	"%#StatusOther#%q", -- Quickfix indicator
+	"%=", -- Align to the right
+	components.position,
+	components.lsp,
 }
 
 line.setup(contents)
