@@ -21,17 +21,16 @@ require("lazy").setup({ import = "plugins" }, {
 		enabled = true,
 		notify = false,
 	},
-	ui = {
-		-- border = "rounded"
-	},
+	ui = {},
 	performance = {
 		rtp = {
 			disabled_plugins = {
 				"gzip",
+				"matchit",
+				"matchparen",
+				"netrwPlugin",
 				"tarPlugin",
-				"tohtml",
 				"tutor",
-				"zipPlugin",
 			},
 		},
 	},

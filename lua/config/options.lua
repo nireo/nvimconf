@@ -1,53 +1,56 @@
+local o = vim.opt
+local a = vim.api
+
 -- Set highlight on search
-vim.o.hlsearch = false
+o.hlsearch = false
 
 -- Backspace
-vim.o.backspace = "indent,eol,start"
+o.backspace = "indent,eol,start"
 
 -- Enable mouse mode
-vim.o.mouse = "a"
-vim.o.guicursor = ""
+o.mouse = "a"
+o.guicursor = ""
 
 -- Indentation changes
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-vim.o.expandtab = true
-vim.o.autoindent = true
+o.shiftwidth = 4
+o.tabstop = 4
+o.expandtab = true
+o.autoindent = true
 
 -- Enable break indent
-vim.o.breakindent = true
+o.breakindent = true
 
 -- Save undo history
-vim.o.undofile = true
+o.undofile = true
 
-vim.opt.completeopt = "menu,menuone,noselect"
+o.completeopt = "menu,menuone,noselect"
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.smartindent = true
+o.ignorecase = true
+o.smartcase = true
+o.smartindent = true
 
 -- Enable usage of system clipboard.
-vim.o.clipboard = "unnamedplus"
+o.clipboard = "unnamedplus"
 
-vim.o.cursorline = false
-vim.o.cursorcolumn = false
+o.cursorline = false
+o.cursorcolumn = false
 
 -- Decrease update time
-vim.o.updatetime = 100
-vim.o.timeoutlen = 500
+o.updatetime = 100
+o.timeoutlen = 300
 vim.wo.signcolumn = "no"
-vim.o.synmaxcol = 120
+o.synmaxcol = 120
 
-vim.o.termguicolors = true
-vim.o.background = "dark"
+o.termguicolors = true
+o.background = "dark"
 
 -- Window splits
-vim.o.splitright = true
-vim.o.splitbelow = true
+o.splitright = true
+o.splitbelow = true
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
+o.completeopt = "menuone,noselect"
 
 -- Set leader to space
 vim.g.mapleader = " "
@@ -55,12 +58,12 @@ vim.g.maplocalleader = " "
 
 vim.g["surround_no_mapping"] = 1
 
-vim.o.backup = false
-vim.o.scrolloff = 5
-vim.o.swapfile = false
-vim.o.fileencoding = "utf-8"
-vim.o.showmode = false
-vim.o.lazyredraw = true
+o.backup = false
+o.scrolloff = 5
+o.swapfile = false
+o.fileencoding = "utf-8"
+o.showmode = false
+o.lazyredraw = true
 vim.wo.wrap = true
 vim.wo.linebreak = true
 
@@ -68,5 +71,22 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_banner = 0
 vim.g.netrw_list_style = 1
 
-vim.opt.relativenumber = true
-vim.opt.number = true
+o.relativenumber = true
+o.number = true
+a.nvim_create_autocmd(
+	{ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
+	{ pattern = "*", command = "if &nu && mode() != 'i' | set rnu | endif" }
+)
+a.nvim_create_autocmd(
+	{ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
+	{ pattern = "*", command = "if &nu | set nornu | endif" }
+)
+
+for _, plugin in pairs({
+	"netrwFileHandlers",
+	"2html_plugin",
+	"spellfile_plugin",
+	"matchit",
+}) do
+	vim.g["loaded_" .. plugin] = 1
+end

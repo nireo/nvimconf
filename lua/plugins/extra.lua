@@ -30,9 +30,16 @@ return {
 		},
 		keys = {
 			{
-				"<leader>/",
+				"gr",
 				function()
 					Snacks.picker.grep()
+				end,
+				desc = "Grep",
+			},
+			{
+				"gw",
+				function()
+					Snacks.picker.grep_word()
 				end,
 				desc = "Grep",
 			},
@@ -51,25 +58,11 @@ return {
 				desc = "Find Config File",
 			},
 			{
-				"<leader>p",
+				"ff",
 				function()
 					Snacks.picker.files()
 				end,
 				desc = "Find Files",
-			},
-			{
-				"<leader>fg",
-				function()
-					Snacks.picker.git_files()
-				end,
-				desc = "Find Git Files",
-			},
-			{
-				"<leader>fp",
-				function()
-					Snacks.picker.projects()
-				end,
-				desc = "Projects",
 			},
 			{
 				"<leader>cR",
