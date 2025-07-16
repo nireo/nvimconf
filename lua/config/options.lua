@@ -81,12 +81,3 @@ a.nvim_create_autocmd(
 	{ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
 	{ pattern = "*", command = "if &nu | set nornu | endif" }
 )
-
-for _, plugin in pairs({
-	"netrwFileHandlers",
-	"2html_plugin",
-	"spellfile_plugin",
-	"matchit",
-}) do
-	vim.g["loaded_" .. plugin] = 1
-end
