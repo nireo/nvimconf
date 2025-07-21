@@ -4,7 +4,9 @@ let g:colors_name = 'less'
 
 " Set black background
 " highlight Normal guifg=#B0B0B0 guibg=#14161B ctermbg=0
-highlight Normal guifg=#B0B0B0 guibg=#060606 ctermbg=0
+" highlight Normal guifg=#B0B0B0 guibg=#060606 ctermbg=0
+" highlight Normal guifg=#B0B0B0 guibg=#0C0B0A ctermbg=0
+highlight Normal guifg=#B0B0B0 guibg=#1D1D1D ctermbg=0
 highlight StatusLine guifg=#B0B0B0 guibg=#090909 ctermbg=0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#121212 ctermbg=0
 
@@ -56,20 +58,20 @@ highlight! link @string String
 " highlight! Comment guifg=#7D8A6F ctermfg=65 gui=italic cterm=italic
 highlight! Comment guifg=#767676 ctermfg=65 gui=italic cterm=italic
 
-highlight! Pmenu guibg=#121212 ctermbg=0
-highlight! PmenuSel guibg=#1A1A1A ctermbg=233 guifg=#8AA3C1 ctermfg=67
+highlight! Pmenu guibg=#040404 ctermbg=0
+highlight! PmenuSel guibg=#1D1D1D ctermbg=233 guifg=#8AA3C1 ctermfg=67
 highlight! PmenuSbar guibg=#121212 ctermbg=232
 highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
 
 highlight! NvimPickerNormal guifg=NvimLightGrey2 guibg=#121212
 highlight! NvimPickerBorder guifg=#2A2A2A guibg=#121212
-highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1A1A1A gui=bold
+highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1D1D1D gui=bold
 highlight! NvimPickerHeader guifg=#708090 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
-highlight! FloatBorder guifg=#2A2A2A guibg=#090909
-highlight! FloatTitle guifg=#708090 guibg=#090909 gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
+highlight! FloatBorder guifg=#2A2A2A guibg=#1D1D1D
+highlight! FloatTitle guifg=#708090 guibg=#1D1D1Dgui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#1D1D1D
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
