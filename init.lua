@@ -5,4 +5,4 @@ require("config.keymaps")
 require("config.autocmds")
 require("statusline")
 
-vim.cmd.colorscheme("zenbones")
+vim.cmd.colorscheme("less")
