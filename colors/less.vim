@@ -34,7 +34,7 @@ highlight! ColorColumn guibg=#0A0A0A
 " highlight! String guifg=#C9A96E
 "highlight! String guifg=#B8C78A  " slightly brighter green
 "highlight! String guifg=#9CAF88  " slightly brighter green
-highlight! String guifg=#7A7A7A  " slightly brighter green
+highlight! String guifg=#88B588   " slightly brighter green
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 
@@ -56,9 +56,9 @@ highlight! link @keyword.return Keyword
 highlight! link @string String
 
 " highlight! Comment guifg=#7D8A6F ctermfg=65 gui=italic cterm=italic
-highlight! Comment guifg=#9BC49B ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#7A7A7A ctermfg=65 gui=italic cterm=italic
 
-highlight! Pmenu guibg=#040404 ctermbg=0
+highlight! Pmenu guibg=#111111 ctermbg=0
 highlight! PmenuSel guibg=#1D1D1D ctermbg=233 guifg=#8AA3C1 ctermfg=67
 highlight! PmenuSbar guibg=#121212 ctermbg=232
 highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
@@ -69,9 +69,9 @@ highlight! NvimPickerSelected guifg=#8AA3C1 guibg=#1D1D1D gui=bold
 highlight! NvimPickerHeader guifg=#708090 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
-highlight! FloatBorder guifg=#2A2A2A guibg=#1D1D1D
-highlight! FloatTitle guifg=#708090 guibg=#1D1D1Dgui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#1D1D1D
+highlight! FloatBorder guifg=#2A2A2A guibg=#111111
+highlight! FloatTitle guifg=#708090 guibg=#111111 gui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#111111
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
