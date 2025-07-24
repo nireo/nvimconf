@@ -8,7 +8,6 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
-vim.keymap.set("i", "jk", "<Esc>")
 
 vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
@@ -35,6 +34,7 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv", opts)
 vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- show search results in the middle of the screen
 vim.keymap.set("n", "n", "nzzzv")
