@@ -2,7 +2,7 @@
 return {
 	"tpope/vim-sleuth",
 	{
-		"pechorin/any-jump.vim", -- fast go to dev in a lot of languages
+		"pechorin/any-jump.vim",
 		cmd = { "AnyJump", "AnyJumpVisual" },
 		keys = {
 			{ "<leader>ii", "<cmd>AnyJump<CR>", desc = "Any Jump" },

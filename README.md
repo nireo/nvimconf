@@ -1,9 +1,9 @@
 # neovim dotfiles
 
-A pretty minimal neovim configuration that contains features for writing c++, go and python code. The config is written fully in lua. 
+A pretty minimal neovim configuration that doesn't have a lot of plugins. Mainly used for Go, Rust and C development. Also supports Zig and some js/ts. 
 
 
-## Getting started 
+## Setup 
 
 ```
 git clone https://github.com/nireo/nvimconf ~/.config/nvim
