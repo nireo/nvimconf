@@ -35,6 +35,14 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv", opts)
 vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv", opts)
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set("n", "<leader>yb", function()
+	local cur = vim.api.nvim_win_get_cursor(0) -- Save current cursor position
+	vim.cmd("normal! ggVGy") -- Yank the whole file
+	vim.api.nvim_win_set_cursor(0, cur) -- Restore cursor position
+
+	print("yanked whole file to system clipboard")
+end)
+vim.keymap.set("n", "zz", ":qa!<CR>", opts)
 
 -- show search results in the middle of the screen
 --
