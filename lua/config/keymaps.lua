@@ -42,7 +42,6 @@ vim.keymap.set("n", "<leader>yb", function()
 
 	print("yanked whole file to system clipboard")
 end)
-vim.keymap.set("n", "zz", ":qa!<CR>", opts)
 
 -- show search results in the middle of the screen
 --
