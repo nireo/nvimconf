@@ -3,11 +3,9 @@ runtime! colors/default.vim
 let g:colors_name = 'less'
 
 " Set black background
-highlight Normal guifg=#B0B0B0 guibg=#111111 ctermbg=0
-highlight StatusLine guifg=#B0B0B0 guibg=#090909 ctermbg=0
-highlight StatusLineNC guifg=#B0B0B0 guibg=#121212 ctermbg=0
-
-" TODO: do sometimg
+highlight Normal guifg=#B0B0B0 guibg=#111111
+highlight StatusLine guifg=#B0B0B0 guibg=#090909
+highlight StatusLineNC guifg=#B0B0B0 guibg=#121212
 
 " primitives
 highlight! Function guifg=#6B8F8F
@@ -73,7 +71,6 @@ highlight! link @variable.member Identifier
 highlight! link @variable.member.lua Identifier
 highlight! link @property.lua Identifier
 highlight! link @field.lua Identifier
-
 
 highlight! @variable.member.builtin guifg=#B0B0B0
 highlight! @config guifg=#B0B0B0
