@@ -46,13 +46,13 @@ return {
 				end,
 				desc = "Grep",
 			},
-			{
-				"ff",
-				function()
-					Snacks.picker.files()
-				end,
-				desc = "Find Files",
-			},
+			-- {
+			-- 	"ff",
+			-- 	function()
+			-- 		Snacks.picker.files()
+			-- 	end,
+			-- 	desc = "Find Files",
+			-- },
 			{
 				"<leader>cR",
 				function()
@@ -154,35 +154,12 @@ return {
 				desc = "Remote Flash",
 			},
 			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
-			{
 				"<c-s>",
 				mode = { "c" },
 				function()
 					require("flash").toggle()
 				end,
 				desc = "Toggle Flash Search",
-			},
-		},
-	},
-	{
-		"folke/todo-comments.nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
-		keys = {
-			{
-				"<leader>st",
-				function()
-					Snacks.picker.todo_comments()
-				end,
-				desc = "Todo",
 			},
 		},
 	},
