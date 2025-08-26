@@ -46,13 +46,6 @@ return {
 				end,
 				desc = "Grep",
 			},
-			-- {
-			-- 	"ff",
-			-- 	function()
-			-- 		Snacks.picker.files()
-			-- 	end,
-			-- 	desc = "Find Files",
-			-- },
 			{
 				"<leader>cR",
 				function()
