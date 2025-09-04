@@ -1,4 +1,5 @@
 return {
+	"github/copilot.vim",
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",

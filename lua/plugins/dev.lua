@@ -53,8 +53,8 @@ return {
 				preset = "enter",
 				["<C-k>"] = { "select_prev", "fallback" },
 				["<C-j>"] = { "select_next", "fallback" },
-				["<Tab>"] = { "select_next", "fallback" },
-				["<S-Tab>"] = { "select_prev", "fallback" },
+				-- ["<Tab>"] = { "select_next", "fallback" },
+				-- ["<S-Tab>"] = { "select_prev", "fallback" },
 			},
 			appearance = {
 				nerd_font_variant = "mono",
