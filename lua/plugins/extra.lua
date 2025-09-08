@@ -109,13 +109,6 @@ return {
 				end,
 				desc = "Diagnostics",
 			},
-			{
-				"<leader>sD",
-				function()
-					Snacks.picker.diagnostics_buffer()
-				end,
-				desc = "Diagnostics",
-			},
 		},
 	},
 	{
@@ -138,22 +131,6 @@ return {
 					require("flash").treesitter()
 				end,
 				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
 			},
 		},
 	},

@@ -43,8 +43,6 @@ vim.keymap.set("n", "<leader>yb", function()
 	print("yanked whole file to system clipboard")
 end)
 
--- show search results in the middle of the screen
---
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "dd", function()
