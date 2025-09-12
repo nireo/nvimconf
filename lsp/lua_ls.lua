@@ -17,4 +17,11 @@ return {
 	},
 	single_file_support = true,
 	log_level = vim.lsp.protocol.MessageType.Error,
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = { "vim" }, -- Recognize 'vim' as a global variable
+			},
+		},
+	},
 }
