@@ -136,6 +136,7 @@ return {
 				enabled = false,
 				show_scores = false,
 			},
+			prompt = ">>> ",
 		},
 		lazy = false,
 		keys = {

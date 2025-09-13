@@ -2,12 +2,10 @@ set background=dark
 runtime! colors/default.vim
 let g:colors_name = 'less'
 
-" Set black background
 highlight Normal guifg=#B0B0B0 guibg=#111111
 highlight StatusLine guifg=#101010 guibg=#B0B0B0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#121212
 
-" primitives
 highlight! Function guifg=#6B8F8F
 highlight! Title guifg=#B294BB
 highlight! Identifier guifg=#B0B0B0
@@ -24,11 +22,10 @@ highlight! link Character String
 highlight! Constant guifg=#7A8A9A
 highlight! Operator guifg=#B294BB
 highlight! ColorColumn guibg=#0A0A0A
-highlight! String guifg=#88B588   " slightly brighter green
+highlight! String guifg=#88B588
 
 highlight! Keyword guifg=#8AA3C1 ctermfg=67
 
-" treesitter
 highlight! link @namespace Namespace
 highlight! link @module Module
 highlight! link @module.builtin Module
@@ -45,7 +42,6 @@ highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
 
-" highlight! Comment guifg=#7D8A6F ctermfg=65 gui=italic cterm=italic
 highlight! Comment guifg=#7A7A7A ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#B8A896 ctermfg=65 gui=italic cterm=italic
 highlight! TodoBgTODO guifg=#111111 guibg=#B8A896 ctermfg=65 gui=italic cterm=italic
