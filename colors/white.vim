@@ -1,30 +1,38 @@
 set background=dark
 runtime! colors/default.vim
-let g:colors_name = 'simple'
+let g:colors_name = 'white'
 
+" Base colors
 highlight Normal guifg=#B0B0B0 guibg=#090909
 highlight StatusLine guifg=#101010 guibg=#B0B0B0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#121212
 
-highlight! Function guifg=#6B8F8F
-highlight! Title guifg=#9BBB94
+" Most syntax elements - muted white
+highlight! Function guifg=#B0B0B0
+highlight! Title guifg=#B0B0B0
 highlight! Identifier guifg=#B0B0B0
 highlight! Delimiter guifg=#B0B0B0
-highlight! Directory guifg=#88AF7A
-highlight! Module cterm=italic gui=italic
-highlight! Special guifg=#88AF7A
+highlight! Directory guifg=#B0B0B0
+highlight! Module cterm=italic gui=italic guifg=#B0B0B0
+highlight! Special guifg=#B0B0B0
 highlight! link Namespace Module
-highlight! Type guifg=#88AAB5
-highlight! Number guifg=#7A8A9A ctermfg=60
+highlight! Type guifg=#B0B0B0
+highlight! Number guifg=#B0B0B0 ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
 highlight! link Character String
-highlight! Constant guifg=#7A8A9A
-highlight! Operator guifg=#9BBB94
+highlight! Constant guifg=#B0B0B0
+highlight! Operator guifg=#B0B0B0
 highlight! ColorColumn guibg=#0A0A0A
-highlight! String guifg=#88B588
-highlight! Keyword guifg=#8AC18A ctermfg=67
+highlight! Keyword guifg=#B0B0B0 ctermfg=67
 
+" Keep original colors for strings, comments, and todos
+highlight! String guifg=#88B588
+highlight! Comment guifg=#6A7A6A ctermfg=65 gui=italic cterm=italic
+highlight! TodoFgTODO guifg=#A8B896 ctermfg=65 gui=italic cterm=italic
+highlight! TodoBgTODO guifg=#090909 guibg=#A8B896 ctermfg=65 gui=italic cterm=italic
+
+" TreeSitter links - all muted white except strings/comments
 highlight! link @namespace Namespace
 highlight! link @module Module
 highlight! link @module.builtin Module
@@ -41,29 +49,23 @@ highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
 
-highlight! Comment guifg=#6A7A6A ctermfg=65 gui=italic cterm=italic
-highlight! TodoFgTODO guifg=#A8B896 ctermfg=65 gui=italic cterm=italic
-highlight! TodoBgTODO guifg=#090909 guibg=#A8B896 ctermfg=65 gui=italic cterm=italic
-
+" UI elements
 highlight! Pmenu guibg=#090909 ctermbg=0
 highlight! PmenuSel guibg=#1D1D1D ctermbg=233 guifg=#8AC18A ctermfg=67
 highlight! PmenuSbar guibg=#121212 ctermbg=232
 highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
-
 highlight! NvimPickerNormal guifg=NvimLightGrey2 guibg=#121212
 highlight! NvimPickerBorder guifg=#2A2A2A guibg=#121212
 highlight! NvimPickerSelected guifg=#8AC18A guibg=#1D1D1D gui=bold
 highlight! NvimPickerHeader guifg=#708060 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
-
-" Floating windows
 highlight! FloatBorder guifg=#2A2A2A guibg=#090909
 highlight! FloatTitle guifg=#708060 guibg=#090909 gui=bold
 highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
-" Variable and property links
+" Variable and method highlights - all muted white
 highlight! link @variable.member Identifier
 highlight! link @variable.member.lua Identifier
 highlight! link @property.lua Identifier
