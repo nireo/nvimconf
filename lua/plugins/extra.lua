@@ -1,5 +1,6 @@
 return {
 	"github/copilot.vim",
+	{ "miikanissi/modus-themes.nvim", priority = 1000 },
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
@@ -13,6 +14,12 @@ return {
 				desc = "Buffer Local Keymaps (which-key)",
 			},
 		},
+	},
+	"darianmorat/gruvdark.nvim",
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		lazy = false,
 	},
 	{
 		"folke/snacks.nvim",
