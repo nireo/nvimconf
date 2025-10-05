@@ -2,7 +2,7 @@ set background=dark
 runtime! colors/default.vim
 let g:colors_name = 'simple'
 
-highlight Normal guifg=#B0B0B0 guibg=#090909
+highlight Normal guifg=#B0B0B0 guibg=#101010
 highlight StatusLine guifg=#101010 guibg=#B0B0B0
 highlight StatusLineNC guifg=#B0B0B0 guibg=#121212
 

@@ -1,6 +1,17 @@
 return {
 	"github/copilot.vim",
-	{ "miikanissi/modus-themes.nvim", priority = 1000 },
+	"craftzdog/solarized-osaka.nvim",
+	"slugbyte/lackluster.nvim",
+	{
+		"darianmorat/gruvdark.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			colors = {
+				bg0 = "#101010",
+			},
+		},
+	},
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",

@@ -25,7 +25,7 @@ vim.keymap.set({ "n", "v" }, "gl", "$")
 vim.keymap.set({ "n", "v" }, "gj", "%")
 vim.keymap.set("n", "<Tab>", "<C-W>w")
 vim.keymap.set("n", "<S-Tab>", "<C-W>W")
-vim.keymap.set("n", "<leader>t", ":terminal<CR>")
+-- vim.keymap.set("n", "<leader>t", ":terminal<CR>")
 vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>") -- this reads the function signature so it makes it alot more efficient
 vim.keymap.set("n", "<leader>gotf", ":GoTestFile<CR>")
 vim.keymap.set("n", "<leader>gofn", ":GoTestFunc<CR>")
@@ -56,3 +56,25 @@ end, { expr = true })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open float window to properly read diagnostic" })
+
+vim.keymap.set("n", "<leader>t", function()
+	local term_buf = nil
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.bo[buf].buftype == "terminal" then
+			term_buf = buf
+			break
+		end
+	end
+
+	if term_buf then
+		local term_win = vim.fn.bufwinid(term_buf)
+		if term_win ~= -1 then
+			vim.api.nvim_win_hide(term_win)
+		else
+			vim.cmd("split | buffer " .. term_buf)
+			vim.cmd("startinsert")
+		end
+	else
+		vim.cmd("split | terminal")
+	end
+end, { desc = "Toggle terminal" })
