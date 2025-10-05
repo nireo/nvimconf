@@ -1,14 +1,30 @@
 return {
 	"github/copilot.vim",
-	"craftzdog/solarized-osaka.nvim",
-	"slugbyte/lackluster.nvim",
 	{
-		"darianmorat/gruvdark.nvim",
-		lazy = false,
-		priority = 1000,
+		"obsidian-nvim/obsidian.nvim",
+		version = "*", -- recommended, use latest release instead of latest commit
+		ft = "markdown",
 		opts = {
-			colors = {
-				bg0 = "#101010",
+			workspaces = {
+				{
+					name = "personal",
+					path = "~/vault/vault",
+				},
+			},
+			new_notes_location = "main notes",
+			templates = {
+				subdir = "templates",
+				date_format = "%Y-%m-%d",
+				time_format = "%H:%M:%S",
+			},
+			mappings = {
+				-- overrides the 'gf' mapping to work on markdown/wiki links within your vault
+				["gf"] = {
+					action = function()
+						return require("obsidian").util.gf_passthrough()
+					end,
+					opts = { noremap = false, expr = true, buffer = true },
+				},
 			},
 		},
 	},
@@ -26,7 +42,6 @@ return {
 			},
 		},
 	},
-	"darianmorat/gruvdark.nvim",
 	{
 		"stevearc/oil.nvim",
 		opts = {},
