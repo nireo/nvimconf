@@ -1,5 +1,27 @@
 return {
-	"github/copilot.vim",
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		opts = {},
+	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
+	{
+		-- copilot is often really bad but sometimes it saves a bit of time, so I guess its worth it
+		"github/copilot.vim",
+		cmd = "Copilot",
+		keys = {
+			vim.keymap.set("n", "<leader>ce", ":Copilot enable<CR>", { desc = "Toggle Copilot" }),
+			vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>", { desc = "Toggle Copilot" }),
+		},
+		config = function()
+			vim.g.copilot_enabled = false
+		end,
+	},
 	{
 		"obsidian-nvim/obsidian.nvim",
 		version = "*", -- recommended, use latest release instead of latest commit
