@@ -45,6 +45,7 @@ vim.keymap.set("n", "<leader>yb", function()
 	print("yanked whole file to system clipboard")
 end)
 
+vim.keymap.set("n", "<leader>cg", ":Neogit<CR>")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "dd", function()

@@ -6,6 +6,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "text" },
+	callback = function()
+		vim.opt_local.spell = true
+	end,
+})
+
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	callback = function()
 		function _G.MyStatusLine()
