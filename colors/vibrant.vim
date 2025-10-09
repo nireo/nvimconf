@@ -72,3 +72,8 @@ highlight! @variable.builtin guifg=#D6CFC4
 highlight! @namespace.lua guifg=#D6CFC4
 highlight! @module.builtin guifg=#D6CFC4
 highlight! @variable guifg=#D6CFC4
+
+highlight! DiffAdd guifg=#6B8B6B guibg=#1A2B1A
+highlight! DiffChange guifg=#7B7B6B guibg=#252520
+highlight! DiffDelete guifg=#8B6B6B guibg=#2B1A1A
+highlight! DiffText guifg=#8B8B7B guibg=#2B2B20 gui=bold
