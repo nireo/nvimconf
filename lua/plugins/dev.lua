@@ -18,7 +18,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				go = { "goimports", "gofmt" },
+				go = { "gofumpt", "golines" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				javascriptreact = { "prettier" },
@@ -31,6 +31,14 @@ return {
 			formatters = {
 				clang_format = {
 					prepend_args = { "--style=file", "--fallback-style=LLVM" },
+				},
+				golines = {
+					prepend_args = {
+						"--max-len=80",
+						"--base-formatter=gofumpt",
+						"--ignore-generated",
+						"--shorten-comments",
+					},
 				},
 			},
 			format_on_save = {
@@ -137,7 +145,7 @@ return {
 				show_scores = false,
 			},
 			title = "",
-			prompt = ">>> ",
+			prompt = ">> ",
 			keymaps = {
 				close = "<Esc>",
 				select = "<CR>",

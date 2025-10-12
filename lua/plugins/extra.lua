@@ -110,22 +110,6 @@ return {
 				desc = "Rename File",
 			},
 			{
-				"<leader>gg",
-				function()
-					Snacks.lazygit()
-				end,
-				desc = "Lazygit",
-			},
-			{
-				"<leader>gb",
-				function()
-					Snacks.picker.git_branches({
-						layout = "select",
-					})
-				end,
-				desc = "Branches",
-			},
-			{
 				"<S-h>",
 				function()
 					Snacks.picker.buffers({

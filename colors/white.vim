@@ -4,7 +4,8 @@ set background=dark
 highlight Normal guifg=#D6CFC4 guibg=#101010
 highlight StatusLine guifg=#D6CFC4 guibg=#232323
 highlight StatusLineNC guifg=#D6CFC4 guibg=#303030
-highlight! Function guifg=#D6CFC4
+" highlight! Function guifg=#D6CFC4
+highlight! Function guifg=#E8E8E0
 highlight! Title guifg=#D6CFC4
 highlight! Identifier guifg=#D6CFC4
 highlight! Delimiter guifg=#D6CFC4
@@ -12,7 +13,8 @@ highlight! Directory guifg=#D6CFC4
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=#D6CFC4
 highlight! link Namespace Module
-highlight! Type guifg=#D6CFC4
+"highlight! Type guifg=#D6CFC4
+highlight! Type guifg=#C0C8D0
 highlight! Number guifg=#D6CFC4 ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
@@ -20,8 +22,9 @@ highlight! link Character String
 highlight! Constant guifg=#D6CFC4
 highlight! Operator guifg=#D6CFC4
 highlight! ColorColumn guibg=#0A0A0A
-highlight! String guifg=#95D095
-highlight! Keyword guifg=#D6CFC4 ctermfg=67
+highlight! String guifg=#7A9B7A
+" highlight! Keyword guifg=#D6CFC4 ctermfg=67
+highlight! Keyword guifg=#A8B4C8 ctermfg=67
 highlight! link @namespace Namespace
 highlight! link @module Module
 highlight! link @module.builtin Module
@@ -37,7 +40,7 @@ highlight! link @keyword.function Keyword
 highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
-highlight! Comment guifg=#9B9B7A ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#7A7A7A ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#BED1A8 ctermfg=65 gui=italic cterm=italic
 highlight! TodoBgTODO guifg=#090909 guibg=#BED1A8 ctermfg=65 gui=italic cterm=italic
 highlight! Pmenu guibg=#090909 ctermbg=0
