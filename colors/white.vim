@@ -5,11 +5,11 @@ highlight Normal guifg=#D6CFC4 guibg=#101010
 highlight StatusLine guifg=#D6CFC4 guibg=#232323
 highlight StatusLineNC guifg=#D6CFC4 guibg=#303030
 " highlight! Function guifg=#D6CFC4
-highlight! Function guifg=#E8E8E0
+highlight! Function guifg=#F0F0E8 gui=bold
 highlight! Title guifg=#D6CFC4
 highlight! Identifier guifg=#D6CFC4
 highlight! Delimiter guifg=#D6CFC4
-highlight! Directory guifg=#D6CFC4
+highlight! Directory guifg=#8BA8C8 gui=bold
 highlight! Module cterm=italic gui=italic
 highlight! Special guifg=#D6CFC4
 highlight! link Namespace Module
@@ -24,7 +24,7 @@ highlight! Operator guifg=#D6CFC4
 highlight! ColorColumn guibg=#0A0A0A
 highlight! String guifg=#7A9B7A
 " highlight! Keyword guifg=#D6CFC4 ctermfg=67
-highlight! Keyword guifg=#A8B4C8 ctermfg=67
+highlight! Keyword guifg=#B8C4D8 ctermfg=67 gui=bold
 highlight! link @namespace Namespace
 highlight! link @module Module
 highlight! link @module.builtin Module

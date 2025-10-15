@@ -18,7 +18,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				go = { "gofumpt", "golines" },
+				go = { "goimports", "golines", "gofumpt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				javascriptreact = { "prettier" },
@@ -34,7 +34,7 @@ return {
 				},
 				golines = {
 					prepend_args = {
-						"--max-len=80",
+						"--max-len=100",
 						"--base-formatter=gofumpt",
 						"--ignore-generated",
 						"--shorten-comments",
