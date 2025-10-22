@@ -29,8 +29,9 @@ return {
 				css = { "prettier" },
 			},
 			formatters = {
-				clang_format = {
-					prepend_args = { "--style=file", "--fallback-style=LLVM" },
+				["clang-format"] = {
+					-- Just use WebKit directly without file fallback
+					prepend_args = { "--style=webkit" },
 				},
 				golines = {
 					prepend_args = {

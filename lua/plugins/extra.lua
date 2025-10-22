@@ -5,6 +5,12 @@ return {
 		opts = {},
 	},
 	{
+		"lucasadelino/conifer.nvim",
+		priority = 1000,
+		lazy = false,
+		opts = {},
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
