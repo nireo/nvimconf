@@ -2,9 +2,10 @@ set background=dark
 runtime! colors/default.vim
 let g:colors_name = 'vibrant'
 
-highlight Normal guifg=#D6CFC4 guibg=#101010
-highlight StatusLine guifg=#D6CFC4 guibg=#232323
-highlight StatusLineNC guifg=#D6CFC4 guibg=#303030
+"highlight Normal guifg=#D6CFC4 guibg=#101010
+highlight Normal guifg=#D6CFC4 guibg=#0e1415
+highlight StatusLine guifg=#D6CFC4 guibg=#101010
+highlight StatusLineNC guifg=#D6CFC4 guibg=#202020
 highlight! Function guifg=#7DADA8
 highlight! Title guifg=#A8D89E
 highlight! Identifier guifg=#D6CFC4
@@ -40,8 +41,8 @@ highlight! link @keyword.return Keyword
 highlight! link @string String
 highlight! Comment guifg=#9B9B7A ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#BED1A8 ctermfg=65 gui=italic cterm=italic
-highlight! TodoBgTODO guifg=#090909 guibg=#BED1A8 ctermfg=65 gui=italic cterm=italic
-highlight! Pmenu guibg=#090909 ctermbg=0
+highlight! TodoBgTODO guifg=#0e1415 guibg=#BED1A8 ctermfg=65 gui=italic cterm=italic
+highlight! Pmenu guibg=#0e1415 ctermbg=0
 highlight! PmenuSel guibg=#1D1D1D ctermbg=233 guifg=#9CD99C ctermfg=67
 highlight! PmenuSbar guibg=#121212 ctermbg=232
 highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
@@ -52,9 +53,9 @@ highlight! NvimPickerHeader guifg=#8AA070 guibg=#121212 gui=bold
 highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
 
 " Floating windows
-highlight! FloatBorder guifg=#2A2A2A guibg=#090909
-highlight! FloatTitle guifg=#8AA070 guibg=#090909 gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
+highlight! FloatBorder guifg=#2A2A2A guibg=#0e1415
+highlight! FloatTitle guifg=#8AA070 guibg=#0e1415 gui=bold
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#0e1415
 highlight! FloatShadow guibg=#050505 blend=80
 highlight! FloatShadowThrough guibg=#050505 blend=100
 
