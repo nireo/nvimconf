@@ -147,6 +147,10 @@ return {
 			},
 			title = "",
 			prompt = ">> ",
+			layout = {
+				prompt_position = "top",
+				height = 0.4,
+			},
 			keymaps = {
 				close = "<Esc>",
 				select = "<CR>",
