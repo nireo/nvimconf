@@ -25,7 +25,7 @@ return {
 	"kevinhwang91/nvim-bqf",
 	{
 		"obsidian-nvim/obsidian.nvim",
-		version = "*", -- recommended, use latest release instead of latest commit
+		version = "*",
 		ft = "markdown",
 		opts = {
 			workspaces = {
@@ -41,7 +41,6 @@ return {
 				time_format = "%H:%M:%S",
 			},
 			mappings = {
-				-- overrides the 'gf' mapping to work on markdown/wiki links within your vault
 				["gf"] = {
 					action = function()
 						return require("obsidian").util.gf_passthrough()
@@ -80,7 +79,12 @@ return {
 				layout = {
 					preview = false,
 					preset = "ivy",
-					layout = { position = "bottom" },
+					position = "bottom",
+					height = 0.2,
+				},
+				win = {
+					border = "none",
+					style = "minimal",
 				},
 			},
 			notifier = {
@@ -95,6 +99,13 @@ return {
 					Snacks.picker.grep()
 				end,
 				desc = "Grep",
+			},
+			{
+				"ff",
+				function()
+					Snacks.picker.files()
+				end,
+				desc = "Find files",
 			},
 			{
 				"gw",

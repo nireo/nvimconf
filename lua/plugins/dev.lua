@@ -137,42 +137,4 @@ return {
 			indent = { enable = true },
 		},
 	},
-	{
-		"dmtrKovalenko/fff.nvim",
-		build = "cargo build --release",
-		opts = {
-			debug = {
-				enabled = false,
-				show_scores = false,
-			},
-			title = "",
-			prompt = ">> ",
-			layout = {
-				prompt_position = "top",
-				height = 0.4,
-			},
-			keymaps = {
-				close = "<Esc>",
-				select = "<CR>",
-				select_split = "<C-s>",
-				select_vsplit = "<C-v>",
-				select_tab = "<C-t>",
-				move_up = { "<Up>", "<C-p>", "<C-k>" },
-				move_down = { "<Down>", "<C-n>", "<C-j>" },
-				preview_scroll_up = "<C-u>",
-				preview_scroll_down = "<C-d>",
-				toggle_debug = "<F2>",
-			},
-		},
-		lazy = false,
-		keys = {
-			{
-				"ff",
-				function()
-					require("fff").find_files()
-				end,
-				desc = "FFFind files",
-			},
-		},
-	},
 }
