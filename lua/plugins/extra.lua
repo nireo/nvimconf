@@ -22,7 +22,6 @@ return {
 			vim.g.copilot_enabled = false
 		end,
 	},
-	"kevinhwang91/nvim-bqf",
 	{
 		"obsidian-nvim/obsidian.nvim",
 		version = "*",
