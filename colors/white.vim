@@ -37,7 +37,7 @@ highlight! link @keyword.function Keyword
 highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
-highlight! Comment guifg=#5a6670 ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#50b7e0 ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! TodoBgTODO guifg=#090909 guibg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! Pmenu guibg=#16181a ctermbg=0
