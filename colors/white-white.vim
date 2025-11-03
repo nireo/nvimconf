@@ -1,7 +1,7 @@
 " colors/default.vim
 let g:colors_name = 'whitewhite'
 set background=light
-highlight Normal guifg=#202224 guibg=#f8f8f8
+highlight Normal guifg=#202224 guibg=#ededed
 highlight StatusLine guifg=#202224 guibg=#e8e8e8
 highlight StatusLineNC guifg=#606264 guibg=#ececec
 highlight! Function guifg=#202224 gui=NONE
@@ -39,7 +39,7 @@ highlight! link @keyword.return Keyword
 highlight! link @string String
 highlight! Comment guifg=#007d9c ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#202224 ctermfg=65 gui=italic cterm=italic
-highlight! TodoBgTODO guifg=#f8f8f8 guibg=#202224 ctermfg=65 gui=italic cterm=italic
+highlight! TodoBgTODO guifg=#ededed guibg=#202224 ctermfg=65 gui=italic cterm=italic
 highlight! Pmenu guibg=#efefef ctermbg=0
 highlight! PmenuSel guibg=#e0e0e0 ctermbg=233 guifg=#202224 ctermfg=67
 highlight! PmenuSbar guibg=#efefef ctermbg=232
@@ -74,9 +74,10 @@ highlight! DiffChange guifg=#202224 guibg=#f0f0d4
 highlight! DiffDelete guifg=#202224 guibg=#f0d4d4
 highlight! DiffText guifg=#202224 guibg=#e8e8d4 gui=NONE
 highlight! PreProc guifg=#202224
+highlight! Statement guifg=#202224
 " Line numbers
-highlight! LineNr guifg=#999999 guibg=#f8f8f8
-highlight! CursorLineNr guifg=#666666 guibg=#f8f8f8 gui=NONE
+highlight! LineNr guifg=#999999 guibg=#ededed
+highlight! CursorLineNr guifg=#666666 guibg=#ededed gui=NONE
 highlight! DiagnosticError guifg=#c73c3f guibg=NONE
 highlight! DiagnosticWarn guifg=#c77c3f guibg=NONE
 highlight! DiagnosticInfo guifg=#007d9c guibg=NONE

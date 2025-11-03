@@ -18,7 +18,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				go = { "goimports", "golines", "gofumpt" },
+				go = { "goimports", "gofumpt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				javascriptreact = { "prettier" },
@@ -32,14 +32,6 @@ return {
 				["clang-format"] = {
 					-- Just use WebKit directly without file fallback
 					prepend_args = { "--style=webkit" },
-				},
-				golines = {
-					prepend_args = {
-						"--max-len=100",
-						"--base-formatter=gofumpt",
-						"--ignore-generated",
-						"--shorten-comments",
-					},
 				},
 			},
 			format_on_save = {

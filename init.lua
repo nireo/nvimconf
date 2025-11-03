@@ -4,4 +4,4 @@ require("core.lsp")
 require("config.keymaps")
 require("config.autocmds")
 
-vim.cmd.colorscheme("vibrant-black")
+vim.cmd.colorscheme("white-white")
