@@ -1,7 +1,10 @@
-" colors/default.vim
-let g:colors_name = 'white'
 set background=dark
-highlight Normal guifg=#a8b5c0 guibg=#1c1e20
+runtime! colors/default.vim
+let g:colors_name = 'white'
+
+" highlight Normal guifg=#a8b5c0 guibg=#16181a
+" highlight Normal guifg=#a8b5c0 guibg=#121214  " was #1b1b1d
+highlight Normal guifg=#a8b5c0 guibg=#0e0e10
 highlight StatusLine guifg=#a8b5c0 guibg=#232323
 highlight StatusLineNC guifg=#a8b5c0 guibg=#303030
 highlight! Function guifg=#a8b5c0 gui=NONE
@@ -13,14 +16,18 @@ highlight! Module cterm=italic gui=italic
 highlight! Special guifg=#a8b5c0
 highlight! link Namespace Module
 highlight! Type guifg=#a8b5c0
-highlight! Number guifg=#a8b5c0 ctermfg=60
 highlight! link Float Number
 highlight! link Constructor Type
 highlight! link Character String
+" highlight! Constant guifg=#88b89f  " sage green
+" highlight! Number guifg=#88b89f
 highlight! Constant guifg=#a8b5c0
+highlight! Number guifg=#a8b5c0 ctermfg=60
+
 highlight! Operator guifg=#a8b5c0
 highlight! ColorColumn guibg=#16181a
-highlight! String guifg=#a8b5c0
+" highlight! String guifg=#a8b5c0
+highlight! String guifg=#c9a87f
 highlight! Keyword guifg=#a8b5c0 ctermfg=67 gui=NONE
 highlight! link @namespace Namespace
 highlight! link @module Module
@@ -37,7 +44,8 @@ highlight! link @keyword.function Keyword
 highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
-highlight! Comment guifg=#50b7e0 ctermfg=65 gui=italic cterm=italic
+" highlight! Comment guifg=#50b7e0 ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#9B9B7A ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! TodoBgTODO guifg=#090909 guibg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! Pmenu guibg=#16181a ctermbg=0
@@ -73,6 +81,17 @@ highlight! DiffAdd guifg=#a8b5c0 guibg=#1a2e1a
 highlight! DiffChange guifg=#a8b5c0 guibg=#252520
 highlight! DiffDelete guifg=#a8b5c0 guibg=#2e1a1a
 highlight! DiffText guifg=#a8b5c0 guibg=#2a2a20 gui=NONE
+highlight PreProc guifg=#a8b5c0
+highlight Statement guifg=#a8b5c0
+
 " Line numbers - light blue like Acme/Go Playground
-highlight! LineNr guifg=#7a8c9c guibg=#1c1e20
-highlight! CursorLineNr guifg=#8a9cac guibg=#1c1e20 gui=NONE
+highlight! LineNr guifg=#7a8c9c guibg=#16181a
+highlight! CursorLineNr guifg=#8a9cac guibg=#16181a gui=NONE
+highlight! LspReferenceText guibg=#1f3040 guifg=NONE
+highlight! LspReferenceRead guibg=#1f3040 guifg=NONE
+highlight! LspReferenceWrite guibg=#1a2838 guifg=NONE
+
+" Visual selection - brighter blue background
+highlight! Visual guibg=#1f3040 guifg=NONE
+highlight! VisualNOS guibg=#1f3040 guifg=NONE
+highlight! MatchParen guifg=#50b7e0 guibg=#2a2d30 gui=bold

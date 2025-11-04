@@ -1,6 +1,8 @@
 " colors/default.vim
-let g:colors_name = 'whitewhite'
 set background=light
+runtime! colors/default.vim
+let g:colors_name = 'white-white'
+
 highlight Normal guifg=#202224 guibg=#ededed
 highlight StatusLine guifg=#202224 guibg=#e8e8e8
 highlight StatusLineNC guifg=#606264 guibg=#ececec
@@ -91,3 +93,4 @@ highlight! LspReferenceRead guibg=#d4e8f0 guifg=NONE
 highlight! LspReferenceWrite guibg=#c4dce8 guifg=NONE
 highlight! Visual guibg=#d4e8f0 guifg=NONE
 highlight! VisualNOS guibg=#d4e8f0 guifg=NONE
+
