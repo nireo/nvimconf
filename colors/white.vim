@@ -21,14 +21,13 @@ highlight! link Constructor Type
 highlight! link Character String
 " highlight! Constant guifg=#88b89f  " sage green
 " highlight! Number guifg=#88b89f
-highlight! Constant guifg=#a8b5c0
-highlight! Number guifg=#a8b5c0 ctermfg=60
-
+highlight! Constant guifg=#78b8b8 gui=NONE        " Brighter teal-cyan (stands out nicely)
+highlight! Number guifg=#78b8b8 ctermfg=60        " Match constants
+highlight! WinSeparator guifg=#16181a guibg=#16181a
 highlight! Operator guifg=#a8b5c0
 highlight! ColorColumn guibg=#16181a
-" highlight! String guifg=#a8b5c0
-highlight! String guifg=#c9a87f
-highlight! Keyword guifg=#a8b5c0 ctermfg=67 gui=NONE
+highlight! String guifg=#7a9c8c
+highlight! Keyword guifg=#b8c5d0
 highlight! link @namespace Namespace
 highlight! link @module Module
 highlight! link @module.builtin Module
@@ -45,7 +44,7 @@ highlight! link @keyword.operator Keyword
 highlight! link @keyword.return Keyword
 highlight! link @string String
 " highlight! Comment guifg=#50b7e0 ctermfg=65 gui=italic cterm=italic
-highlight! Comment guifg=#9B9B7A ctermfg=65 gui=italic cterm=italic
+highlight! Comment guifg=#8a9a8a ctermfg=65 gui=italic cterm=italic
 highlight! TodoFgTODO guifg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! TodoBgTODO guifg=#090909 guibg=#a8b5c0 ctermfg=65 gui=italic cterm=italic
 highlight! Pmenu guibg=#16181a ctermbg=0
@@ -91,7 +90,29 @@ highlight! LspReferenceText guibg=#1f3040 guifg=NONE
 highlight! LspReferenceRead guibg=#1f3040 guifg=NONE
 highlight! LspReferenceWrite guibg=#1a2838 guifg=NONE
 
+highlight! DiffAdd guifg=#a8b5c0 guibg=#1a3a2a gui=NONE
+highlight! DiffChange guifg=#a8b5c0 guibg=#3a3a2a gui=NONE
+highlight! DiffDelete guifg=#5a6c7c guibg=#3a1a1a gui=NONE
+highlight! DiffText guifg=#b8c5d0 guibg=#4a4a2a gui=bold
+
+highlight! NeogitDiffAdd guifg=#a8b5c0 guibg=#1a3a2a
+highlight! NeogitDiffAddHighlight guifg=#a8b5c0 guibg=#1a3a2a
+highlight! NeogitDiffDelete guifg=#7a8c9c guibg=#3a1a1a
+highlight! NeogitDiffDeleteHighlight guifg=#7a8c9c guibg=#3a1a1a
+highlight! NeogitDiffContext guifg=#a8b5c0 guibg=NONE
+highlight! NeogitDiffContextHighlight guifg=#a8b5c0 guibg=#16181a
+highlight! NeogitHunkHeader guifg=#8a9cac guibg=#16181a
+highlight! NeogitHunkHeaderHighlight guifg=#8a9cac guibg=#2a2d30
+
 " Visual selection - brighter blue background
 highlight! Visual guibg=#1f3040 guifg=NONE
 highlight! VisualNOS guibg=#1f3040 guifg=NONE
 highlight! MatchParen guifg=#50b7e0 guibg=#2a2d30 gui=bold
+highlight! Search guibg=#1f3040 guifg=NONE
+highlight! IncSearch guibg=#1f3040 guifg=NONE
+highlight! Function guifg=#90b8c8 gui=NONE        " Soft cyan-blue
+highlight! Type guifg=#b8c0a8 gui=NONE            " Soft sage (echoes your string color)
+highlight! Keyword guifg=#c0b0a8 gui=NONE         " Soft warm grey-beige
+highlight! Function guifg=#90b8c8 gui=NONE        " Soft cyan-blue (keeping this - it's great)
+highlight! Type guifg=#a8c0b0 gui=NONE            " Soft blue-sage (structural, cool)
+highlight! Keyword guifg=#98b0b8 gui=NONE         " Soft steel-blue (control flow)
