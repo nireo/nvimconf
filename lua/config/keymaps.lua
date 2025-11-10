@@ -11,10 +11,10 @@ vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
 
-vim.keymap.set("n", "<leader>l", "<C-w>l<CR>")
-vim.keymap.set("n", "<leader>h", "<C-w>h<CR>")
-vim.keymap.set("n", "<leader>j", "<C-w>j<CR>")
-vim.keymap.set("n", "<leader>k", "<C-w>k<CR>")
+vim.keymap.set("n", "<leader>wl", "<C-w>l<CR>")
+vim.keymap.set("n", "<leader>wh", "<C-w>h<CR>")
+vim.keymap.set("n", "<leader>wj", "<C-w>j<CR>")
+vim.keymap.set("n", "<leader>wk", "<C-w>k<CR>")
 
 vim.keymap.set("n", "<leader>|", "<C-w>v")
 vim.keymap.set("n", "<leader>-", "<C-w>s")
@@ -58,24 +58,46 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous dia
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open float window to properly read diagnostic" })
 
-vim.keymap.set("n", "<leader>t", function()
-	local term_buf = nil
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.bo[buf].buftype == "terminal" then
-			term_buf = buf
-			break
-		end
-	end
+vim.keymap.set('n', '<leader>t', function()
+  local term_buf = nil
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == 'terminal' then
+      term_buf = buf
+      break
+    end
+  end
+  
+  if term_buf then
+    vim.api.nvim_set_current_buf(term_buf)
+  else
+    vim.cmd('terminal')
+  end
+  
+  vim.cmd('startinsert')
+end, { desc = 'Toggle terminal buffer' })
 
-	if term_buf then
-		local term_win = vim.fn.bufwinid(term_buf)
-		if term_win ~= -1 then
-			vim.api.nvim_win_hide(term_win)
-		else
-			vim.cmd("split | buffer " .. term_buf)
-			vim.cmd("startinsert")
-		end
-	else
-		vim.cmd("split | terminal")
-	end
-end, { desc = "Toggle terminal" })
+vim.keymap.set('n', '<C-a>', '<C-^>', { desc = 'Go to back from terminal' })
+vim.keymap.set('n', '<leader>T', function()
+  local term_buf = nil
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == 'terminal' then
+      term_buf = buf
+      break
+    end
+  end
+  
+  local width = vim.api.nvim_win_get_width(0)
+  local height = vim.api.nvim_win_get_height(0)
+  
+  local split_cmd = (width > height * 2) and 'vsplit' or 'split'
+  
+  if term_buf then
+    vim.cmd(split_cmd)
+    vim.api.nvim_set_current_buf(term_buf)
+  else
+    vim.cmd(split_cmd)
+    vim.cmd('terminal')
+  end
+  
+  vim.cmd('startinsert')
+end, { desc = 'Split terminal buffer' })
