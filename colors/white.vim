@@ -116,3 +116,7 @@ highlight! Keyword guifg=#c0b0a8 gui=NONE         " Soft warm grey-beige
 highlight! Function guifg=#90b8c8 gui=NONE        " Soft cyan-blue (keeping this - it's great)
 highlight! Type guifg=#a8c0b0 gui=NONE            " Soft blue-sage (structural, cool)
 highlight! Keyword guifg=#98b0b8 gui=NONE         " Soft steel-blue (control flow)
+
+
+highlight! Directory guifg=#90b8c8 gui=NONE        " Soft cyan-blue
+highlight! Title guifg=#90b8c8 gui=NONE        " Soft cyan-blue

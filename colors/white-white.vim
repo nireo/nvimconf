@@ -94,3 +94,4 @@ highlight! LspReferenceWrite guibg=#c4dce8 guifg=NONE
 highlight! Visual guibg=#d4e8f0 guifg=NONE
 highlight! VisualNOS guibg=#d4e8f0 guifg=NONE
 
+

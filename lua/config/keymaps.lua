@@ -101,3 +101,16 @@ vim.keymap.set('n', '<leader>T', function()
   
   vim.cmd('startinsert')
 end, { desc = 'Split terminal buffer' })
+
+-- toggle absolute and relative line numbers
+vim.keymap.set("n", "<leader>rn", function()
+  local number = vim.wo.number
+  local relativenumber = vim.wo.relativenumber
+  if number or relativenumber then
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  else
+    vim.wo.number = true
+    vim.wo.relativenumber = true
+  end
+end, { desc = "Toggle line numbers (absolute + relative)" })

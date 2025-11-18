@@ -5,6 +5,9 @@ return {
 		opts = {},
 	},
 	{
+		"junegunn/seoul256.vim",
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
