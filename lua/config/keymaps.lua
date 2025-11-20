@@ -102,7 +102,6 @@ vim.keymap.set('n', '<leader>T', function()
   vim.cmd('startinsert')
 end, { desc = 'Split terminal buffer' })
 
--- toggle absolute and relative line numbers
 vim.keymap.set("n", "<leader>rn", function()
   local number = vim.wo.number
   local relativenumber = vim.wo.relativenumber
@@ -114,3 +113,8 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.wo.relativenumber = true
   end
 end, { desc = "Toggle line numbers (absolute + relative)" })
+
+vim.keymap.set("n", "<C-Left>",  ":vertical resize -2<CR>")
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
+vim.keymap.set("n", "<C-Up>",    ":resize +2<CR>")
+vim.keymap.set("n", "<C-Down>",  ":resize -2<CR>")

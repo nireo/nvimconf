@@ -50,8 +50,8 @@ highlight! Keyword guifg=#79a8ff gui=NONE
 highlight! Statement guifg=#79a8ff gui=NONE
 
 " strings (keep blue)
-highlight! String guifg=#2fafff
-highlight! Character guifg=#2fafff
+highlight! String guifg=#c5c875
+highlight! Character guifg=#c5c875
 
 " constants (keep magenta-cooler)
 highlight! Constant guifg=#b6a0ff
@@ -106,8 +106,8 @@ highlight! @module guifg=#feacd0
 highlight! @module.builtin guifg=#feacd0
 
 " strings
-highlight! @string guifg=#2fafff
-highlight! @string.special.path guifg=#2fafff
+highlight! @string guifg=#c5c875
+highlight! @string.special.path guifg=#c5c875
 
 " constructors, functions, methods keep original meaning
 highlight! @constructor guifg=#11c777
@@ -187,8 +187,8 @@ highlight! TermCursorNC guifg=#000000 guibg=#595959
 
 highlight! NormalNC guifg=#ffffff guibg=#000000
 
-highlight! FloatBorder guifg=#2a2d30 guibg=#16181a
-highlight! FloatTitle guifg=#a8b5c0 guibg=#16181a gui=NONE
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#16181a
+highlight! FloatBorder guifg=#2a2d30 guibg=#070707
+highlight! FloatTitle guifg=#a8b5c0 guibg=#070707 gui=NONE
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#070707
 highlight! FloatShadow guibg=#0a0c0e blend=80
 highlight! FloatShadowThrough guibg=#0a0c0e blend=100
