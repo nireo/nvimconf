@@ -6,7 +6,7 @@ let g:colors_name = 'modus_dark'
 " -----------------------------------------------------
 " Core UI
 " -----------------------------------------------------
-highlight Normal guifg=#ffffff guibg=#070707
+highlight Normal guifg=#ffffff guibg=#101010
 highlight StatusLine guifg=#a8b5c0 guibg=#232323
 highlight StatusLineNC guifg=#a8b5c0 guibg=#303030
 
@@ -185,10 +185,10 @@ highlight! qfLineNr guifg=#c6daff guibg=#45605e
 highlight! TermCursor guifg=#000000 guibg=#ffffff
 highlight! TermCursorNC guifg=#000000 guibg=#595959
 
-highlight! NormalNC guifg=#ffffff guibg=#000000
+highlight! NormalNC guifg=#ffffff guibg=#101010
 
-highlight! FloatBorder guifg=#2a2d30 guibg=#070707
-highlight! FloatTitle guifg=#a8b5c0 guibg=#070707 gui=NONE
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#070707
-highlight! FloatShadow guibg=#0a0c0e blend=80
-highlight! FloatShadowThrough guibg=#0a0c0e blend=100
+highlight! FloatBorder guifg=#2a2d30 guibg=#101010
+highlight! FloatTitle guifg=#a8b5c0 guibg=#101010
+highlight! NormalFloat guifg=NvimLightGrey2 guibg=#101010
+highlight! FloatShadow guibg=#0a0c0e
+highlight! FloatShadowThrough guibg=#0a0c0e 

@@ -1,13 +1,5 @@
 return {
 	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		opts = {},
-	},
-	{
-		"junegunn/seoul256.vim",
-	},
-	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -24,33 +16,6 @@ return {
 		config = function()
 			vim.g.copilot_enabled = false
 		end,
-	},
-	{
-		"obsidian-nvim/obsidian.nvim",
-		version = "*",
-		ft = "markdown",
-		opts = {
-			workspaces = {
-				{
-					name = "personal",
-					path = "~/vault/vault",
-				},
-			},
-			new_notes_location = "main notes",
-			templates = {
-				subdir = "templates",
-				date_format = "%Y-%m-%d",
-				time_format = "%H:%M:%S",
-			},
-			mappings = {
-				["gf"] = {
-					action = function()
-						return require("obsidian").util.gf_passthrough()
-					end,
-					opts = { noremap = false, expr = true, buffer = true },
-				},
-			},
-		},
 	},
 	{
 		"folke/which-key.nvim",
