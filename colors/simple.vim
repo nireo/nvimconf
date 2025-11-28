@@ -1,79 +1,109 @@
 set background=dark
 runtime! colors/default.vim
-let g:colors_name = 'simple'
+let g:colors_name = 'bw_simple'
 
+" --- Main Interface ---
+" Everything text-related defaults to this single color
 highlight Normal guifg=#B0B0B0 guibg=#101010
+
+" --- UI Elements (Keep these distinct for usability) ---
 highlight StatusLine guifg=#101010 guibg=#B0B0B0
-highlight StatusLineNC guifg=#B0B0B0 guibg=#121212
+highlight StatusLineNC guifg=#606060 guibg=#121212
+highlight ColorColumn guibg=#1A1A1A
+highlight CursorLine guibg=#181818
+highlight Visual guibg=#303030
 
-highlight! Function guifg=#6B8F8F
-highlight! Title guifg=#9BBB94
-highlight! Identifier guifg=#B0B0B0
-highlight! Delimiter guifg=#B0B0B0
-highlight! Directory guifg=#88AF7A
-highlight! Module cterm=italic gui=italic
-highlight! Special guifg=#88AF7A
-highlight! link Namespace Module
-highlight! Type guifg=#88AAB5
-highlight! Number guifg=#7A8A9A ctermfg=60
-highlight! link Float Number
-highlight! link Constructor Type
-highlight! link Character String
-highlight! Constant guifg=#7A8A9A
-highlight! Operator guifg=#9BBB94
-highlight! ColorColumn guibg=#0A0A0A
-highlight! String guifg=#88B588
-highlight! Keyword guifg=#8AC18A ctermfg=67
+" --- Syntax Flattening ---
+" Link everything to Normal to enforce the "one color" rule
+" highlight! link Comment Normal
+" highlight! Comment     guifg=#8a8a8a gui=italic cterm=italic
+highlight Comment guifg=#98C379 gui=italic
+highlight! link Constant Normal
+highlight! link String Normal
+highlight! link Character Normal
+highlight! link Number Normal
+highlight! link Boolean Normal
+highlight! link Float Normal
 
-highlight! link @namespace Namespace
-highlight! link @module Module
-highlight! link @module.builtin Module
-highlight! link @string.special.path Underlined
-highlight! link @constructor Constructor
-highlight! link @identifier Identifier
-highlight! link @type.builtin @type
-highlight! link @variable.builtin @variable
-highlight! link @constant.builtin @constant
-highlight! link @function.builtin @function
-highlight! link @tag.attribute @attribute
-highlight! link @keyword.function Keyword
-highlight! link @keyword.operator Keyword
-highlight! link @keyword.return Keyword
-highlight! link @string String
+highlight! link Identifier Normal
+highlight! link Function Normal
 
-highlight! Comment guifg=#6A7A6A ctermfg=65 gui=italic cterm=italic
-highlight! TodoFgTODO guifg=#A8B896 ctermfg=65 gui=italic cterm=italic
-highlight! TodoBgTODO guifg=#090909 guibg=#A8B896 ctermfg=65 gui=italic cterm=italic
+highlight! link Statement Normal
+highlight! link Conditional Normal
+highlight! link Repeat Normal
+highlight! link Label Normal
+highlight! link Operator Normal
+highlight! link Keyword Normal
+highlight! link Exception Normal
 
-highlight! Pmenu guibg=#090909 ctermbg=0
-highlight! PmenuSel guibg=#1D1D1D ctermbg=233 guifg=#8AC18A ctermfg=67
-highlight! PmenuSbar guibg=#121212 ctermbg=232
-highlight! PmenuThumb guibg=#2A2A2A ctermbg=234
+highlight! link PreProc Normal
+highlight! link Include Normal
+highlight! link Define Normal
+highlight! link Macro Normal
+highlight! link PreCondit Normal
 
-highlight! NvimPickerNormal guifg=NvimLightGrey2 guibg=#121212
-highlight! NvimPickerBorder guifg=#2A2A2A guibg=#121212
-highlight! NvimPickerSelected guifg=#8AC18A guibg=#1D1D1D gui=bold
-highlight! NvimPickerHeader guifg=#708060 guibg=#121212 gui=bold
-highlight! NvimPickerHeaderBorder guifg=#2A2A2A guibg=#121212
+highlight! link Type Normal
+highlight! link StorageClass Normal
+highlight! link Structure Normal
+highlight! link Typedef Normal
+
+highlight! link Special Normal
+highlight! link SpecialChar Normal
+highlight! link Tag Normal
+highlight! link Delimiter Normal
+highlight! link SpecialComment Normal
+highlight! link Debug Normal
+highlight! link Directory Normal
+highlight! link Title Normal
+
+" --- TreeSitter / LSP Linking ---
+" Map all semantic tokens back to Normal
+highlight! link @namespace Normal
+highlight! link @module Normal
+highlight! link @module.builtin Normal
+highlight! link @string.special.path Normal
+highlight! link @constructor Normal
+highlight! link @identifier Normal
+highlight! link @type.builtin Normal
+highlight! link @variable.builtin Normal
+highlight! link @constant.builtin Normal
+highlight! link @function.builtin Normal
+highlight! link @tag.attribute Normal
+highlight! link @keyword.function Normal
+highlight! link @keyword.operator Normal
+highlight! link @keyword.return Normal
+highlight! link @string Normal
+highlight! link @variable Normal
+highlight! link @variable.member Normal
+highlight! link @variable.member.lua Normal
+highlight! link @property.lua Normal
+highlight! link @field.lua Normal
+highlight! link @variable.member.builtin Normal
+highlight! link @config Normal
+highlight! link @method.call Normal
+highlight! link @method Normal
+highlight! link @label.lua Normal
+highlight! link @variable.builtin Normal
+highlight! link @namespace.lua Normal
+highlight! link @module.builtin Normal
+
+" --- Specific UI Overrides (Menus/Popups) ---
+" These need to be visible against the background, but we can keep the text neutral
+highlight! Pmenu guibg=#090909 guifg=#B0B0B0
+highlight! PmenuSel guibg=#202020 guifg=#B0B0B0 gui=bold
+highlight! PmenuSbar guibg=#121212
+highlight! PmenuThumb guibg=#303030
+
+" Picker / Telescope
+highlight! NvimPickerNormal guifg=#B0B0B0 guibg=#121212
+highlight! NvimPickerBorder guifg=#303030 guibg=#121212
+highlight! NvimPickerSelected guifg=#B0B0B0 guibg=#202020 gui=bold
+highlight! NvimPickerHeader guifg=#B0B0B0 guibg=#121212 gui=bold
+highlight! NvimPickerHeaderBorder guifg=#303030 guibg=#121212
 
 " Floating windows
-highlight! FloatBorder guifg=#2A2A2A guibg=#090909
-highlight! FloatTitle guifg=#708060 guibg=#090909 gui=bold
-highlight! NormalFloat guifg=NvimLightGrey2 guibg=#090909
-highlight! FloatShadow guibg=#050505 blend=80
-highlight! FloatShadowThrough guibg=#050505 blend=100
-
-" Variable and property links
-highlight! link @variable.member Identifier
-highlight! link @variable.member.lua Identifier
-highlight! link @property.lua Identifier
-highlight! link @field.lua Identifier
-highlight! @variable.member.builtin guifg=#B0B0B0
-highlight! @config guifg=#B0B0B0
-highlight! link @method.call Identifier
-highlight! link @method Identifier
-highlight! link @label.lua Identifier
-highlight! @variable.builtin guifg=#B0B0B0
-highlight! @namespace.lua guifg=#B0B0B0
-highlight! @module.builtin guifg=#B0B0B0
-highlight! @variable guifg=#B0B0B0
+highlight! FloatBorder guifg=#303030 guibg=#090909
+highlight! FloatTitle guifg=#B0B0B0 guibg=#090909 gui=bold
+highlight! NormalFloat guifg=#B0B0B0 guibg=#090909
+highlight! FloatShadow guibg=#000000 blend=80
+highlight! FloatShadowThrough guibg=#000000 blend=100

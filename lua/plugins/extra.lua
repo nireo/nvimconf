@@ -1,5 +1,10 @@
 return {
 	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		opts = {},
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",

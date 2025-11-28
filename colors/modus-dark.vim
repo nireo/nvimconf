@@ -6,15 +6,15 @@ let g:colors_name = 'modus_dark'
 " -----------------------------------------------------
 " Core UI
 " -----------------------------------------------------
-highlight Normal guifg=#ffffff guibg=#101010
+highlight Normal guifg=#ffffff guibg=#060606
 highlight StatusLine guifg=#a8b5c0 guibg=#232323
 highlight StatusLineNC guifg=#a8b5c0 guibg=#303030
 
 highlight! CursorLine guibg=#2f3849 gui=NONE
 highlight! CursorColumn guibg=#2f3849
 
-highlight! LineNr guifg=#989898 guibg=#1e1e1e
-highlight! CursorLineNr guifg=#ffffff guibg=#535353 gui=NONE
+highlight! LineNr guifg=#989898
+highlight! CursorLineNr guifg=#ffffff
 
 highlight! VertSplit guifg=#646464 guibg=#000000
 highlight! SignColumn guifg=#989898 guibg=#000000
@@ -33,7 +33,7 @@ highlight! VisualNOS guibg=#5a5a5a guifg=NONE
 " -----------------------------------------------------
 " Comments & documentation
 " -----------------------------------------------------
-highlight! Comment guifg=#989898 gui=italic cterm=italic
+highlight! Comment guifg=#b7a98a
 highlight! TodoFgTODO guifg=#ff5f59 gui=italic
 highlight! TodoBgTODO guifg=#000000 guibg=#7a6100 gui=italic
 
@@ -55,8 +55,8 @@ highlight! Character guifg=#c5c875
 
 " constants (keep magenta-cooler)
 highlight! Constant guifg=#b6a0ff
-highlight! Number guifg=#ffffff
-highlight! Float guifg=#ffffff
+highlight! Number guifg=#b6a0ff
+highlight! Float guifg=#b6a0ff
 highlight! Boolean guifg=#b6a0ff
 
 " builtin (keep magenta)
