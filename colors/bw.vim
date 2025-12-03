@@ -7,8 +7,8 @@ set background=dark
 " Base UI (slightly more muted)
 highlight Normal guifg=#C0C0C0 guibg=#070707
 
-highlight StatusLine   guifg=#070707 guibg=#C0C0C0
-highlight StatusLineNC guifg=#666666 guibg=#121212
+highlight StatusLine   guifg=#C0C0C0 guibg=#121212
+highlight StatusLineNC guifg=#666666 guibg=#000000
 highlight ColorColumn  guibg=#141414
 highlight CursorLine   guibg=#111111
 highlight Visual       guibg=#382642      " muted purple tint
@@ -19,9 +19,10 @@ highlight Comment guifg=#7E9CB5 gui=italic
 highlight Keyword      guifg=#B09AE0
 
 highlight Type         guifg=#86B8E0      " softer icy blue
-highlight Function     guifg=#E6E6E6      " off-white, less contrast
+highlight Function     guifg=#FFFFFF      " off-white, less contrast
 
-" Reset most groups to Normal
+highlight Directory guifg=#B09AE0
+
 highlight! link Constant Normal
 highlight! link Character Normal
 highlight! link Number Normal
@@ -53,7 +54,6 @@ highlight! link Tag Normal
 highlight! link Delimiter Normal
 highlight! link SpecialComment Comment
 highlight! link Debug Normal
-highlight! link Directory Normal
 highlight! link Title Normal
 
 " --- TreeSitter/LSP Linking ---
