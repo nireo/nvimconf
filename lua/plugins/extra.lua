@@ -10,9 +10,7 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 	},
-  "nyoom-engineering/oxocarbon.nvim",
 	{
-		-- copilot is often really bad but sometimes it saves a bit of time, so I guess its worth it
 		"github/copilot.vim",
 		cmd = "Copilot",
 		keys = {
@@ -137,8 +135,7 @@ return {
 	},
 	{
 		"folke/zen-mode.nvim",
-		opts = {
-		}
+		opts = {},
 	},
 	{
 		"folke/flash.nvim",
