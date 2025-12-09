@@ -1,12 +1,8 @@
 runtime! colors/default.vim
-let g:colors_name = 'minimal-bw-enhanced'
+let g:colors_name = 'mono'
 
 set background=dark
 
-" --------------------------------
-" Editor Basics
-" --------------------------------
-" Soft white text, Dark (090909) background
 highlight Normal       guifg=#C8C8C8 guibg=#090909
 
 " UI Elements
@@ -46,7 +42,7 @@ highlight MutedSymbol    guifg=#78879E gui=NONE
 highlight! link Function        Normal
 highlight! link Identifier      Normal
 highlight! link Character       Normal
-highlight! link String          Normal
+highlight String guifg=#789E96
 highlight! link Statement       Normal
 highlight! link Constant        Normal
 highlight! link Number          Normal

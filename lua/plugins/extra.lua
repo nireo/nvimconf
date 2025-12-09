@@ -134,10 +134,6 @@ return {
 		},
 	},
 	{
-		"folke/zen-mode.nvim",
-		opts = {},
-	},
-	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		opts = {},

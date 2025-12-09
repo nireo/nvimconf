@@ -83,3 +83,4 @@ a.nvim_create_autocmd(
 	{ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
 	{ pattern = "*", command = "if &nu | set nornu | endif" }
 )
+
