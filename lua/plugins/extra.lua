@@ -45,6 +45,9 @@ return {
 		priority = 1000,
 		lazy = false,
 		opts = {
+			zen = {
+				enabled = true,
+			},
 			picker = {
 				enabled = true,
 				layout = {
@@ -130,6 +133,13 @@ return {
 					Snacks.picker.diagnostics()
 				end,
 				desc = "Diagnostics",
+			},
+			{
+				"<leader>z",
+				function()
+					Snacks.zen()
+				end,
+				desc = "Toggle Zen Mode",
 			},
 		},
 	},
