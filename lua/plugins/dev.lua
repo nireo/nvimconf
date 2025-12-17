@@ -104,6 +104,13 @@ return {
 		},
 	},
 	{
+		"stevearc/quicker.nvim",
+		ft = "qf",
+		---@module "quicker"
+		---@type quicker.SetupOptions
+		opts = {},
+	},
+	{
 		"nvim-treesitter/nvim-treesitter",
 		event = "BufRead",
 		build = ":TSUpdate",
@@ -126,7 +133,7 @@ return {
 				"scala",
 			},
 			highlight = { enable = true },
-			indent = { 
+			indent = {
 				enable = true,
 				disable = { "ocaml" },
 			},

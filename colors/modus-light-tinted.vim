@@ -5,7 +5,7 @@ runtime! colors/default.vim
 let g:colors_name = 'modus-light-tinted'
 
 " Core UI
-highlight Normal guifg=#000000 guibg=#fbf7f0
+highlight Normal guifg=#000000 guibg=#e5dfd3
 highlight StatusLine guifg=#000000 guibg=#cab9b2
 highlight StatusLineNC guifg=#585858 guibg=#dfd9cf
 

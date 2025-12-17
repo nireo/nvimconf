@@ -22,19 +22,22 @@ vim.keymap.set("n", "<CR>", ":write!<CR>")
 vim.keymap.set({ "n", "v" }, "go", "%")
 vim.keymap.set({ "n", "v" }, "gh", "^")
 vim.keymap.set({ "n", "v" }, "gl", "$")
-vim.keymap.set({ "n", "v" }, "gj", "%")
 vim.keymap.set("n", "<Tab>", "<C-W>w")
 vim.keymap.set("n", "<S-Tab>", "<C-W>W")
--- vim.keymap.set("n", "<leader>t", ":terminal<CR>")
+
 vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>") -- this reads the function signature so it makes it alot more efficient
 vim.keymap.set("n", "<leader>gotf", ":GoTestFile<CR>")
 vim.keymap.set("n", "<leader>gofn", ":GoTestFunc<CR>")
 vim.keymap.set("n", "<leader>gofs", ":GoFillStruct<CR>")
 vim.keymap.set("n", "<leader>goj", ":GoAddTag json<CR>")
+
+-- visual move moving text around
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv")
 vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv")
+
+-- exit insert mode in terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<leader>yb", function()
 	local cur = vim.api.nvim_win_get_cursor(0) -- Save current cursor position
@@ -44,9 +47,14 @@ vim.keymap.set("n", "<leader>yb", function()
 	print("yanked whole file to system clipboard")
 end)
 
+-- open neogit
 vim.keymap.set("n", "<leader>cg", ":Neogit<CR>")
+
+-- center search results
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+
+-- do not copy empty lines when deleting them
 vim.keymap.set("n", "dd", function()
 	if vim.fn.getline("."):match("^%s*$") then
 		return '"_dd'
@@ -54,68 +62,135 @@ vim.keymap.set("n", "dd", function()
 	return "dd"
 end, { expr = true })
 
+-- diagnostics
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open float window to properly read diagnostic" })
 
-vim.keymap.set('n', '<leader>t', function()
-  local term_buf = nil
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == 'terminal' then
-      term_buf = buf
-      break
-    end
-  end
-  
-  if term_buf then
-    vim.api.nvim_set_current_buf(term_buf)
-  else
-    vim.cmd('terminal')
-  end
-  
-  vim.cmd('startinsert')
-end, { desc = 'Toggle terminal buffer' })
+-- open full screen terminal
+vim.keymap.set("n", "<leader>t", function()
+	local term_buf = nil
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+			term_buf = buf
+			break
+		end
+	end
 
-vim.keymap.set('n', '<C-a>', '<C-^>', { desc = 'Go to back from terminal' })
-vim.keymap.set('n', '<leader>T', function()
-  local term_buf = nil
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == 'terminal' then
-      term_buf = buf
-      break
-    end
-  end
-  
-  local width = vim.api.nvim_win_get_width(0)
-  local height = vim.api.nvim_win_get_height(0)
-  
-  local split_cmd = (width > height * 2) and 'vsplit' or 'split'
-  
-  if term_buf then
-    vim.cmd(split_cmd)
-    vim.api.nvim_set_current_buf(term_buf)
-  else
-    vim.cmd(split_cmd)
-    vim.cmd('terminal')
-  end
-  
-  vim.cmd('startinsert')
-end, { desc = 'Split terminal buffer' })
+	if term_buf then
+		vim.api.nvim_set_current_buf(term_buf)
+	else
+		vim.cmd("terminal")
+	end
+
+	vim.cmd("startinsert")
+end, { desc = "Toggle terminal buffer" })
+
+vim.keymap.set("n", "<C-a>", "<C-^>", { desc = "Go to back from terminal" })
+
+-- open a terminal via a smart split, i.e. checks the size of the screen and based on that does
+-- vertical or horizontal split.
+vim.keymap.set("n", "<leader>T", function()
+	local term_buf = nil
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+			term_buf = buf
+			break
+		end
+	end
+
+	local width = vim.api.nvim_win_get_width(0)
+	local height = vim.api.nvim_win_get_height(0)
+
+	local split_cmd = (width > height * 2) and "vsplit" or "split"
+
+	if term_buf then
+		vim.cmd(split_cmd)
+		vim.api.nvim_set_current_buf(term_buf)
+	else
+		vim.cmd(split_cmd)
+		vim.cmd("terminal")
+	end
+
+	vim.cmd("startinsert")
+end, { desc = "Split terminal buffer" })
 
 vim.keymap.set("n", "<leader>rn", function()
-  local number = vim.wo.number
-  local relativenumber = vim.wo.relativenumber
-  if number or relativenumber then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = true
-  end
+	local number = vim.wo.number
+	local relativenumber = vim.wo.relativenumber
+	if number or relativenumber then
+		vim.wo.number = false
+		vim.wo.relativenumber = false
+	else
+		vim.wo.number = true
+		vim.wo.relativenumber = true
+	end
 end, { desc = "Toggle line numbers (absolute + relative)" })
 
-vim.keymap.set("n", "<C-Left>",  ":vertical resize -2<CR>")
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
-vim.keymap.set("n", "<C-Up>",    ":resize +2<CR>")
-vim.keymap.set("n", "<C-Down>",  ":resize -2<CR>")
-vim.keymap.set("n", "gv", "<C-w>]", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-Left>", ":vertical resize -6<CR>")
+vim.keymap.set("n", "<C-Right>", ":vertical resize +6<CR>")
+vim.keymap.set("n", "<C-Up>", ":resize +6<CR>")
+vim.keymap.set("n", "<C-Down>", ":resize -6<CR>")
+vim.keymap.set("n", "gv", "<C-w>]", { noremap = true, silent = true }) -- jump to def in another window
+
+local opts = { noremap = true, silent = true }
+
+-- Open / close quickfix
+vim.keymap.set("n", "<leader>lo", ":copen<CR>", opts)
+vim.keymap.set("n", "<leader>lc", ":cclose<CR>", opts)
+-- vim.keymap.set("n", "<leader>qt", function()
+-- 	if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+-- 		vim.cmd("cclose")
+-- 	else
+-- 		vim.cmd("copen")
+-- 	end
+-- end, opts)
+
+-- Navigate quickfix items
+vim.keymap.set("n", "]q", ":cnext<CR>", opts)
+vim.keymap.set("n", "[q", ":cprev<CR>", opts)
+vim.keymap.set("n", "]Q", ":clast<CR>", opts)
+vim.keymap.set("n", "[Q", ":cfirst<CR>", opts)
+
+-- Jump and center
+vim.keymap.set("n", "<leader>ln", ":cnext<CR>zz", opts)
+vim.keymap.set("n", "<leader>lp", ":cprev<CR>zz", opts)
+
+-- Clear quickfix list
+vim.keymap.set("n", "<leader>lc", function()
+	vim.fn.setqflist({})
+end, opts)
+
+-- Reopen quickfix after grep
+vim.keymap.set("n", "<leader>lr", ":copen<CR>", opts)
+
+vim.keymap.set("n", "<leader>lq", function()
+	require("quicker").toggle()
+end, {
+	desc = "Toggle quickfix",
+})
+
+vim.keymap.set("n", "<leader>ll", function()
+	require("quicker").toggle()
+end, {
+	desc = "Toggle quickfix",
+})
+
+require("quicker").setup({
+	keys = {
+		{
+			">",
+			function()
+				require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+			end,
+			desc = "Expand quickfix context",
+		},
+		{
+			"<",
+			function()
+				require("quicker").collapse()
+			end,
+			desc = "Collapse quickfix context",
+		},
+	},
+})

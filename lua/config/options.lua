@@ -83,3 +83,6 @@ a.nvim_create_autocmd(
 	{ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
 	{ pattern = "*", command = "if &nu | set nornu | endif" }
 )
+
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+vim.opt.grepformat = "%f:%l:%c:%m"
