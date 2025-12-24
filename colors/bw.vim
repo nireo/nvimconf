@@ -3,15 +3,14 @@ let g:colors_name = 'bw-enhanced'
 
 set background=dark
 
-highlight Normal     guifg=#C0C0C0 guibg=#090909
+highlight Normal     guifg=#C0C0C0 guibg=#151515
 highlight StatusLine   guifg=#C0C0C0 guibg=#121212
 highlight StatusLineNC guifg=#666666 guibg=#000000
 highlight ColorColumn  guibg=#141414
-highlight CursorLine   guibg=#090909
+highlight CursorLine   guibg=#151515
 highlight Visual       guifg=NONE    guibg=#382642      " muted purple tint
-highlight String       guifg=#B89AD8
+highlight String          guifg=#8FBFB2
 highlight Character    guifg=#B89AD8
-highlight Comment      guifg=#7E9CB5 gui=italic
 highlight Type         guifg=#86B8E0
 highlight StorageClass guifg=#86B8E0
 highlight Structure    guifg=#86B8E0
@@ -44,7 +43,8 @@ highlight Title        guifg=#B09AE0 gui=bold
 
 highlight! link Identifier Normal
 
-highlight! link SpecialComment Comment
+highlight Comment         guifg=#9BB6D1 guibg=#1A2430 gui=italic
+highlight SpecialComment  guifg=#A7BED6 guibg=#1A2430 gui=italic
 highlight! link Debug Normal
 
 highlight! link @namespace Normal
@@ -70,7 +70,7 @@ highlight! link @operator Operator
 highlight! link @punctuation.delimiter Delimiter
 highlight! link @punctuation.bracket Delimiter
 
-highlight! Pmenu       guibg=#0A0A0A guifg=#C8C8C8
+highlight! Pmenu       guibg=#151515 guifg=#C8C8C8
 highlight! PmenuSel    guibg=#2A2A2A guifg=#F0F0F0 gui=bold
 highlight! PmenuSbar   guibg=#151515
 highlight! PmenuThumb  guibg=#383838
@@ -81,27 +81,27 @@ highlight! NvimPickerSelected      guifg=#F0F0F0 guibg=#2A2A2A gui=bold
 highlight! NvimPickerHeader        guifg=#D8D8D8 guibg=#141414 gui=bold
 highlight! NvimPickerHeaderBorder  guifg=#3C3C3C guibg=#141414
 
-highlight! FloatBorder   guifg=#474747 guibg=#0A0A0A
-highlight! FloatTitle    guifg=#E6E6E6 guibg=#0A0A0A gui=bold
-highlight! NormalFloat   guifg=#C8C8C8 guibg=#0A0A0A
+highlight! FloatBorder   guifg=#474747 guibg=#151515
+highlight! FloatTitle    guifg=#E6E6E6 guibg=#151515 gui=bold
+highlight! NormalFloat   guifg=#C8C8C8 guibg=#151515
 highlight! FloatShadow           guibg=#000000 blend=80
 highlight! FloatShadowThrough    guibg=#000000 blend=100
 
-highlight LineNr        guifg=#666666 guibg=#090909
-highlight CursorLineNr  guifg=#98BC99 guibg=#090909 gui=bold
-highlight NonText       guifg=#2A2A2A guibg=#090909
-highlight VertSplit     guifg=#1A1A1A guibg=#090909
-highlight SignColumn    guifg=#505050 guibg=#090909
+highlight LineNr        guifg=#666666 guibg=#151515
+highlight CursorLineNr  guifg=#98BC99 guibg=#151515 gui=bold
+highlight NonText       guifg=#2A2A2A guibg=#151515
+highlight VertSplit     guifg=#1A1A1A guibg=#151515
+highlight SignColumn    guifg=#505050 guibg=#151515
 
 highlight Search        guifg=#E6E6E6 guibg=#274252
 highlight IncSearch     guifg=#E6E6E6 guibg=#3A5A6E gui=bold
 
 highlight Todo          guifg=#E6E6E6 guibg=#504060 gui=bold
 
-highlight DiagnosticError guifg=#D88A8A guibg=#0B0707
-highlight DiagnosticWarn  guifg=#D3B07A guibg=#0B0907
-highlight DiagnosticInfo  guifg=#8FB6D8 guibg=#07090B
-highlight DiagnosticHint  guifg=#98BC99 guibg=#070B09
+highlight DiagnosticError guifg=#D88A8A 
+highlight DiagnosticWarn  guifg=#D3B07A 
+highlight DiagnosticInfo  guifg=#8FB6D8
+highlight DiagnosticHint  guifg=#98BC99
 
 highlight DiagnosticUnderlineError gui=undercurl guisp=#D88A8A
 highlight DiagnosticUnderlineWarn  gui=undercurl guisp=#D3B07A

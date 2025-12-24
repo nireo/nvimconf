@@ -10,6 +10,7 @@ o.backspace = "indent,eol,start"
 -- Enable mouse mode
 o.mouse = "a"
 o.guicursor = ""
+o.cursorline = true
 
 -- Indentation changes
 o.shiftwidth = 4

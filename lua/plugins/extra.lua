@@ -1,9 +1,32 @@
 return {
 	{
+		"craftzdog/solarized-osaka.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
+	},
+	{
+		"vague-theme/vague.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("vague").setup({})
+		end,
+	},
+	{
+		"zenbones-theme/zenbones.nvim",
+		dependencies = "rktjmp/lush.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("zenwritten")
+		end,
 	},
 	{
 		"github/copilot.vim",
