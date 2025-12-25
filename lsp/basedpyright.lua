@@ -1,6 +1,7 @@
 return {
-	cmd = { "pyright-langserver", "--stdio" },
+	cmd = { "basedpyright-langserver", "--stdio" },
 	filetypes = { "python" },
+	single_file_support = true,
 	root_markers = {
 		"pyproject.toml",
 		"setup.py",
@@ -11,7 +12,7 @@ return {
 		".git",
 	},
 	settings = {
-		python = {
+		basedpyright = {
 			analysis = {
 				autoSearchPaths = true,
 				useLibraryCodeForTypes = true,
