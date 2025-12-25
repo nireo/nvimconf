@@ -16,13 +16,20 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	callback = function()
 		function _G.MyStatusLine()
-			local rest = " %m %r %w%=%y %l:%c "
-			if vim.fn.expand("%:~:.") == "" or vim.bo.buftype ~= "" then
-				return "%t" .. rest
+			local mode = vim.api.nvim_get_mode().mode
+			local mode_str = string.format("<%s>", mode)
+
+			local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+			local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+			local lsp = (errors > 0 or warnings > 0) and string.format(" [E:%d W:%d]", errors, warnings) or ""
+
+			local file = vim.fn.expand("%:~:.")
+			if file == "" or vim.bo.buftype ~= "" then
+				file = vim.fn.expand("%:t")
 			end
-			return vim.fn.expand("%:~:.") .. rest
+			return mode_str .. " " .. file .. " %m %r %w" .. lsp .. " %= %y %l:%c "
 		end
-		vim.opt.statusline = "%!v:lua.MyStatusLine()"
+		vim.opt_local.statusline = "%!v:lua.MyStatusLine()"
 	end,
 	group = me_Stl,
 })
