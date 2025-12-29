@@ -44,7 +44,6 @@ vim.wo.signcolumn = "no"
 o.synmaxcol = 120
 
 o.termguicolors = true
-o.background = "dark"
 
 -- Window splits
 o.splitright = true
@@ -72,8 +71,8 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_banner = 0
 vim.g.netrw_list_style = 1
 
--- o.relativenumber = true
--- o.number = true
+o.relativenumber = true
+o.number = true
 
 a.nvim_create_autocmd(
 	{ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },

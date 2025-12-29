@@ -11,7 +11,9 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("zenwritten")
+			vim.g.zenbones_solid_line_nr = true
+			vim.g.darkness = "warm"
+			vim.g.lightness = "dim"
 		end,
 	},
 	{
@@ -144,6 +146,20 @@ return {
 					Snacks.zen()
 				end,
 				desc = "Toggle Zen Mode",
+			},
+		},
+	},
+	{
+		"obsidian-nvim/obsidian.nvim",
+		version = "*",
+		ft = "markdown",
+		opts = {
+			legacy_commands = false, -- this will be removed in the next major release
+			workspaces = {
+				{
+					name = "personal",
+					path = "~/vault/vault",
+				},
 			},
 		},
 	},
