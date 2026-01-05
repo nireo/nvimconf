@@ -34,7 +34,7 @@ o.smartindent = true
 -- Enable usage of system clipboard.
 o.clipboard = "unnamedplus"
 
-o.cursorline = false
+o.cursorline = true
 o.cursorcolumn = false
 
 -- Decrease update time

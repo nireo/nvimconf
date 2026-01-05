@@ -11,9 +11,10 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
+			vim.g.zenwritten_solid_line_nr = true
+			vim.g.zenwritten_transparent_background = true
+			vim.g.zenbones_transparent_background = true
 			vim.g.zenbones_solid_line_nr = true
-			vim.g.darkness = "warm"
-			vim.g.lightness = "dim"
 		end,
 	},
 	{
@@ -154,7 +155,7 @@ return {
 		version = "*",
 		ft = "markdown",
 		opts = {
-			legacy_commands = false, -- this will be removed in the next major release
+			legacy_commands = false,
 			workspaces = {
 				{
 					name = "personal",

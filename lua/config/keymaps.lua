@@ -10,6 +10,7 @@ vim.keymap.set("n", "<leader>cw", ":set textwidth=80 | normal! gggqG<CR>", { des
 vim.keymap.set("i", "<C-j>", "<ESC>")
 vim.keymap.set("i", "<C-f>", "<ESC>")
 vim.keymap.set("n", "<leader>q", ":q!<CR>")
+vim.keymap.set("n", "<C-s>", ":w!<CR>")
 
 vim.keymap.set("n", "<leader>wl", "<C-w>l<CR>")
 vim.keymap.set("n", "<leader>wh", "<C-w>h<CR>")
@@ -138,13 +139,6 @@ local opts = { noremap = true, silent = true }
 -- Open / close quickfix
 vim.keymap.set("n", "<leader>lo", ":copen<CR>", opts)
 vim.keymap.set("n", "<leader>lc", ":cclose<CR>", opts)
--- vim.keymap.set("n", "<leader>qt", function()
--- 	if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
--- 		vim.cmd("cclose")
--- 	else
--- 		vim.cmd("copen")
--- 	end
--- end, opts)
 
 -- Navigate quickfix items
 vim.keymap.set("n", "]q", ":cnext<CR>", opts)

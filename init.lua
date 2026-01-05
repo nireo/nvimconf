@@ -4,5 +4,5 @@ require("core.lsp")
 require("config.keymaps")
 require("config.autocmds")
 
-vim.o.background = "light"
+vim.o.background = "dark"
 vim.cmd([[colorscheme zenbones]])
