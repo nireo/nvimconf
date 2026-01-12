@@ -17,7 +17,6 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	callback = function()
 		function _G.MyStatusLine()
 			local mode = vim.api.nvim_get_mode().mode
-			local mode_str = string.format("<%s>", mode)
 
 			local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
 			local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
@@ -27,7 +26,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 			if file == "" or vim.bo.buftype ~= "" then
 				file = vim.fn.expand("%:t")
 			end
-			return mode_str .. " " .. file .. " %m %r %w" .. lsp .. " %= %y %l:%c "
+			return file .. " %m %r %w" .. lsp .. " %= %y %l:%c "
 		end
 		vim.opt_local.statusline = "%!v:lua.MyStatusLine()"
 	end,

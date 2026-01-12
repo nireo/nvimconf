@@ -6,6 +6,11 @@ return {
 		},
 	},
 	{
+		"Mofiqul/adwaita.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
 		"zenbones-theme/zenbones.nvim",
 		dependencies = "rktjmp/lush.nvim",
 		lazy = false,
@@ -15,6 +20,9 @@ return {
 			vim.g.zenwritten_transparent_background = true
 			vim.g.zenbones_transparent_background = true
 			vim.g.zenbones_solid_line_nr = true
+
+			vim.g.neobones_transparent_background = true
+			vim.g.neobones_solid_line_nr = true
 		end,
 	},
 	{
