@@ -1,29 +1,14 @@
 return {
 	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+		opts = {},
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-	},
-	{
-		"Mofiqul/adwaita.nvim",
-		lazy = false,
-		priority = 1000,
-	},
-	{
-		"zenbones-theme/zenbones.nvim",
-		dependencies = "rktjmp/lush.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.g.zenwritten_solid_line_nr = true
-			vim.g.zenwritten_transparent_background = true
-			vim.g.zenbones_transparent_background = true
-			vim.g.zenbones_solid_line_nr = true
-
-			vim.g.neobones_transparent_background = true
-			vim.g.neobones_solid_line_nr = true
-		end,
 	},
 	{
 		"github/copilot.vim",
