@@ -5,4 +5,4 @@ require("config.keymaps")
 require("config.autocmds")
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme mono]])
+vim.cmd([[colorscheme mono_green]])
