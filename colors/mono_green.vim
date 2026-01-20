@@ -4,8 +4,8 @@ let g:colors_name = 'mono_green'
 set background=dark
 
 " Base colors
-highlight Normal          guifg=#B8C4B3 guibg=#0E1511
-highlight BoldKeyword     guifg=#B8C4B3 guibg=NONE    gui=bold
+highlight Normal          guifg=#A9B5A4 guibg=#0E1511
+highlight BoldKeyword     guifg=#D6E0D2 guibg=NONE    gui=bold
 highlight Muted           guifg=#6C776D guibg=NONE    gui=NONE
 
 " UI Elements
@@ -33,7 +33,7 @@ highlight String          guifg=#86A181 guibg=NONE    gui=NONE
 
 " --- Neutralizing Everything Else ---
 highlight! link Identifier     Normal
-highlight! link Function       Normal
+highlight Function       guifg=#87B094 guibg=NONE    gui=NONE
 highlight! link Number         Normal
 highlight! link Boolean        Normal
 highlight! link Constant       Normal
@@ -76,10 +76,10 @@ highlight! link @tag.attribute     Normal
 highlight! link @tag.delimiter     Normal
 highlight! link @namespace         Normal
 highlight! link @module            Normal
-highlight! link @function          Normal
-highlight! link @function.builtin  Normal
-highlight! link @function.macro    Normal
-highlight! link @function.method   Normal
+highlight! link @function          Function
+highlight! link @function.builtin  Function
+highlight! link @function.macro    Function
+highlight! link @function.method   Function
 highlight! link @number            Normal
 highlight! link @number.float      Normal
 highlight! link @boolean           Normal
