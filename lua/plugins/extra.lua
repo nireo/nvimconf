@@ -18,7 +18,7 @@ return {
 			vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>", { desc = "Toggle Copilot" }),
 		},
 		config = function()
-			vim.g.copilot_enabled = false
+			vim.g.copilot_enabled = true
 		end,
 	},
 	{
@@ -59,6 +59,11 @@ return {
 				win = {
 					border = "none",
 					style = "minimal",
+				},
+				formatters = {
+					file = {
+						truncate = 120,
+					},
 				},
 			},
 			notifier = {
