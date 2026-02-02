@@ -24,6 +24,18 @@ highlight Visual          guibg=#E2DED4 gui=NONE
 highlight Search          guifg=#F5F3ED guibg=#6E6E6E gui=bold
 highlight IncSearch       guifg=#F5F3ED guibg=#4F4F4F gui=bold
 
+" Diff
+highlight DiffAdd         guifg=#3A3A3A guibg=#E3EEE3
+highlight DiffChange      guifg=#3A3A3A guibg=#EFE5D6
+highlight DiffDelete      guifg=#3E2A2A guibg=#F2D2D2
+highlight DiffText        guifg=#3A3A3A guibg=#DCCFB8 gui=bold
+
+" Neogit diff (override plugin palette)
+highlight! link NeogitDiffDelete          DiffDelete
+highlight! link NeogitDiffDeleteHighlight DiffDelete
+highlight! link NeogitDiffDeleteCursor    DiffDelete
+highlight NeogitDiffDeletions guifg=#3E2A2A guibg=NONE
+
 " --- The Only Colored Groups ---
 " Muted dusty blue for comments
 highlight Comment         guifg=#6E8798 guibg=NONE    gui=italic
