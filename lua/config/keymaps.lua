@@ -26,24 +26,22 @@ vim.keymap.set({ "n", "v" }, "gl", "$")
 vim.keymap.set("n", "<Tab>", "<C-W>w")
 vim.keymap.set("n", "<S-Tab>", "<C-W>W")
 
-vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>") -- this reads the function signature so it makes it alot more efficient
+vim.keymap.set("n", "<leader>ie", ":GoIfErr<CR>")
 vim.keymap.set("n", "<leader>gotf", ":GoTestFile<CR>")
 vim.keymap.set("n", "<leader>gofn", ":GoTestFunc<CR>")
 vim.keymap.set("n", "<leader>gofs", ":GoFillStruct<CR>")
 vim.keymap.set("n", "<leader>goj", ":GoAddTag json<CR>")
 
--- visual move moving text around
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "v", "x" }, "J", ":move '>+1<cr>gv-gv")
 vim.keymap.set({ "v", "x" }, "K", ":move '<-2<cr>gv-gv")
 
--- exit insert mode in terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<leader>yb", function()
-	local cur = vim.api.nvim_win_get_cursor(0) -- Save current cursor position
-	vim.cmd("normal! ggVGy") -- Yank the whole file
-	vim.api.nvim_win_set_cursor(0, cur) -- Restore cursor position
+	local cur = vim.api.nvim_win_get_cursor(0)
+	vim.cmd("normal! ggVGy")
+	vim.api.nvim_win_set_cursor(0, cur)
 
 	print("yanked whole file to system clipboard")
 end)
@@ -136,28 +134,22 @@ vim.keymap.set("n", "gv", "<C-w>]", { noremap = true, silent = true }) -- jump t
 
 local opts = { noremap = true, silent = true }
 
--- Open / close quickfix
 vim.keymap.set("n", "<leader>lo", ":copen<CR>", opts)
 vim.keymap.set("n", "<leader>lc", ":cclose<CR>", opts)
 
--- Navigate quickfix items
 vim.keymap.set("n", "]q", ":cnext<CR>", opts)
 vim.keymap.set("n", "[q", ":cprev<CR>", opts)
 vim.keymap.set("n", "]Q", ":clast<CR>", opts)
 vim.keymap.set("n", "[Q", ":cfirst<CR>", opts)
 
--- Jump and center
 vim.keymap.set("n", "<leader>ln", ":cnext<CR>zz", opts)
 vim.keymap.set("n", "<leader>lp", ":cprev<CR>zz", opts)
 
--- Clear quickfix list
 vim.keymap.set("n", "<leader>lc", function()
 	vim.fn.setqflist({})
 end, opts)
 
--- Reopen quickfix after grep
 vim.keymap.set("n", "<leader>lr", ":copen<CR>", opts)
-
 vim.keymap.set("n", "<leader>lq", function()
 	require("quicker").toggle()
 end, {

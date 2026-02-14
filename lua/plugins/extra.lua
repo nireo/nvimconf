@@ -11,17 +11,6 @@ return {
 		},
 	},
 	{
-		"github/copilot.vim",
-		cmd = "Copilot",
-		keys = {
-			vim.keymap.set("n", "<leader>ce", ":Copilot enable<CR>", { desc = "Toggle Copilot" }),
-			vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>", { desc = "Toggle Copilot" }),
-		},
-		config = function()
-			vim.g.copilot_enabled = true
-		end,
-	},
-	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		opts = {},
