@@ -74,6 +74,8 @@ vim.g.netrw_list_style = 1
 o.relativenumber = true
 o.number = true
 
+o.autoread = true
+
 a.nvim_create_autocmd(
 	{ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
 	{ pattern = "*", command = "if &nu && mode() != 'i' | set rnu | endif" }
