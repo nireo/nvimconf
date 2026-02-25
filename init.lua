@@ -5,4 +5,4 @@ require("config.keymaps")
 require("config.autocmds")
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme yep]])
+vim.cmd([[colorscheme mute_original]])
