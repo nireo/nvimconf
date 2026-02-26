@@ -27,11 +27,22 @@ return {
 				typescript = { "prettier" },
 				json = { "prettier" },
 				css = { "prettier" },
+				ocaml = { "ocamlformat" },
 			},
 			formatters = {
 				["clang-format"] = {
 					-- Just use WebKit directly without file fallback
 					prepend_args = { "--style=webkit" },
+				},
+				ocamlformat = {
+					prepend_args = {
+						"--if-then-else",
+						"vertical",
+						"--break-cases",
+						"fit-or-vertical",
+						"--type-decl",
+						"sparse",
+					},
 				},
 			},
 			format_on_save = {

@@ -3,59 +3,65 @@ let g:colors_name = 'mute_original'
 
 set background=dark
 
-" --- Core Palette (Original) ---
-" Background:   #0F0E0C
+" --- Core Palette (Original Warm) ---
+" Background:   #14100C
 " Foreground:   #B0B0B0 (Gray)
 " Keyword:      #5F8787 (Muted Teal)
-" Type/Label:   #708090 (Slate)
-" Comment:      #9B9158 (Muted Warm Yellow)
-" String:       #D0D0D0 (Light Gray)
-" Punctuation:  #444444 (Dim Gray)
+" Type/Label:   #748594 (Dusty Slate)
+" Comment:      #8FBF72 (Bright Sage Green)
+" String:       #D9CFC0 (Warm Off-white)
+" Punctuation:  #4A433A (Muted Brown Gray)
 
 " Base colors
-highlight Normal          guifg=#B0B0B0 guibg=#0F0E0C
+highlight Normal          guifg=#B0B0B0 guibg=#14100C
 highlight BoldKeyword     guifg=#5F8787 guibg=NONE    gui=bold
-highlight SlateKeyword    guifg=#708090 guibg=NONE    gui=NONE
-highlight Muted           guifg=#444444 guibg=NONE    gui=NONE
+highlight SlateKeyword    guifg=#748594 guibg=NONE    gui=NONE
+highlight Muted           guifg=#4A433A guibg=NONE    gui=NONE
+highlight WarmIdentifier  guifg=#C2AA8D guibg=NONE    gui=NONE
+highlight SoftFunction    guifg=#B7C08E guibg=NONE    gui=NONE
+highlight SoftSpecial     guifg=#C49B83 guibg=NONE    gui=NONE
+highlight DustyPreProc    guifg=#86A0B2 guibg=NONE    gui=NONE
+highlight WarmTitle       guifg=#D2C29E guibg=NONE    gui=NONE
+highlight SoftDirectory   guifg=#96B68A guibg=NONE    gui=NONE
 
 " UI Elements
-highlight LineNr          guifg=#333333 guibg=#0F0E0C
-highlight CursorLine      guibg=#181715
-highlight CursorLineNr    guifg=#708090 guibg=#0F0E0C gui=bold
-highlight ColorColumn     guibg=#0F0E0C
-highlight SignColumn      guibg=#0F0E0C
-highlight VertSplit       guifg=#22211F guibg=#0F0E0C
-highlight WinSeparator    guifg=#22211F guibg=#0F0E0C
-highlight StatusLine      guifg=#FFFFFF guibg=#1C1B19 gui=NONE
-highlight StatusLineNC    guifg=#444444 guibg=#0F0E0C gui=NONE
+highlight LineNr          guifg=#3C342C guibg=#14100C
+highlight CursorLine      guibg=#1D1712
+highlight CursorLineNr    guifg=#748594 guibg=#14100C gui=bold
+highlight ColorColumn     guibg=#1A1511
+highlight SignColumn      guibg=#14100C
+highlight VertSplit       guifg=#29231D guibg=#14100C
+highlight WinSeparator    guifg=#29231D guibg=#14100C
+highlight StatusLine      guifg=#F0E6D8 guibg=#201A15 gui=NONE
+highlight StatusLineNC    guifg=#4A433A guibg=#14100C gui=NONE
 
 " Selection and Search
-highlight Visual          guibg=#202A2A gui=NONE
-highlight Search          guifg=#0F0E0C guibg=#5F8787 gui=bold
-highlight IncSearch       guifg=#0F0E0C guibg=#FFFFFF gui=bold
+highlight Visual          guibg=#2A2119 gui=NONE
+highlight Search          guifg=#14100C guibg=#5F8787 gui=bold
+highlight IncSearch       guifg=#14100C guibg=#E7DAC7 gui=bold
 
 " --- Content ---
-highlight Comment         guifg=#9B9158 guibg=NONE    gui=italic
-highlight SpecialComment  guifg=#9B9158 guibg=NONE    gui=italic
-highlight String          guifg=#D0D0D0 guibg=NONE    gui=NONE
-highlight Constant        guifg=#B0B0B0 guibg=NONE    gui=NONE
-highlight Number          guifg=#B0B0B0 guibg=NONE    gui=NONE
-highlight Boolean         guifg=#B0B0B0 guibg=NONE    gui=NONE
+highlight Comment         guifg=#8FBF72 guibg=NONE    gui=italic
+highlight SpecialComment  guifg=#8FBF72 guibg=NONE    gui=italic
+highlight String          guifg=#D9CFC0 guibg=NONE    gui=NONE
+highlight Constant        guifg=#C7A08C guibg=NONE    gui=NONE
+highlight Number          guifg=#CDAE76 guibg=NONE    gui=NONE
+highlight Boolean         guifg=#9CC681 guibg=NONE    gui=NONE
 
 " --- Links ---
 highlight! link Identifier     Normal
-highlight! link Function       Normal
-highlight! link Special        Normal
-highlight! link Character      Normal
-highlight! link PreProc        Normal
-highlight! link Include        Normal
-highlight! link Define         Normal
-highlight! link Macro          Normal
-highlight! link PreCondit      Normal
-highlight! link SpecialChar    Normal
-highlight! link Tag            Normal
-highlight! link Title          Normal
-highlight! link Directory      Normal
+highlight! link Function       SoftFunction
+highlight! link Special        SoftSpecial
+highlight! link Character      String
+highlight! link PreProc        DustyPreProc
+highlight! link Include        DustyPreProc
+highlight! link Define         DustyPreProc
+highlight! link Macro          DustyPreProc
+highlight! link PreCondit      DustyPreProc
+highlight! link SpecialChar    SoftSpecial
+highlight! link Tag            SoftSpecial
+highlight! link Title          WarmTitle
+highlight! link Directory      SoftDirectory
 
 " Keyword Accents
 highlight! link Keyword        BoldKeyword
@@ -79,17 +85,24 @@ highlight! link Operator       Muted
 highlight! link @variable                Normal
 highlight! link @variable.builtin        Normal
 highlight! link @variable.member         Normal
-highlight! link @constant                Normal
-highlight! link @constant.builtin        Normal
-highlight! link @tag                     Normal
-highlight! link @tag.attribute           Normal
+highlight! link @parameter               Normal
+highlight! link @parameter.reference     Normal
+highlight! link @variable.parameter      Normal
+highlight! link @variable.parameter.builtin Normal
+highlight! link @constant                Constant
+highlight! link @constant.builtin        Constant
+highlight! link @constant.macro          DustyPreProc
+highlight! link @tag                     SoftSpecial
+highlight! link @tag.attribute           WarmIdentifier
 highlight! link @tag.delimiter           Muted
-highlight! link @namespace               Normal
-highlight! link @module                  Normal
-highlight! link @function                Normal
-highlight! link @function.builtin        Normal
-highlight! link @function.macro          Normal
-highlight! link @function.method         Normal
+highlight! link @namespace               DustyPreProc
+highlight! link @module                  DustyPreProc
+highlight! link @function                SoftFunction
+highlight! link @function.builtin        SoftFunction
+highlight! link @function.macro          DustyPreProc
+highlight! link @function.method         SoftFunction
+highlight! link @property                Normal
+highlight! link @field                   Normal
 
 highlight! link @type                    SlateKeyword
 highlight! link @type.builtin            SlateKeyword
@@ -100,20 +113,23 @@ highlight! link @keyword.function        BoldKeyword
 highlight! link @keyword.return          BoldKeyword
 
 highlight! link @string                  String
+highlight! link @character               String
 highlight! link @comment                 Comment
+highlight! link @number                  Number
+highlight! link @boolean                 Boolean
 
 highlight! link @operator                Muted
 highlight! link @punctuation.delimiter   Muted
 highlight! link @punctuation.bracket     Muted
 
 " Pop-up Menu
-highlight Pmenu           guifg=#A0A0A0 guibg=#1A1917
-highlight PmenuSel        guifg=#FFFFFF guibg=#202A2A gui=bold
-highlight FloatBorder     guifg=#303030 guibg=#0F0E0C
-highlight NormalFloat     guifg=#B0B0B0 guibg=#0F0E0C
+highlight Pmenu           guifg=#ADA395 guibg=#1B1612
+highlight PmenuSel        guifg=#FFF6E8 guibg=#2A2119 gui=bold
+highlight FloatBorder     guifg=#35302A guibg=#14100C
+highlight NormalFloat     guifg=#B0B0B0 guibg=#14100C
 
 " Diagnostics
-highlight DiagnosticError guifg=#704040
-highlight DiagnosticWarn  guifg=#706040
-highlight DiagnosticInfo  guifg=#506070
-highlight DiagnosticHint  guifg=#507060
+highlight DiagnosticError guifg=#8D5E5A
+highlight DiagnosticWarn  guifg=#967E54
+highlight DiagnosticInfo  guifg=#68819A
+highlight DiagnosticHint  guifg=#6D9B6A
